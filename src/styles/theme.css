@@ -1,0 +1,184 @@
+/*
+ * 主题令牌。所有页面颜色都从这里取值：明暗两套主题只换变量，组件样式不写死颜色。
+ * 加载顺序在 global.css / design.css / features.css / pelican.css 之后，因此这里的值优先。
+ */
+:root {
+  --paper: #fff;
+  --paper-2: #fafafa;
+  --canvas: #f5f5f7;
+  --tint: #f0f0f3;
+  --tint-2: #f7f7fa;
+  --ink: #1d1d1f;
+  --ink-soft: #424245;
+  --muted: #6e6e73;
+  --muted-2: #86868b;
+  --faint: #a1a1a6;
+  --line: #e8e8ed;
+  --line-strong: #d2d2d7;
+  --blue: #0071e3;
+  --blue-dark: #0066cc;
+  --blue-light: #f0f6ff;
+  --on-accent: #fff;
+  --good: #0a7d5a;
+  --warn: #c2410c;
+  --bad: #b42318;
+  --good-soft: #e8f7f0;
+  --warn-soft: #fdf1ea;
+  --caution: #8b632a;
+  --caution-ink: #885d13;
+  --caution-soft: #fff5df;
+  --caution-line: #f2e5c8;
+  --code-bg: #1d1d1f;
+  --code-ink: #f5f5f7;
+  --header-bg: #fafafcdd;
+  --shadow-card: 0 4px 20px #00000005;
+  --shadow-pop: 0 12px 32px #0000001f;
+  --chart-grid: #ececf0;
+  --chart-axis: #86868b;
+  --logo-plate: #fff;
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --paper: #1c1c1e;
+  --paper-2: #202023;
+  --canvas: #0c0c0e;
+  --tint: #26262a;
+  --tint-2: #1f1f22;
+  --ink: #f2f2f5;
+  --ink-soft: #d2d2d7;
+  --muted: #a3a3a9;
+  --muted-2: #8f8f95;
+  --faint: #6e6e73;
+  --line: #2e2e33;
+  --line-strong: #3c3c42;
+  --blue: #0a84ff;
+  --blue-dark: #409cff;
+  --blue-light: #102a44;
+  --on-accent: #fff;
+  --good: #32d74b;
+  --warn: #ff9f0a;
+  --bad: #ff6b60;
+  --good-soft: #14301f;
+  --warn-soft: #3a2416;
+  --caution: #e8c07a;
+  --caution-ink: #f0cd8b;
+  --caution-soft: #33280f;
+  --caution-line: #4a3a1c;
+  --code-bg: #101012;
+  --code-ink: #e8e8ed;
+  --header-bg: #0c0c0edd;
+  --shadow-card: 0 4px 20px #00000059;
+  --shadow-pop: 0 12px 32px #00000080;
+  --chart-grid: #2a2a2f;
+  --chart-axis: #8f8f95;
+  /* 厂商 Logo 是深色描边图形，深色底上给一块浅色托板，保证识别度 */
+  --logo-plate: #f2f2f5;
+  color-scheme: dark;
+}
+
+/* 跟随系统：用户没有手动选过主题时生效 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --paper: #1c1c1e;
+    --paper-2: #202023;
+    --canvas: #0c0c0e;
+    --tint: #26262a;
+    --tint-2: #1f1f22;
+    --ink: #f2f2f5;
+    --ink-soft: #d2d2d7;
+    --muted: #a3a3a9;
+    --muted-2: #8f8f95;
+    --faint: #6e6e73;
+    --line: #2e2e33;
+    --line-strong: #3c3c42;
+    --blue: #0a84ff;
+    --blue-dark: #409cff;
+    --blue-light: #102a44;
+    --on-accent: #fff;
+    --good: #32d74b;
+    --warn: #ff9f0a;
+    --bad: #ff6b60;
+  --good-soft: #14301f;
+  --warn-soft: #3a2416;
+  --caution: #e8c07a;
+  --caution-ink: #f0cd8b;
+  --caution-soft: #33280f;
+  --caution-line: #4a3a1c;
+  --code-bg: #101012;
+  --code-ink: #e8e8ed;
+    --header-bg: #0c0c0edd;
+    --shadow-card: 0 4px 20px #00000059;
+    --shadow-pop: 0 12px 32px #00000080;
+    --chart-grid: #2a2a2f;
+    --chart-axis: #8f8f95;
+    --logo-plate: #f2f2f5;
+    color-scheme: dark;
+  }
+}
+
+/* 切换按钮 */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin-left: auto;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1;
+  transition: background .2s, border-color .2s, color .2s;
+}
+.theme-toggle:hover { border-color: var(--line-strong); }
+.theme-toggle svg { width: 15px; height: 15px; display: block; }
+.theme-toggle .icon-sun { display: none; }
+[data-theme='dark'] .theme-toggle .icon-sun { display: block; }
+[data-theme='dark'] .theme-toggle .icon-moon { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .theme-toggle .icon-sun { display: block; }
+  :root:not([data-theme='light']) .theme-toggle .icon-moon { display: none; }
+}
+
+/* 深色下的细节修正：这些位置原本依赖浅色底 */
+[data-theme='dark'] .site-header { border-color: #ffffff14; }
+[data-theme='dark'] .filter-count { color: var(--muted); }
+[data-theme='dark'] input[type=checkbox] { accent-color: var(--blue); }
+[data-theme='dark'] select { color: var(--ink); }
+[data-theme='dark'] .champion-card,
+[data-theme='dark'] .provider-gallery-item,
+[data-theme='dark'] .method-grid article,
+[data-theme='dark'] .compare-scroll,
+[data-theme='dark'] .detail-price-card { box-shadow: none; }
+[data-theme='dark'] .search-box,
+[data-theme='dark'] input,
+[data-theme='dark'] select { background: var(--paper-2); }
+[data-theme='dark'] thead th { background: var(--paper); }
+[data-theme='dark'] .provider-mark { background: var(--logo-plate); }
+[data-theme='dark'] img[src$='.svg']:not(.brand-avatar) { filter: none; }
+[data-theme='dark'] ::selection { background: #1d4d8a; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .site-header { border-color: #ffffff14; }
+  :root:not([data-theme='light']) .filter-count { color: var(--muted); }
+  :root:not([data-theme='light']) input[type=checkbox] { accent-color: var(--blue); }
+  :root:not([data-theme='light']) select { color: var(--ink); }
+  :root:not([data-theme='light']) .provider-mark { background: var(--logo-plate); }
+  :root:not([data-theme='light']) .search-box,
+  :root:not([data-theme='light']) input,
+  :root:not([data-theme='light']) select { background: var(--paper-2); }
+  :root:not([data-theme='light']) thead th { background: var(--paper); }
+}
+
+/* 内联 SVG 图表：CSS 优先于 presentation attribute，因此这里改一次即可跟着主题走 */
+.scatter-label { fill: var(--ink); }
+.scatter-axis-label,
+.scatter-tick { fill: var(--chart-axis); }
+.scatter-axis { stroke: var(--line-strong); }
+.scatter-grid { stroke: var(--chart-grid); }
+.scatter-frontier { stroke: var(--muted-2); }
+.chart-grid { stroke: var(--chart-grid); }
+.chart-label,
+.chart-date { fill: var(--chart-axis); }
+.chart-value { fill: var(--ink); }

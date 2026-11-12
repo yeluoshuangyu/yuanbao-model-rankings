@@ -84,32 +84,32 @@ import { pelicanManualCriteria } from '../lib/pelican-manual';
 <style>
   .pelican-method { border-top: 1px solid var(--line); padding: 19px 26px; color: var(--muted); font-size: 13px; }
   .pelican-method > summary { cursor: pointer; font-size: 13px; padding: 8px 0; min-height: 40px; }
-  .method-version { float: right; color: #86868b; font-size: 11px; }
+  .method-version { float: right; color: var(--muted-2); font-size: 11px; }
   .method-content { max-width: 860px; margin-top: 24px; line-height: 1.9; }
   .method-intro { color: var(--ink); font-size: 14px; }
   .method-content section { margin-top: 28px; }
   .method-content h3 { color: var(--ink); font-size: 15px; font-weight: 600; margin-bottom: 12px; letter-spacing: -.02em; }
   .method-content ul { margin: 0 0 12px; padding-left: 20px; }
   .method-content li + li { margin-top: 9px; }
-  .method-content strong { color: #515154; font-weight: 550; }
+  .method-content strong { color: var(--ink-soft); font-weight: 550; }
   .method-score-table { width: 100%; min-width: 0; margin-bottom: 14px; font-size: 12px; }
-  .method-score-table :is(th, td) { height: auto; text-align: left; vertical-align: top; white-space: normal; padding: 11px 12px 11px 0; border-bottom: 1px solid #f0f0f3; }
+  .method-score-table :is(th, td) { height: auto; text-align: left; vertical-align: top; white-space: normal; padding: 11px 12px 11px 0; border-bottom: 1px solid var(--tint); }
   .method-score-table th:first-child { width: 126px; font-weight: 550; }
   .method-score-table :is(th, td):nth-child(2) { width: 48px; font-variant-numeric: tabular-nums; }
   .method-score-table :is(th, td):last-child { padding-right: 0; }
-  .method-score-table tbody th { color: #515154; }
+  .method-score-table tbody th { color: var(--ink-soft); }
   .method-tier-list { margin: 0 0 18px; padding: 0; }
-  .method-tier-list > div { display: grid; grid-template-columns: 70px minmax(0, 1fr); align-items: baseline; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0f0f3; }
+  .method-tier-list > div { display: grid; grid-template-columns: 70px minmax(0, 1fr); align-items: baseline; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--tint); }
   .method-tier-list dt { color: var(--tier-ink); font-weight: 600; }
   .method-tier-list dd { margin: 0; display: flex; flex-wrap: wrap; gap: 4px 18px; }
   .method-tier-list dd strong { min-width: 130px; font-variant-numeric: tabular-nums; }
-  .method-prompt { margin-top: 28px; padding: 16px 18px; border-radius: 12px; background: #f5f5f7; }
+  .method-prompt { margin-top: 28px; padding: 16px 18px; border-radius: 12px; background: var(--canvas); }
   .method-prompt summary { cursor: pointer; color: var(--ink); font-weight: 550; min-height: 40px; padding: 8px 0; }
   .method-prompt-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
   .method-prompt-actions button { margin-left: auto; }
   .method-copy-status { font-size: 12px; color: var(--blue); }
   .method-copy-status:empty { display: none; }
-  .method-prompt pre { white-space: pre-wrap; overflow-wrap: anywhere; margin: 16px 0 0; font: inherit; font-size: 12px; color: #515154; user-select: text; }
+  .method-prompt pre { white-space: pre-wrap; overflow-wrap: anywhere; margin: 16px 0 0; font: inherit; font-size: 12px; color: var(--ink-soft); user-select: text; }
   .method-source { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 12px; }
   .method-source a { color: var(--blue); }
   @media (max-width: 680px) {

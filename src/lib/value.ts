@@ -61,7 +61,7 @@ export function renderScatter(points: ValuePoint[], catalog: Catalog, category: 
   const dots = order.map(point => {
     const isFrontier = frontier.has(point.modelId);
     const cx = x(point.price), cy = y(point.score);
-    const dot = `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${isFrontier ? 6 : 4.2}" fill="${colors.get(point.providerId) ?? '#86868b'}" fill-opacity="${isFrontier ? 1 : 0.62}"${isFrontier ? ' stroke="#1d1d1f" stroke-width="1.4"' : ''}><title>${escapeHtml(point.name)}${point.mode ? ` · ${escapeHtml(point.mode)}` : ''} · ${priceLabel(point.price)} / 次 · ${point.score} 分</title></circle>`;
+    const dot = `<circle class="scatter-dot${isFrontier ? ' scatter-frontier-dot' : ''}" style="--dot-color:${colors.get(point.providerId) ?? '#86868b'}" cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${isFrontier ? 6 : 4.2}" fill="${colors.get(point.providerId) ?? '#86868b'}" fill-opacity="${isFrontier ? 1 : 0.62}"><title>${escapeHtml(point.name)}${point.mode ? ` · ${escapeHtml(point.mode)}` : ''} · ${priceLabel(point.price)} / 次 · ${point.score} 分</title></circle>`;
     if (!isFrontier) return dot;
     const text = point.name;
     const anchor = cx > width - 150 ? 'end' : 'start';

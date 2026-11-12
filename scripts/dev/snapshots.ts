@@ -8,11 +8,12 @@
  *   npm run snap -- --shot             # 顺便截 1440px 整页 PNG
  *   npm run snap -- --shot --width=390 # 手机宽度
  *   npm run snap -- --shot --only=home,value
+ *   npm run snap -- --shot --theme=dark   # 深色模式快照
  *   npm run snap -- --shot --chrome="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
  *
  * 退出码：快照生成失败为 1；只是找不到 Chrome 时打印提示并以 0 退出（CI 里可以只跑 HTML 快照）。
  */
-import { spawnSync } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
@@ -39,6 +40,7 @@ if (!existsSync(dist)) {
 const width = Number(option('width', '1440'));
 const only = option('only', '').split(',').map(value => value.trim()).filter(Boolean);
 const wantShot = has('shot');
+const theme = option('theme', 'light') === 'dark' ? 'dark' : 'light';
 const pageFilter = (name: string) => !only.length || only.includes(name);
 
 /** 站点部署在子路径下，资源链接都带这个前缀；从产物里读出来，避免和 BASE_PATH 对不上。 */
@@ -79,6 +81,7 @@ function snapshot(page: string, patches: SnapshotPatch[] = []): string {
     (_match, href: string) => `<style>\n${readFileSync(resolve(dist, href), 'utf8')}\n</style>`);
   html = html.replace(/<script[\s\S]*?<\/script>/g, '');
   for (const patch of patches) html = html.replace(patch.needle, patch.value);
+  if (theme === 'dark') html = html.replace(/<html([^>]*)>/, '<html$1 data-theme="dark">');
   html = html.replace(new RegExp(`(href|src|poster|content)="${escaped}`, 'g'), `$1="${assetPrefix}`);
   return html;
 }
@@ -199,39 +202,89 @@ function chromeArgs(profile: string, extra: string[]): string[] {
   ];
 }
 
-/** 先量一次文档高度，才能截到整页：Chrome 的 `--screenshot` 只认 `--window-size`。 */
-function measureHeight(chrome: string, profile: string, file: string, viewportWidth: number): number | null {
-  const probe = join(profile, 'measure.html');
-  const html = readFileSync(file, 'utf8').replace('</body>',
-    '<script>addEventListener("load", () => { document.title = "H:" + Math.ceil(document.documentElement.scrollHeight); });</script></body>');
-  writeFileSync(probe, html);
-  const result = spawnSync(chrome, chromeArgs(profile, [
-    `--window-size=${viewportWidth},900`,
-    '--virtual-time-budget=2000',
-    '--dump-dom',
-    `file://${probe}`,
-  ]), { encoding: 'utf8', timeout: 60_000 });
-  const match = result.stdout?.match(/<title>H:(\d+)<\/title>/);
-  return match ? Number(match[1]) : null;
+/**
+ * 用 CDP 截图，而不是 `--screenshot`：Chrome 的窗口最小宽度被钳在 500px，
+ * `--window-size=390` 实际渲染的是 500px 再裁切，媒体查询也就不会命中。
+ * 走 `Emulation.setDeviceMetricsOverride` 才能真正得到 390 CSS px 的视口。
+ */
+type Cdp = { send(method: string, params?: Record<string, unknown>): Promise<any>; close(): void };
+
+async function openCdp(chrome: string, profile: string): Promise<Cdp> {
+  const child = spawn(chrome, [
+    ...chromeArgs(profile, ['--remote-debugging-port=0']),
+    'about:blank',
+  ], { stdio: ['ignore', 'ignore', 'pipe'] });
+
+  const browser = await new Promise<string>((ok, fail) => {
+    let buffer = '';
+    const timer = setTimeout(() => fail(new Error(`DevTools 没起来：${buffer.trim()}`)), 20_000);
+    child.stderr?.on('data', (chunk: Buffer) => {
+      buffer += chunk.toString();
+      const found = buffer.match(/DevTools listening on (ws:\/\/\S+)/);
+      if (found) {
+        clearTimeout(timer);
+        ok(found[1]);
+      }
+    });
+  });
+
+  const base = browser.replace('ws://', 'http://').replace(/\/devtools\/browser\/.*$/, '');
+  const targets = await (await fetch(`${base}/json/list`)).json() as { type: string; webSocketDebuggerUrl: string }[];
+  const page = targets.find(target => target.type === 'page');
+  if (!page) throw new Error('没有可用的页面目标');
+
+  const socket = new WebSocket(page.webSocketDebuggerUrl);
+  await new Promise((ok, fail) => { socket.onopen = () => ok(null); socket.onerror = fail; });
+
+  let seq = 0;
+  const pending = new Map<number, { ok: (value: any) => void; fail: (error: Error) => void }>();
+  socket.onmessage = (event: MessageEvent) => {
+    const message = JSON.parse(String(event.data)) as { id?: number; result?: unknown; error?: unknown };
+    if (!message.id) return;
+    const slot = pending.get(message.id);
+    if (!slot) return;
+    pending.delete(message.id);
+    message.error ? slot.fail(new Error(JSON.stringify(message.error))) : slot.ok(message.result);
+  };
+
+  const send = (method: string, params: Record<string, unknown> = {}) => new Promise<any>((ok, fail) => {
+    const id = ++seq;
+    pending.set(id, { ok, fail });
+    socket.send(JSON.stringify({ id, method, params }));
+  });
+
+  await send('Page.enable');
+  return { send, close() { socket.close(); child.kill(); } };
 }
 
-function shoot(chrome: string, profile: string, file: string, out: string, viewportWidth: number): boolean {
-  const height = measureHeight(chrome, profile, file, viewportWidth);
-  if (!height) {
-    console.warn(`  量不到页面高度，跳过 ${out}`);
+/** 截整页：先按视口宽度排版，量出 scrollHeight，再用 captureBeyondViewport 一次拍完。 */
+async function shoot(cdp: Cdp, file: string, out: string, viewportWidth: number): Promise<boolean> {
+  const scale = viewportWidth < 600 ? 2 : 1;
+  await cdp.send('Emulation.setDeviceMetricsOverride', {
+    width: viewportWidth,
+    height: 900,
+    deviceScaleFactor: scale,
+    mobile: viewportWidth < 600,
+  });
+  await cdp.send('Page.navigate', { url: `file://${file}` });
+  await new Promise(done => setTimeout(done, 900));
+
+  const measured = await cdp.send('Runtime.evaluate', {
+    expression: 'Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)',
+    returnByValue: true,
+  });
+  const height = Math.min(Number(measured?.result?.value ?? 0) || 900, 60_000);
+  const shot = await cdp.send('Page.captureScreenshot', {
+    format: 'png',
+    captureBeyondViewport: true,
+    clip: { x: 0, y: 0, width: viewportWidth, height, scale: 1 },
+  });
+  if (!shot?.data) {
+    console.warn(`  截图失败：${out}`);
     return false;
   }
-  const result = spawnSync(chrome, chromeArgs(profile, [
-    `--window-size=${viewportWidth},${height}`,
-    '--virtual-time-budget=2000',
-    `--screenshot=${out}`,
-    `file://${file}`,
-  ]), { encoding: 'utf8', timeout: 120_000 });
-  if (!existsSync(out)) {
-    console.warn(`  截图失败：${(result.stderr ?? '').trim().split('\n').slice(-1)[0] ?? '未知错误'}`);
-    return false;
-  }
-  console.log(`  ${out.split('/').pop()}  ${viewportWidth}×${height}`);
+  writeFileSync(out, Buffer.from(shot.data, 'base64'));
+  console.log(`  ${out.split('/').pop()}  ${viewportWidth}×${height}${scale > 1 ? ` @${scale}x` : ''}`);
   return true;
 }
 
@@ -252,6 +305,8 @@ emit('compare', snapshot('compare/index.html', comparePatches));
 emit('value', snapshot('value/index.html'));
 emit('model', snapshot(`models/${focus.id}/index.html`, migrationPatches));
 emit('api', snapshot('api/index.html'));
+emit('status', snapshot('status/index.html'));
+emit('pelican', snapshot('pelican/index.html'));
 
 // 分享对话框默认是关的，单独开一份来检查按钮与提示。
 if (pageFilter('share')) {
@@ -279,14 +334,23 @@ if (!chrome) {
 }
 
 const profileDir = mkdtempSync(join(tmpdir(), 'yuanbao-chrome-'));
-const shotsDir = resolve(outDir, `shots-${width}`);
+const shotsDir = resolve(outDir, theme === 'dark' ? `shots-${width}-dark` : `shots-${width}`);
 mkdirSync(shotsDir, { recursive: true });
 let failures = 0;
-for (const page of produced) {
-  const ok = shoot(chrome, profileDir, page.file, resolve(shotsDir, `${page.name}.png`), width);
-  if (!ok) failures += 1;
+let cdp: Cdp | null = null;
+try {
+  cdp = await openCdp(chrome, profileDir);
+  for (const page of produced) {
+    const ok = await shoot(cdp, page.file, resolve(shotsDir, `${page.name}.png`), width);
+    if (!ok) failures += 1;
+  }
+} catch (error) {
+  console.warn(`截图失败：${(error as Error).message}`);
+  failures = 1;
+} finally {
+  cdp?.close();
+  try { rmSync(profileDir, { recursive: true, force: true }); } catch { /* Chrome 可能还在收尾，临时目录留着无妨 */ }
 }
-rmSync(profileDir, { recursive: true, force: true });
 
 if (failures) {
   console.error(`有 ${failures} 张截图没生成出来。`);

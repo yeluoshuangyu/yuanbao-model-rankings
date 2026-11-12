@@ -18,6 +18,7 @@
 - 性能：综合文本 241、网页编程 103、视觉理解 113、智能体 36 条模型/配置记录。各自保留官方指标、日期、名次，不跨分类拼分。
 - 开放数据：`/data/*.json` 与 `/data/models.csv` 五个端点的字段说明和示例；CSV 共 22 列，含人民币换算与任务成本。
 - 大模型科目三：17 份 HTML 原作，按源宝人工总分从高到低展示，同分并列，左侧竖线从夯到拉。五项各 2 分，总分 10 分，可展开明细；保留小窗预览、放大、下载、筛选和分享，不显示 GIF 或测试记录。
+- 深色模式：右上角一键切换，选择存进 localStorage 并跨页保持；没选过时跟随系统 `prefers-color-scheme`。全站颜色走 CSS 变量（`src/styles/theme.css`），内联 SVG 图表、厂商 Logo 底板、代码块与状态徽章都有对应的深色值。
 - 统一彩色厂商 Logo、冠军卡、桌面/手机布局和社区页脚。标志资源及许可见 [Logo 说明](public/logos/README.md)。
 - 价格自动更新、异常审核、追加历史及 Pages 自动构建发布；覆盖与失败边界见下文。
 
@@ -42,11 +43,14 @@ npm run validate:build
 ```bash
 npm run snap                        # 生成 .shots/*.html（自包含，可直接打开）
 npm run snap -- --shot              # 顺便截 1440px 整页 PNG 到 .shots/shots-1440/
-npm run snap -- --shot --width=390  # 手机宽度
+npm run snap -- --shot --width=390  # 手机宽度（真 390px 视口，见下）
+npm run snap -- --shot --theme=dark # 深色模式，落到 .shots/shots-<width>-dark/
 npm run snap -- --shot --only=home,value --chrome=/path/to/chrome
 ```
 
 快照会剥离脚本、内联 CSS，并用同一批 `src/lib` 函数把客户端渲染的区块（月账单、对比表、迁移表）预先填好；分享图是 Canvas 绘制的，所以额外用 esbuild 打包一份真实渲染出来。找不到 Chrome 时只出 HTML、不报错。
+
+截图走 Chrome DevTools Protocol 的 `Emulation.setDeviceMetricsOverride`，而不是 `--window-size`：Chrome 的窗口最小宽度被钳在 500px，`--window-size=390` 实际渲染的是 500px 再裁切，`@media (max-width: 480px)` 根本不会命中。窄屏（< 600px）会以 2 倍像素密度出图，方便看细节。
 
 项目子路径校验：
 
