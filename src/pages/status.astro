@@ -1,0 +1,125 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { catalog, verification } from '../lib/catalog';
+import { escapeHtml, mark, pathFor } from '../lib/render';
+import { statusLabels } from '../lib/ranking';
+import { performanceBoards } from '../lib/performance-data';
+import { performanceCategories, performanceCategoryIds } from '../lib/performance-categories';
+import { historySchema } from '../lib/pricing-metadata';
+import historyData from '../data/price-history.json';
+
+const base = import.meta.env.BASE_URL;
+const history = historySchema.parse(historyData);
+const events = history.models.reduce((sum, record) => sum + record.events.length, 0);
+
+const models = catalog.models;
+const countBy = (predicate: (model: (typeof models)[number]) => boolean) => models.filter(predicate).length;
+const byStatus = (status: string) => countBy(model => verification.models[model.id]?.status === status);
+const byMode = (mode: string) => countBy(model => verification.models[model.id]?.verification === mode);
+
+const stale = models
+  .filter(model => verification.models[model.id]?.status === 'stale')
+  .map(model => ({ model, note: verification.models[model.id] }));
+const deprecated = countBy(model => model.status === 'deprecated');
+const retired = countBy(model => model.status === 'retired');
+const unpriced = countBy(model => model.rates[0].input <= 0 || model.rates[0].output <= 0);
+
+const now = Date.parse(verification.checkedAt);
+const daysSince = (value: string | null | undefined) => (value ? Math.max(0, Math.floor((now - Date.parse(value)) / 86_400_000)) : null);
+const stamp = (value: string | null | undefined) => (value ? new Date(value).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', hour12: false }) : '未记录');
+
+const providers = catalog.providers.map(provider => {
+  const owned = models.filter(model => model.providerId === provider.id);
+  const state = verification.providers[provider.id];
+  return {
+    provider,
+    count: owned.length,
+    stale: owned.filter(model => verification.models[model.id]?.status === 'stale').length,
+    age: daysSince(state?.lastCheckedAt),
+    state,
+    source: catalog.sources.find(source => source.providerId === provider.id),
+  };
+});
+
+const boards = performanceCategoryIds.map(category => {
+  const board = performanceBoards[category];
+  return { category, label: performanceCategories[category].label, publishedAt: board.publishedAt, days: Math.max(0, Math.floor((now - Date.parse(board.publishedAt)) / 86_400_000)), entries: board.sourceRowCount };
+}).filter(board => board.publishedAt);
+
+const cards = [
+  { label: '收录模型', value: models.length, note: `${catalog.providers.length} 家厂商，其中 ${models.length - retired} 款在售` },
+  { label: '价格已核验', value: byStatus('fresh'), note: `最近一次全量核算 ${stamp(verification.checkedAt)}` },
+  { label: '沿用旧价', value: stale.length, note: stale.length ? '官方页已不列出，费率保留但标为过期' : '全部模型仍在官方页可查' },
+  { label: '仅存量', value: deprecated + retired, note: `${deprecated} 款已排定下线，${retired} 款已退役` },
+];
+---
+<Layout title="数据状态 · 源宝模型排行榜" description="公开每一项价格的核验时间、核验方式与异常状态：哪些模型沿用旧价、哪些厂商的页面结构变了、外部成绩榜多久没更新。">
+  <main id="main" class="page-shell status-page" data-base={base}>
+    <section class="page-intro" aria-labelledby="page-title">
+      <div class="intro-copy"><h1 id="page-title">数据是怎么来的，<span>也一并告诉你。</span></h1><p>{models.length} 条费率 · {events} 条历史事件 · 最后核算 {stamp(verification.checkedAt)}</p></div>
+      <a class="outline-button back-link" href={pathFor(base)}>← 返回价格榜</a>
+    </section>
+
+    <section class="status-cards" aria-label="数据概况">
+      {cards.map(card => <div class="status-card"><span class="status-value">{card.value}</span><span class="status-label">{card.label}</span><span class="status-note">{card.note}</span></div>)}
+    </section>
+
+    <section class="status-block" aria-labelledby="status-method">
+      <h2 id="status-method">核验方式</h2>
+      <p>价格来自各厂商官方定价页，两种途径：<strong>自动核对</strong>由抓取脚本每 6 小时读一次页面，落地前逐条比对页面结构，结构变了就整家跳过并保留旧值；<strong>人工核对</strong>是脚本读不到的厂商（登录墙、地区跳转、页面超时），由人逐条抄录后写入。</p>
+      <dl class="status-meta">
+        <div><dt>自动核对</dt><dd>{byMode('auto_verified')} 条</dd></div>
+        <div><dt>人工核对</dt><dd>{byMode('manual_verified')} 条</dd></div>
+        <div><dt>零价模型</dt><dd>{unpriced} 条（不进价格榜，仅在详情页说明）</dd></div>
+        <div><dt>历史事件</dt><dd>{events} 条，覆盖 {history.models.length} 款模型</dd></div>
+      </dl>
+    </section>
+
+    <section class="status-block" aria-labelledby="status-providers">
+      <h2 id="status-providers">各厂商最后核验</h2>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="各厂商核验状态">
+        <table class="status-table">
+          <caption>核验时间为该厂商页面上一次被成功读取的时刻（北京时间）</caption>
+          <thead><tr><th scope="col">厂商</th><th scope="col" class="numeric">模型</th><th scope="col" class="numeric">沿用旧价</th><th scope="col">最后核验</th><th scope="col" class="numeric">距今</th><th scope="col">来源</th></tr></thead>
+          <tbody>{providers.map(({ provider, count, stale: staleCount, age, source, state }) => <tr>
+            <th scope="row"><span class="provider-cell-inline"><Fragment set:html={mark(catalog, provider.id, base)} />{escapeHtml(provider.shortName)}</span></th>
+            <td class="numeric">{count}</td>
+            <td class="numeric">{staleCount ? <span class="status-tag verification-caution">{staleCount}</span> : '—'}</td>
+            <td class="status-time">{stamp(state?.lastCheckedAt)}</td>
+            <td class="numeric">{age === null ? '—' : `${age} 天`}</td>
+            <td>{source ? <a class="text-button" href={source.url} target="_blank" rel="noopener noreferrer">官方页 ↗</a> : '—'}</td>
+          </tr>)}</tbody>
+        </table>
+      </div>
+    </section>
+
+    {stale.length > 0 && <section class="status-block" aria-labelledby="status-attention">
+      <h2 id="status-attention">需要留意：{stale.length} 条沿用旧价</h2>
+      <p class="muted">这些型号的官方定价页上已经找不到对应条目，费率沿用最后一次成功抓取的快照。它们仍会出现在榜单里（除非标为下线），但请以控制台实际可调用情况为准。</p>
+      <ul class="status-attention">{stale.map(({ model, note }) => <li>
+        <a class="model-link" href={pathFor(base, `models/${model.id}/`)}><Fragment set:html={mark(catalog, model.providerId, base)} /><span class="model-name">{escapeHtml(model.name)}</span></a>
+        <span class="status-reason">{escapeHtml(note?.reason ?? '')}</span>
+      </li>)}</ul>
+    </section>}
+
+    <section class="status-block" aria-labelledby="status-external">
+      <h2 id="status-external">外部成绩榜</h2>
+      <p>性能分来自第三方竞技场，更新节奏不受本站控制。数据落后时图表照常显示，但会标注「已 N 天未更新」。</p>
+      <ul class="status-external">{boards.map(board => <li>
+        <span class="external-name">{board.label}</span>
+        <span class="external-meta">{board.entries} 条记录 · 发布于 {board.publishedAt} · 距今 {board.days} 天</span>
+        {board.days > 30 && <span class="status-tag verification-caution">已 {board.days} 天未更新</span>}
+      </li>)}</ul>
+    </section>
+
+    <section class="status-block" aria-labelledby="status-fix">
+      <h2 id="status-fix">发现错误怎么办</h2>
+      <p>每个数字都能追到官方页。如果某条费率与官方页不符，欢迎直接提 issue，附上官方页链接与截图；确认后会在下一次核算中修正，历史事件里也会留下这次变更。</p>
+      <div class="status-actions">
+        <a class="primary-button" href="https://github.com/yeluoshuangyu/yuanbao-model-rankings/issues" target="_blank" rel="noopener noreferrer">提交纠错</a>
+        <a class="outline-button" href={pathFor(base, 'api/')}>查看数据端点</a>
+        <a class="outline-button" href={pathFor(base, 'feed.xml')}>订阅调价（Atom）</a>
+      </div>
+    </section>
+  </main>
+</Layout>

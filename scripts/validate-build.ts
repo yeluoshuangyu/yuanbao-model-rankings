@@ -10,8 +10,8 @@ async function walk(dir: string): Promise<string[]> {
 }
 const files = await walk(root);
 const htmlFiles = files.filter(file => file.endsWith('.html'));
-// Landing pages: home, performance, pelican, 404, compare, value, open data.
-const staticPages = 7;
+// Landing pages: home, performance, pelican, 404, compare, value, open data, status.
+const staticPages = 8;
 assert.equal(htmlFiles.length, catalog.models.length + staticPages, `每条模型记录必须有永久详情 URL，另有 ${staticPages} 个静态页面`);
 const performanceHtml = await readFile(join(root, 'performance/index.html'), 'utf8');
 assert.match(performanceHtml, /Arena/);
@@ -19,10 +19,18 @@ assert.match(performanceHtml, /performance-body/);
 const pelicanHtml = await readFile(join(root, 'pelican/index.html'), 'utf8');
 assert.match(pelicanHtml, /id="pelican-board-title"/);
 assert.match(pelicanHtml, /仅供娱乐/);
-for (const page of ['compare', 'value', 'api']) {
+for (const page of ['compare', 'value', 'api', 'status']) {
   const html = await readFile(join(root, page, 'index.html'), 'utf8');
   assert.ok(html.includes(`href="${base}api/"`), `${page} 页面必须包含开放数据导航`);
 }
+const feed = await readFile(join(root, 'feed.xml'), 'utf8');
+assert.match(feed, /<feed xmlns="http:\/\/www\.w3\.org\/2005\/Atom"/, '必须输出 Atom 订阅源');
+assert.ok((feed.match(/<entry>/g) ?? []).length > 0, '订阅源至少要有一条事件');
+const sitemap = await readFile(join(root, 'sitemap.xml'), 'utf8');
+assert.equal((sitemap.match(/<url>/g) ?? []).length, catalog.models.length + staticPages - 1, '站点地图必须收录全部详情页与工具页（404 除外）');
+assert.match(await readFile(join(root, 'robots.txt'), 'utf8'), /Sitemap: https?:\/\/\S+\/sitemap\.xml/);
+const badges = files.filter(file => file.startsWith(join(root, 'badge')) && file.endsWith('.svg'));
+assert.equal(badges.length, catalog.models.length, '每款模型都要有可嵌入的价格徽章');
 const csv = await readFile(join(root, 'data/models.csv'), 'utf8');
 assert.equal(csv.trim().split('\n').length, catalog.models.length + 1, 'CSV 必须每款模型一行');
 let checked = 0;
