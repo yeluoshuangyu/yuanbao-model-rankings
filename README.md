@@ -2,7 +2,7 @@
 
 中文主流 AI 模型价格、性能与鹈鹕作品榜。Astro + TypeScript + 静态 JSON，仅依赖 GitHub Repository / Actions / Pages。
 
-当前产品基线：[PRD v3.0](PRD.md)。本次迭代说明：[v3.1 发布说明](docs/RELEASE-v3.1.md)；上一版发布验收：[v3.0 验收记录](docs/RELEASE-v3.0.md)、[9 月 14 日自动更新修复记录](docs/WORKFLOW-FIX-2026-09-14.md)。
+当前产品基线：[PRD v3.1](PRD.md)。本次迭代说明：[v3.1 发布说明](docs/RELEASE-v3.1.md)；上一版发布验收：[v3.0 验收记录](docs/RELEASE-v3.0.md)、[9 月 14 日自动更新修复记录](docs/WORKFLOW-FIX-2026-09-14.md)。
 
 ## 当前功能
 
