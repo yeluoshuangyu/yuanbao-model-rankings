@@ -12,9 +12,13 @@ const TOP = 244;
  * 换仓库、换自定义域名都不必改代码。没有 canonical 时退回当前主机名。
  */
 function siteLabel(): string {
+  // 主机名取 canonical（部署地址），路径取 Layout 写进 meta 的 base：
+  // 详情页与工具页的 canonical 各带自己的路径，直接截 canonical 会把 /compare 或 /models/<id> 印到图上。
   const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute('href') ?? '';
-  const value = canonical || location.host;
-  return value.replace(/^https?:\/\//, '').replace(/\/+$/, '');
+  let host = location.host;
+  if (canonical) { try { host = new URL(canonical).host || host; } catch { /* 非绝对地址时退回当前主机 */ } }
+  const base = document.querySelector('meta[name="yuanbao-base"]')?.getAttribute('content') || '/';
+  return `${host}${base.startsWith('/') ? '' : '/'}${base}`.replace(/\/+$/, '');
 }
 
 function clip(context: CanvasRenderingContext2D, text: string, max: number) {
@@ -170,7 +174,7 @@ export function drawCompare(models: Model[], catalog: Catalog, filters: Filters,
   );
 
   const rows: { label: string; cells: Cell[] }[] = [
-    { label: `输入（${metricLabels[filters.metric] === '输入价格' ? '每百万 Token' : '每百万 Token'}）`, cells: price('input') },
+    { label: '输入（每百万 Token）', cells: price('input') },
     { label: '输出（每百万 Token）', cells: price('output') },
     { label: '缓存读取', cells: price('cache') },
     { label: '单次任务成本', cells: price('task') },
@@ -179,7 +183,7 @@ export function drawCompare(models: Model[], catalog: Catalog, filters: Filters,
     { label: '模型状态', cells: cell(models.map(model => statusLabels[model.status]), models.map(() => null), 'none') },
   ];
 
-  const height = top + rows.length * rowHeight + 132;
+  const height = top + rows.length * rowHeight + 104;
   const canvas = document.createElement('canvas');
   const scale = 2;
   canvas.width = WIDTH * scale;
@@ -246,7 +250,7 @@ export function drawCompare(models: Model[], catalog: Catalog, filters: Filters,
     }
   });
 
-  const footerY = top + rows.length * rowHeight + 40;
+  const footerY = top + rows.length * rowHeight + 26;
   context.fillStyle = '#8b8f98';
   context.font = `400 15px ${FONT}`;
   context.fillText(`绿色为该项最优；任务成本按 ${filters.inputTokens.toLocaleString('zh-CN')} 输入 + ${filters.outputTokens.toLocaleString('zh-CN')} 输出计；价格以官方账单为准`, left, footerY);

@@ -25,7 +25,7 @@ test('下线时间表按日期升序，且只收标了 retireAt 的型号', () =
   assert.deepEqual(dates, [...dates].sort());
   for (const row of rows) {
     assert.ok(row.model.status === 'deprecated' || row.model.status === 'retired');
-    assert.ok(row.monthly > 0);
+    assert.ok((row.monthly ?? 0) > 0);
   }
   assert.ok(rows.some(row => row.model.id === 'minimax-m2-7' && row.countdown.days === 6));
 });
