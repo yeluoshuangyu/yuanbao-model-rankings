@@ -1,0 +1,29 @@
+MIT License
+
+Copyright (c) 2026 源宝（gityuanbao）
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+本许可适用于本仓库的代码、数据整理与文案。以下内容不在授权范围内，权利归各自所有者：
+
+- `public/logos/` 下的厂商品牌图形与商标（来自 Lobe Icons，按其 MIT 许可使用，见 `public/logos/LICENSE`），以及页脚社交图标；仅用于识别所比较的 API 服务。
+- `public/pelican-originals/` 与 `public/media/` 中由各模型生成的原始作品，作品权利归对应模型的提供方与生成者。
+- 各厂商的名称、定价页面文本与商标。
