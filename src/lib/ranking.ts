@@ -10,13 +10,17 @@ export interface Filters {
   status: 'available' | 'all' | Model['status']; region: 'all' | Model['region'];
   useCase: 'all' | 'chat' | 'long' | 'code'; scenario: Scenario;
   inputTokens: number; outputTokens: number; billing: Billing; cachePercent: number; query: string;
+  /** User-supplied USD→CNY rate; null falls back to the published reference rate. */
+  fx: number | null;
+  /** Client-only: restrict the board to the visitor's saved models. */
+  favoriteOnly: boolean;
 }
 export const scenarios = {
   chat: { name: '日常聊天', input: 1000, output: 1000 },
   long: { name: '长文本', input: 32000, output: 2000 },
   code: { name: 'AI 编程', input: 8000, output: 2000 },
 } as const;
-export const defaultFilters: Filters = { metric: 'input', order: 'asc', providers: [], maxPrice: null, minContext: 0, status: 'available', region: 'all', useCase: 'all', scenario: 'chat', inputTokens: 1000, outputTokens: 1000, billing: 'standard', cachePercent: 50, query: '' };
+export const defaultFilters: Filters = { metric: 'input', order: 'asc', providers: [], maxPrice: null, minContext: 0, status: 'available', region: 'all', useCase: 'all', scenario: 'chat', inputTokens: 1000, outputTokens: 1000, billing: 'standard', cachePercent: 50, query: '', fx: null, favoriteOnly: false };
 export const metricLabels: Record<Metric, string> = { input: '输入价格', output: '输出价格', task: '任务成本' };
 export const statusLabels = { active: '正式可用', preview: '预览版', deprecated: '仅存量 / 即将下架', retired: '已下架' };
 export const billingLabels: Record<Billing, string> = { standard: '标准费率', cache: '缓存输入', batch: '批量处理', offpeak: '低峰费率', promotion: '限时优惠' };
@@ -56,8 +60,9 @@ export function rankRows(rows: Row[], metric: Metric): Row[] {
     return { ...row, rank, tied: (index > 0 && compareValue(row[metric], sorted[index - 1][metric])) || (index < sorted.length - 1 && compareValue(row[metric], sorted[index + 1][metric])), ratio: minimum === 0 ? (row[metric] === 0 ? 1 : null) : compareValue(row[metric], minimum) ? 1 : row[metric] / minimum };
   });
 }
-export function getRows(catalog: Catalog, filters: Filters, today?: string): { rows: Row[]; unavailable: number } {
+export function getRows(catalog: Catalog, filters: Filters, today?: string, only?: ReadonlySet<string>): { rows: Row[]; unavailable: number } {
   let unavailable = 0;
+  const fx = filters.fx ?? catalog.meta.usdToCny;
   const rows: Row[] = [];
   const matches = modelSearch(filters.query);
   for (const model of catalog.models) {
@@ -69,7 +74,8 @@ export function getRows(catalog: Catalog, filters: Filters, today?: string): { r
     if (filters.minContext && (model.contextTokens ?? 0) < filters.minContext) continue;
     const provider = catalog.providers.find(p => p.id === model.providerId)!;
     if (!matches(model.name, model.apiId, provider.name, provider.shortName, provider.id)) continue;
-    const prices = quote(model, filters, catalog.meta.usdToCny, today);
+    if (only && !only.has(model.id)) continue;
+    const prices = quote(model, { ...filters, fx }, fx, today);
     if (!prices) { unavailable++; continue; }
     // Zero rates remain in the catalog/history, but don't participate in paid-price rankings.
     // Check both the standard tier and the selected billing mode before any ranking or champions.

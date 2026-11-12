@@ -28,9 +28,18 @@ function update() {
   filters = { ...filters, scenario: 'custom', inputTokens: Number(input('detail-input').value), outputTokens: Number(input('detail-output').value), billing: input('detail-billing').value as Billing, cachePercent: Number(input('detail-cache').value) };
   history.replaceState(null, '', location.pathname + serializeFilters(filters));
   show();
+  renderMigration();
 }
 byId('detail-calculator').addEventListener('submit', event => { event.preventDefault(); update(); });
 input('detail-billing').addEventListener('change', update);
 input('detail-cache').addEventListener('change', update);
-window.addEventListener('popstate', () => { filters = parseFilters(location.search); show(); });
+window.addEventListener('popstate', () => { filters = parseFilters(location.search); show(); renderMigration(); });
 show();
+renderMigration();
+
+import { migrationTable, renderMigrationBody } from '../lib/migration';
+function renderMigration() {
+  const daily = Math.max(1, Number(input('migration-daily').value) || 1);
+  byId('migration-body').innerHTML = renderMigrationBody(migrationTable(model, catalog, filters, daily), model, import.meta.env.BASE_URL);
+}
+input('migration-daily').addEventListener('input', renderMigration);

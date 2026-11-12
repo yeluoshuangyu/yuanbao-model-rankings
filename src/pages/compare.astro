@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { catalog } from '../lib/catalog';
+import { pathFor } from '../lib/render';
+import { MAX_COMPARE } from '../lib/compare';
+const base = import.meta.env.BASE_URL;
+---
+<Layout title="模型对比 · 源宝模型排行榜" description="并排对比 4 款以内大模型的官方输入、输出、缓存价格、长度阶梯、上下文窗口与不同任务下的单次成本。">
+  <main id="main" class="page-shell compare-page" data-base={base}>
+    <section class="page-intro" aria-labelledby="page-title">
+      <div class="intro-copy"><h1 id="page-title">并排对比，<span>一眼看懂差别。</span></h1><p>最多 {MAX_COMPARE} 款模型 · 价格、阶梯、上下文与任务成本</p></div>
+      <a class="outline-button back-link" href={pathFor(base)}>← 返回价格榜</a>
+    </section>
+    <section class="compare-picker" aria-label="加入对比">
+      <label class="search-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="compare-search" type="search" aria-label="搜索模型并加入对比" placeholder="搜索模型名称，加入对比" maxlength="100" autocomplete="off" /></label>
+      <div id="compare-suggestions" class="compare-suggestions" role="listbox" aria-label="可加入对比的模型"></div>
+      <p class="compare-hint" id="compare-hint">从排行榜或本页搜索加入模型，对比结果会写进链接，可直接分享。</p>
+    </section>
+    <div id="compare-empty" class="empty-state" hidden><div class="empty-icon" aria-hidden="true">⇄</div><h3>还没有选择模型</h3><p>在上方搜索模型名称，或回到 <a href={pathFor(base)}>价格排行榜</a> 勾选「对比」。</p></div>
+    <section id="compare-panel" class="compare-panel" aria-labelledby="compare-title" hidden>
+      <div class="ranking-header"><h2 id="compare-title">对比结果 <span class="count-pill" id="compare-count">0</span></h2><button id="compare-share" class="outline-button" type="button">复制对比链接</button></div>
+      <div class="table-scroll compare-scroll" tabindex="0" role="region" aria-label="模型对比表，可横向滚动"><div id="compare-root"></div></div>
+      <p class="compare-note">价格按当前汇率与标准费率折算；任务成本按「日常聊天 1,000 输入 + 1,000 输出」计算。切回榜单可调整计费方式与缓存命中比例后再次对比。</p>
+    </section>
+    <noscript><p class="data-footnote">模型对比需要浏览器 JavaScript。所有价格与阶梯数据仍可在 <a href={pathFor(base, 'api/')}>开放数据</a> 中获取。</p></noscript>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</Layout>
+<script>
+  import '../scripts/compare';
+</script>

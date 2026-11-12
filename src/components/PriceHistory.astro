@@ -2,7 +2,7 @@
 import type { Model } from '../lib/schema';
 import data from '../data/price-history.json';
 import { historySchema } from '../lib/pricing-metadata';
-import { money } from '../lib/ranking';
+import { money, tokens } from '../lib/ranking';
 interface Props { model: Model }
 const { model } = Astro.props;
 const events = historySchema.parse(data).models.find(m => m.modelId === model.id)?.events ?? [];
@@ -10,10 +10,54 @@ const previous = events.length > 1 ? events.at(-2) : undefined;
 const latestChange = [...events].reverse().find(e => e.reason === 'price_change');
 const symbol = (currency: string) => currency === 'USD' ? '$' : '¥';
 const change = (old: number | undefined, value: number) => old === undefined ? '尚无历史变价' : old === value ? '持平' : old === 0 ? '由免费改为收费' : `${value < old ? '↓' : '↑'} ${Math.abs((value - old) / old * 100).toFixed(2)}%`;
+const currency = events.at(-1)?.currency;
+const timeline = events.filter(event => event.currency === currency);
+const points = (field: 'input' | 'output') => timeline.map(event => event.rates[0][field]);
+const values = [...points('input'), ...points('output')];
+const chart = (() => {
+  if (timeline.length < 2 || !values.length) return null;
+  const width = 640, height = 190, padX = 12, padTop = 18, padBottom = 34;
+  const max = Math.max(...values), min = Math.min(...values);
+  const span = max - min || max || 1;
+  const x = (index: number) => padX + (index / (timeline.length - 1)) * (width - padX * 2);
+  const y = (value: number) => padTop + (1 - (value - min) / span) * (height - padTop - padBottom);
+  const line = (field: 'input' | 'output') => points(field).map((value, index) => `${index ? 'L' : 'M'}${x(index).toFixed(1)},${y(value).toFixed(1)}`).join(' ');
+  const dates = [timeline[0], timeline.at(-1)!].map(event => (event.effectiveAt ?? event.detectedAt).slice(0, 10));
+  return { width, height, x, y, line, dates, max, min, minY: y(min), maxY: y(max), lastX: x(timeline.length - 1) };
+})();
+const symbolOf = (value: string | undefined) => value === 'USD' ? '$' : '¥';
+// With a single snapshot there is no line to draw, so show the length ladder instead.
+const ladder = chart ? null : (() => {
+  const peak = Math.max(...model.rates.map(rate => rate.output)) || 1;
+  return { peak, bars: model.rates.map((rate, index) => ({ index, upTo: rate.upToInputTokens, input: rate.input, output: rate.output, inputWidth: Math.max(2, rate.input / peak * 100), outputWidth: Math.max(2, rate.output / peak * 100) })) };
+})();
 ---
 <section class="detail-box" aria-labelledby="price-history-title">
   <h2 id="price-history-title">价格变化与历史</h2>
   <p>按官方原币 / 百万 Token 记录基础档价格，汇率变化不计为厂商调价。</p>
+  {ladder && <figure class="history-chart ladder-chart"><svg viewBox="0 0 640 160" role="img" aria-label="按输入长度分档的输入与输出价格">
+    {ladder.bars.map((bar, row) => <g transform={`translate(0 ${row * 46})`}>
+      <text class="chart-label" x="12" y="14">{bar.index ? `${tokens(model.rates[bar.index - 1].upToInputTokens)} <` : '≤'} {tokens(bar.upTo)}</text>
+      <rect class="chart-bar chart-bar-input" x="150" y="0" width={bar.inputWidth * 4.4} height="12" rx="6" />
+      <rect class="chart-bar chart-bar-output" x="150" y="18" width={bar.outputWidth * 4.4} height="12" rx="6" />
+      <text class="chart-value" x={150 + bar.outputWidth * 4.4 + 10} y="15">{symbolOf(model.currency)}{money(bar.input)} / {symbolOf(model.currency)}{money(bar.output)}</text>
+    </g>)}
+  </svg>
+  <figcaption><span class="chart-legend"><i class="legend-input" aria-hidden="true"></i>输入价</span><span class="chart-legend"><i class="legend-output" aria-hidden="true"></i>输出价</span><span class="muted">只有一次价格记录，先按长度阶梯展示；出现调价后自动换成走势图</span></figcaption></figure>}
+  {chart && <figure class="history-chart"><svg viewBox={`0 0 ${chart.width} ${chart.height}`} role="img" aria-label={`输入与输出价格变化折线：${chart.dates[0]} 至 ${chart.dates[1]}`}>
+    <line class="chart-grid" x1="12" y1={chart.maxY} x2={chart.width - 12} y2={chart.maxY} />
+    <line class="chart-grid" x1="12" y1={chart.minY} x2={chart.width - 12} y2={chart.minY} />
+    <path class="chart-line chart-input" d={chart.line('input')} />
+    <path class="chart-line chart-output" d={chart.line('output')} />
+    {timeline.map((event, index) => <circle class="chart-dot" cx={chart.x(index)} cy={chart.y(event.rates[0].input)} r="3"><title>{(event.effectiveAt ?? event.detectedAt).slice(0, 10)} 输入 {symbolOf(event.currency)}{money(event.rates[0].input)}</title></circle>)}
+    {timeline.map((event, index) => <circle class="chart-dot chart-dot-output" cx={chart.x(index)} cy={chart.y(event.rates[0].output)} r="3"><title>{(event.effectiveAt ?? event.detectedAt).slice(0, 10)} 输出 {symbolOf(event.currency)}{money(event.rates[0].output)}</title></circle>)}
+    <text class="chart-label" x="12" y={chart.maxY - 6}>{symbolOf(currency)}{money(chart.max)}</text>
+    <text class="chart-label" x="12" y={chart.minY + 16}>{symbolOf(currency)}{money(chart.min)}</text>
+    <text class="chart-date" x="12" y={chart.height - 8}>{chart.dates[0]}</text>
+    <text class="chart-date" x={chart.width - 12} y={chart.height - 8} text-anchor="end">{chart.dates[1]}</text>
+  </svg>
+  <figcaption><span class="chart-legend"><i class="legend-input" aria-hidden="true"></i>输入价</span><span class="chart-legend"><i class="legend-output" aria-hidden="true"></i>输出价</span><span class="muted">单位：{symbolOf(currency)} / 百万 Token · 共 {timeline.length} 次记录</span></figcaption></figure>}
+  {!chart && <p class="muted chart-empty">只有一次有效记录时还画不出走势，等下一次官方调价或核验后会自动补上。</p>}
   <div class="history-summary">
     {(['input', 'output'] as const).map((field, index) => <div><span>当前{index ? '输出' : '输入'}价</span><strong>{symbol(model.currency)}{money(model.rates[0][field])}</strong><small>{previous ? `上次 ${symbol(previous.currency)}${money(previous.rates[0][field])} · ${previous.currency === model.currency ? change(previous.rates[0][field],model.rates[0][field]) : '币种变化，比例不直接比较'}` : '开始记录后尚无价格变化'}</small></div>)}
   </div>

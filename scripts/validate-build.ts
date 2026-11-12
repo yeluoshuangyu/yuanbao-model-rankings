@@ -10,13 +10,21 @@ async function walk(dir: string): Promise<string[]> {
 }
 const files = await walk(root);
 const htmlFiles = files.filter(file => file.endsWith('.html'));
-assert.equal(htmlFiles.length, catalog.models.length + 4, '每条模型记录必须有永久详情 URL，另有首页、性能榜、鹈鹕测试榜和 404');
+// Landing pages: home, performance, pelican, 404, compare, value, open data.
+const staticPages = 7;
+assert.equal(htmlFiles.length, catalog.models.length + staticPages, `每条模型记录必须有永久详情 URL，另有 ${staticPages} 个静态页面`);
 const performanceHtml = await readFile(join(root, 'performance/index.html'), 'utf8');
 assert.match(performanceHtml, /Arena/);
 assert.match(performanceHtml, /performance-body/);
 const pelicanHtml = await readFile(join(root, 'pelican/index.html'), 'utf8');
 assert.match(pelicanHtml, /id="pelican-board-title"/);
 assert.match(pelicanHtml, /仅供娱乐/);
+for (const page of ['compare', 'value', 'api']) {
+  const html = await readFile(join(root, page, 'index.html'), 'utf8');
+  assert.ok(html.includes(`href="${base}api/"`), `${page} 页面必须包含开放数据导航`);
+}
+const csv = await readFile(join(root, 'data/models.csv'), 'utf8');
+assert.equal(csv.trim().split('\n').length, catalog.models.length + 1, 'CSV 必须每款模型一行');
 let checked = 0;
 for (const file of htmlFiles) {
   const html = await readFile(file, 'utf8');

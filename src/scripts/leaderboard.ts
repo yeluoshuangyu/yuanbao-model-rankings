@@ -4,11 +4,18 @@ import { defaultFilters, getRows, metricLabels, scenarios, type Filters, type Me
 import { parseFilters, serializeFilters } from '../lib/url-state';
 import { renderChampions, renderMobileRows, renderRows, renderTableHead, renderPriceCoverage } from '../lib/render';
 import { bindSearch, bindResponsiveFilters } from './controls';
+import { loadCompare, loadFavorites, paintRowTools, saveCompare, saveFavorites } from './favorites';
+import { renderMonthly } from './monthly';
+import { downloadRanking } from './share-image';
+import { MAX_COMPARE, compareHref } from '../lib/compare';
 
 const byId = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const field = (id: string) => byId<HTMLInputElement | HTMLSelectElement>(id);
 const base = byId('main').dataset.base!;
 let state = parseFilters(location.search);
+let favorites = loadFavorites();
+let compare = loadCompare();
+let currentRows: Awaited<ReturnType<typeof getRows>>['rows'] = [];
 let toastTimer: ReturnType<typeof setTimeout>;
 const search = byId<HTMLInputElement>('search');
 const searchInput = bindSearch(search, query => update({ query }, true, false), 180);
@@ -18,21 +25,37 @@ function toast(message: string) {
   byId('toast').hidden = false;
   toastTimer = setTimeout(() => { byId('toast').hidden = true; }, 3200);
 }
+function renderMonthlyPanel() {
+  const daily = Math.max(0, Number(field('monthly-daily').value) || 0);
+  const days = Math.min(31, Math.max(1, Number(field('monthly-days').value) || 30));
+  byId('monthly-body').innerHTML = renderMonthly(currentRows, state, base, daily, days);
+}
+function syncCompareBar() {
+  byId('compare-bar').hidden = compare.size === 0;
+  if (!compare.size) return;
+  byId('compare-bar-text').textContent = `已选 ${compare.size} 款（最多 ${MAX_COMPARE} 款）`;
+  byId<HTMLAnchorElement>('compare-go').href = compareHref(base, [...compare], state);
+}
 function render(sync = true, animate = true) {
   const positions = animate ? captureRows() : new Map<string, DOMRect>();
   const focusedColumn = document.activeElement?.closest<HTMLButtonElement>('[data-sort-column]')?.dataset.metric;
-  const { rows, unavailable } = getRows(catalog, state);
+  const { rows, unavailable } = getRows(catalog, state, undefined, state.favoriteOnly ? favorites : undefined);
+  currentRows = rows;
   byId('champions').innerHTML = renderChampions(rows, catalog, state, base);
   byId('table-head').innerHTML = renderTableHead(state.metric, state.order);
   byId('table-body').innerHTML = renderRows(rows, catalog, state, base);
   byId('mobile-results').innerHTML = renderMobileRows(rows, catalog, state, base);
   byId('result-count').textContent = String(rows.length);
+  paintRowTools(favorites, compare);
+  renderMonthlyPanel();
+  syncCompareBar();
   byId('empty-state').hidden = rows.length > 0;
   const coverage = renderPriceCoverage(catalog, state, base);
   byId('price-coverage').innerHTML = coverage;
   byId('price-coverage').hidden = !coverage;
-  byId('empty-state').querySelector('h3')!.textContent = coverage ? '价格待核验' : '没有找到符合条件的模型';
-  byId('empty-state').querySelector('p')!.textContent = coverage ? '相关型号完成官方价格核验后会加入榜单。' : '尝试减少筛选条件，或调整任务的 Token 数量。';
+  const starved = state.favoriteOnly && !rows.length;
+  byId('empty-state').querySelector('h3')!.textContent = starved ? '还没有收藏任何模型' : coverage ? '价格待核验' : '没有找到符合条件的模型';
+  byId('empty-state').querySelector('p')!.textContent = starved ? '在榜单里点模型右侧的 ☆ 就能收藏，藏在这里的模型会同步到本机浏览器。' : coverage ? '相关型号完成官方价格核验后会加入榜单。' : '尝试减少筛选条件，或调整任务的 Token 数量。';
   const pending = state.providers.map(id => catalog.providers.find(p => p.id === id)).filter(p => p?.pendingReason);
   byId('results-summary').textContent = `显示 ${rows.length} 条模型费率 · ${metricLabels[state.metric]}${state.order === 'asc' ? '从低到高' : '从高到低'}${unavailable ? ` · ${unavailable} 条超出长度限制或缺少该长度费率` : ''}${pending.length ? ` · ${pending.map(p => p!.shortName).join('、')}费率待核验` : ''}`;
   byId('results-footer').classList.toggle('sr-only', !unavailable && !pending.length);
@@ -61,6 +84,9 @@ function render(sync = true, animate = true) {
     const context = byId<HTMLSelectElement>('min-context');
     if (![...context.options].some(option => option.value === String(state.minContext))) context.add(new Option(`至少 ${state.minContext.toLocaleString('zh-CN')} Token`, String(state.minContext)));
     Object.entries(values).forEach(([id, value]) => { if (id !== 'search' || !searchInput.composing) field(id).value = value; });
+    const fxInput = byId<HTMLInputElement>('fx-rate');
+    fxInput.value = (state.fx ?? catalog.meta.usdToCny).toFixed(2);
+    byId<HTMLInputElement>('only-favorites').checked = state.favoriteOnly;
     byId<HTMLInputElement>('all-providers').checked = !state.providers.length;
     document.querySelectorAll<HTMLInputElement>('[name="provider"]').forEach(input => { input.checked = state.providers.includes(input.value); });
   }
@@ -85,6 +111,26 @@ document.querySelectorAll<HTMLInputElement>('[name="provider"]').forEach(input =
   update({ providers: [...document.querySelectorAll<HTMLInputElement>('[name="provider"]:checked')].map(box => box.value) });
 }));
 document.addEventListener('click', event => {
+  const star = (event.target as Element).closest<HTMLButtonElement>('button[data-favorite]');
+  if (star) {
+    const id = star.dataset.favorite!;
+    if (favorites.has(id)) favorites.delete(id); else favorites.add(id);
+    saveFavorites(favorites);
+    paintRowTools(favorites, compare);
+    if (state.favoriteOnly) render(false, false);
+    return;
+  }
+  const toggle = (event.target as Element).closest<HTMLButtonElement>('button[data-compare-toggle]');
+  if (toggle) {
+    const id = toggle.dataset.compareToggle!;
+    if (compare.has(id)) compare.delete(id);
+    else if (compare.size >= MAX_COMPARE) { toast(`最多同时对比 ${MAX_COMPARE} 款模型，先去掉一款`); return; }
+    else { compare.add(id); toast(`已加入对比：${compare.size}/${MAX_COMPARE} 款`); }
+    saveCompare(compare);
+    paintRowTools(favorites, compare);
+    syncCompareBar();
+    return;
+  }
   const button = (event.target as Element).closest<HTMLButtonElement>('button[data-sort-column], button[data-scenario]');
   if (!button) return;
   if (button.dataset.metric) {
@@ -129,5 +175,21 @@ byId('share').addEventListener('click', async () => {
 });
 byId('close-share').addEventListener('click', () => byId<HTMLDialogElement>('share-dialog').close());
 byId('select-share').addEventListener('click', () => byId<HTMLInputElement>('share-url').select());
+byId<HTMLInputElement>('only-favorites').addEventListener('change', () => update({ favoriteOnly: byId<HTMLInputElement>('only-favorites').checked }));
+byId('compare-clear').addEventListener('click', () => { compare = new Set(); saveCompare(compare); paintRowTools(favorites, compare); syncCompareBar(); });
+field('fx-rate').addEventListener('change', () => {
+  const input = byId<HTMLInputElement>('fx-rate');
+  if (!input.reportValidity()) return;
+  update({ fx: input.value === '' ? null : Number(input.value) });
+});
+byId('fx-reset').addEventListener('click', () => update({ fx: null }));
+field('monthly-daily').addEventListener('input', renderMonthlyPanel);
+field('monthly-days').addEventListener('input', renderMonthlyPanel);
+byId('share-image').addEventListener('click', async () => {
+  byId('share-image').setAttribute('disabled', 'true');
+  try { await downloadRanking(currentRows, state, catalog); toast('榜单图已保存到下载目录'); }
+  catch { toast('生成榜单图失败，请重试'); }
+  finally { byId('share-image').removeAttribute('disabled'); }
+});
 bindResponsiveFilters(byId<HTMLDetailsElement>('filter-panel'));
 render(true, false);

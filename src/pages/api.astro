@@ -1,0 +1,62 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { catalog } from '../lib/catalog';
+import { pathFor } from '../lib/render';
+const base = import.meta.env.BASE_URL;
+const endpoints = [
+  { path: 'data/catalog.json', file: 'catalog.json', title: '全部模型与费率', detail: '厂商、官方来源、每款模型的长度阶梯、缓存价、Batch / 低峰系数、核验状态。这是站内所有页面的数据源。' },
+  { path: 'data/models.csv', file: 'models.csv', title: '费率扁平表（CSV）', detail: '一款模型一行，取第一档价格并附人民币换算与日常聊天单次成本。适合直接丢进表格或 BI。' },
+  { path: 'data/price-history.json', file: 'price-history.json', title: '价格变更历史', detail: '每条记录从首次快照开始，按检测时间排序；含完整阶梯与官方来源链接。' },
+  { path: 'data/performance.json', file: 'performance.json', title: 'Arena 综合文本榜', detail: '官方分数、原始名次、票数与置信区间，只做展示，不重新计算。' },
+  { path: 'data/performance-categories.json', file: 'performance-categories.json', title: '网页编程 / 视觉 / 智能体', detail: '三个分类榜的快照，智能体榜为因果关系估计值，与分数不可混用。' },
+];
+const fields = [
+  ['models[].id', '本站模型标识，与详情页 URL、对比链接一致'],
+  ['models[].rates[]', '按输入长度升序排列的阶梯：upToInputTokens 为档位上界，input / output / cacheRead 单位为「原币 / 百万 Token」'],
+  ['models[].currency', 'USD 或 CNY；catalog.meta.usdToCny 为参考汇率，只用于站内人民币展示'],
+  ['models[].verification', 'fresh / stale / manual_review / deprecated / unknown，unknown 不参与默认排名'],
+  ['rates[].batchFactor', 'Batch 批量折扣系数，0.5 表示五折；null 表示官方未按型号标注'],
+  ['rates[].offPeakFactor', '低峰时段系数；null 表示不适用或未收录'],
+];
+---
+<Layout title="开放数据 · 源宝模型排行榜" description="源宝模型排行榜的静态数据接口：完整模型费率 JSON、价格历史、性能榜快照与 CSV 导出，字段口径与更新方式说明。">
+  <main id="main" class="page-shell api-page" data-base={base}>
+    <section class="page-intro" aria-labelledby="page-title">
+      <div class="intro-copy"><h1 id="page-title">数据是开放的，<span>口径是写清楚的。</span></h1><p>静态 JSON 与 CSV · 无需申请 API Key · 随时下载</p></div>
+      <a class="outline-button back-link" href={pathFor(base)}>← 返回价格榜</a>
+    </section>
+    <section class="api-grid">
+      {endpoints.map(endpoint => (
+        <article class="api-card">
+          <h2>{endpoint.title}</h2>
+          <p>{endpoint.detail}</p>
+          <div class="api-links"><a class="primary-button" href={pathFor(base, endpoint.path)} download={endpoint.file}>下载 {endpoint.file}</a><a class="text-button" href={pathFor(base, endpoint.path)} target="_blank" rel="noopener noreferrer">在线查看 ↗</a></div>
+        </article>
+      ))}
+    </section>
+    <section class="api-section" aria-labelledby="fields-title">
+      <h2 id="fields-title">字段口径</h2>
+      <dl class="api-fields">{fields.map(([key, value]) => <div><dt><code>{key}</code></dt><dd>{value}</dd></div>)}</dl>
+    </section>
+    <section class="api-section" aria-labelledby="usage-title">
+      <h2 id="usage-title">怎么用</h2>
+      <p>这些是构建时生成的静态文件，没有鉴权、没有速率限制。拉取后请缓存到本地，并保留 <code>verifiedAt</code> 与来源链接，方便核对时效。</p>
+      <pre class="api-code"><code>{`const res = await fetch('${pathFor(base, 'data/models.csv')}');
+const csv = await res.text();
+
+// 或者用 JSON 做筛选：取人民币输入价低于 1 元的在售模型
+const { models } = await fetch('${pathFor(base, 'data/catalog.json')}').then(r => r.json());
+const cheap = models.filter(m => m.status === 'active' && m.currency === 'CNY' && m.rates[0].input < 1);`}</code></pre>
+      <p class="muted">跨域读取取决于托管方的响应头。当前站点部署在 GitHub Pages，如果浏览器拦下请求，请下载后再处理，或加一层自己的代理。</p>
+    </section>
+    <section class="api-section" aria-labelledby="fresh-title">
+      <h2 id="fresh-title">更新与责任</h2>
+      <ul class="api-rules">
+        <li>价格来自厂商官方定价页，<time datetime={catalog.meta.updatedAt}>{catalog.meta.updatedAt}</time> 快照，一家厂商一个来源。</li>
+        <li>自动抓取发现费率变化时先进入审核，确认后才写入；缺失字段或异常幅度过大会保留旧值。</li>
+        <li>官方页面已下架但仍可调用的型号标 <code>stale</code> 并保留历史；确认下线的标 <code>deprecated</code> / <code>retired</code>。</li>
+        <li>数据仅供参考，最终费用以厂商账单为准；汇率、促销与地区差异不在推算范围内。</li>
+      </ul>
+    </section>
+  </main>
+</Layout>

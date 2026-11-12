@@ -28,6 +28,10 @@ function renderPriceState(model: Model) {
   if (verification.includes('超过 7 天')) tags.push('<span class="status-tag verification-caution">超过 7 天未核验</span>');
   return tags.length ? `<div class="price-state-tags">${tags.join('')}</div>` : '';
 }
+/** Star + compare toggles; pressed state is applied on the client from storage. */
+function rowTools(model: Model) {
+  return `<div class="row-tools"><button type="button" class="icon-button" data-favorite="${escapeHtml(model.id)}" aria-pressed="false" aria-label="收藏 ${escapeHtml(model.name)}" title="收藏"><span aria-hidden="true">☆</span></button><button type="button" class="icon-button" data-compare-toggle="${escapeHtml(model.id)}" aria-pressed="false" aria-label="把 ${escapeHtml(model.name)} 加入对比" title="加入对比"><span aria-hidden="true">⇄</span></button></div>`;
+}
 export function renderRows(rows: Row[], catalog: Catalog, filters: Filters, base: string) {
   return rows.map(row => {
     const { model } = row;
@@ -36,7 +40,7 @@ export function renderRows(rows: Row[], catalog: Catalog, filters: Filters, base
     const label = row.applied === 'standard' ? (model.rates.length > 1 ? '阶梯计费' : '') : billingLabels[row.applied];
     return `<tr data-model-id="${escapeHtml(model.id)}" class="${row.rank === 1 ? 'winner-row' : ''}">
       <td class="rank-cell"><span class="rank-number ${row.rank <= 3 ? 'top-rank' : ''}">${row.rank < 10 ? '0' : ''}${row.rank}</span>${row.tied ? '<span class="tie-label">并列</span>' : ''}</td>
-      <th scope="row"><a class="model-link" href="${modelUrl(base, model.id, filters)}">${mark(catalog, model.providerId, base)}<span><span class="model-name">${escapeHtml(model.name)}</span><span class="model-meta">${model.status !== 'active' ? `<span class="status-tag ${model.status}">${statusLabels[model.status]}</span>` : ''}${label ? `<span class="billing-tag">${label}</span>` : ''}</span></span></a></th>
+      <th scope="row"><div class="model-cell"><a class="model-link" href="${modelUrl(base, model.id, filters)}">${mark(catalog, model.providerId, base)}<span><span class="model-name">${escapeHtml(model.name)}</span><span class="model-meta">${model.status !== 'active' ? `<span class="status-tag ${model.status}">${statusLabels[model.status]}</span>` : ''}${label ? `<span class="billing-tag">${label}</span>` : ''}</span></span></a>${rowTools(model)}</div></th>
       <td class="provider-cell">${escapeHtml(provider.shortName)}</td>
       <td class="numeric ${filters.metric === 'input' ? 'selected-col' : ''}">¥${money(row.input)}</td>
       <td class="numeric ${filters.metric === 'output' ? 'selected-col' : ''}">¥${money(row.output)}</td>
@@ -65,7 +69,7 @@ export function renderMobileRows(rows: Row[], catalog: Catalog, filters: Filters
       ['相对最低价', row.ratio === null ? '最低价为 0，倍数不适用' : `${+row.ratio.toFixed(2)}×`],
       ['模型状态', statusLabels[row.model.status]], ['最后核验', escapeHtml(verificationText(row.model.verification, row.model.verifiedAt))],
     ];
-    return `<article class="mobile-result" data-model-id="${escapeHtml(row.model.id)}"><div class="mobile-result-main"><span class="mobile-rank">${String(row.rank).padStart(2, '0')}${row.tied ? '<small>并列</small>' : ''}</span><a class="mobile-model" href="${modelUrl(base, row.model.id, filters)}">${mark(catalog, row.model.providerId, base)}<span class="mobile-model-text"><strong>${escapeHtml(row.model.name)}</strong><span>${escapeHtml(provider.shortName)} · ${escapeHtml(row.model.regionLabel)}</span></span></a><div class="mobile-cost"><strong>¥${money(row[filters.metric], filters.metric === 'task')}</strong><span>${filters.metric === 'task' ? '每次任务' : '每百万 Token'}</span></div></div>${renderPriceState(row.model)}<details><summary>完整费率与来源 <span aria-hidden="true">＋</span></summary><dl>${fields.map(([key, value]) => `<div><dt>${key}</dt><dd>${value}</dd></div>`).join('')}</dl><a class="source-link" href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">官方定价 ↗</a></details></article>`;
+    return `<article class="mobile-result" data-model-id="${escapeHtml(row.model.id)}"><div class="mobile-result-main"><span class="mobile-rank">${String(row.rank).padStart(2, '0')}${row.tied ? '<small>并列</small>' : ''}</span><a class="mobile-model" href="${modelUrl(base, row.model.id, filters)}">${mark(catalog, row.model.providerId, base)}<span class="mobile-model-text"><strong>${escapeHtml(row.model.name)}</strong><span>${escapeHtml(provider.shortName)} · ${escapeHtml(row.model.regionLabel)}</span></span></a><div class="mobile-cost"><strong>¥${money(row[filters.metric], filters.metric === 'task')}</strong><span>${filters.metric === 'task' ? '每次任务' : '每百万 Token'}</span></div></div>${rowTools(row.model)}${renderPriceState(row.model)}<details><summary>完整费率与来源 <span aria-hidden="true">＋</span></summary><dl>${fields.map(([key, value]) => `<div><dt>${key}</dt><dd>${value}</dd></div>`).join('')}</dl><a class="source-link" href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">官方定价 ↗</a></details></article>`;
   }).join('');
 }
 export function renderChampions(rows: Row[], catalog: Catalog, filters: Filters, base: string) {

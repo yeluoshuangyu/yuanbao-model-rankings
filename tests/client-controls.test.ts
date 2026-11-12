@@ -153,6 +153,8 @@ function client(board: typeof boards[number], hash = '', pelicanData: unknown = 
     navigator: { clipboard: { async writeText(text: string) { copied = text; } } },
     matchMedia: (query: string) => query.includes('900px') ? mobile : { matches: true },
     captureRows: () => new Map(), animateRows() {},
+    loadFavorites: () => new Set<string>(), saveFavorites() {}, loadCompare: () => new Set<string>(), saveCompare() {},
+    paintRowTools() {}, renderMonthly: () => '', downloadRanking: async () => {}, MAX_COMPARE: 4, compareHref: () => '/',
     setTimeout(callback: () => void, delay: number) { const id = ++timerId; timers.set(id, { at: clock + delay, callback }); return id; },
     clearTimeout(id: number) { timers.delete(id); },
   });

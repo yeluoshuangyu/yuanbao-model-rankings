@@ -11,3 +11,4 @@ reports/
 .price-update.lock/
 .artifact-work/
 outputs/
+.shots/

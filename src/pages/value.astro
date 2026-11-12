@@ -1,0 +1,54 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { catalog } from '../lib/catalog';
+import { defaultFilters, money, scenarios } from '../lib/ranking';
+import { escapeHtml, mark, modelUrl, pathFor } from '../lib/render';
+import { frontierRows, renderScatter, valueBoard, valueCategories, type ValueCategory } from '../lib/value';
+import { performanceCategories } from '../lib/performance-categories';
+const base = import.meta.env.BASE_URL;
+const boards = valueCategories.map(category => {
+  const board = valueBoard(catalog, defaultFilters, category);
+  return { category, board, frontier: frontierRows(board.points, catalog), points: board.points, staledays: Math.floor((Date.now() - Date.parse(board.publishedAt)) / 86_400_000) };
+});
+const total = catalog.models.filter(model => model.status !== 'retired').length;
+---
+<Layout title="性价比图 · 源宝模型排行榜" description="把 Arena 性能分与官方价格放在同一张图上：看清同样的能力谁更便宜，同样的价格谁能做得更多，并标出帕累托前沿。">
+  <main id="main" class="page-shell value-page" data-base={base}>
+    <section class="page-intro" aria-labelledby="page-title">
+      <div class="intro-copy"><h1 id="page-title">同样的钱，<span>能买到多少能力。</span></h1><p>Arena 性能分 × 官方单次成本 · 标出帕累托前沿</p></div>
+      <a class="outline-button back-link" href={pathFor(base)}>← 返回价格榜</a>
+    </section>
+    <section class="value-intro">
+      <p>横轴是<strong>一次日常聊天请求</strong>（{scenarios.chat.input.toLocaleString('zh-CN')} 输入 + {scenarios.chat.output.toLocaleString('zh-CN')} 输出）的人民币成本，对数刻度；纵轴是 Arena 官方分数。点越靠左上，同样的能力越便宜。</p>
+      <p class="muted">虚线连接<strong>帕累托前沿</strong>：这些模型没有任何一款能同时做到「更便宜且分数更高」。共 {total} 款在售模型中，{boards.map(board => `${performanceCategories[board.category].label} ${board.points.length} 款`).join('、')} 能同时拿到官方价格与 Arena 成绩；Arena 收录名称与本站模型按标识/名称归一化匹配，同族多档成绩取最高分。</p>
+    </section>
+    <div class="value-tabs" role="tablist" aria-label="性能分类">
+      {boards.map((board, index) => <button type="button" role="tab" id={`value-tab-${board.category}`} aria-controls={`value-board-${board.category}`} aria-selected={index === 0 ? 'true' : 'false'} data-value-tab={board.category}>{performanceCategories[board.category].label}</button>)}
+    </div>
+    {boards.map(({ category, board, frontier, staledays }, index) => (
+      <section id={`value-board-${category}`} class="value-board" role="tabpanel" aria-labelledby={`value-tab-${category}`} hidden={index !== 0} data-value-board={category}>
+        <Fragment set:html={renderScatter(board.points, catalog, category)} />
+        <div class="value-meta"><span>{performanceCategories[category].description}</span><a href={board.sourceUrl} target="_blank" rel="noopener noreferrer">Arena 原始榜 {board.publishedAt} ↗</a>{staledays > 30 && <span class="verification-caution">榜单已 {staledays} 天未更新</span>}</div>
+        <div class="table-scroll" tabindex="0" role="region" aria-label="帕累托前沿模型列表">
+          <table class="frontier-table"><caption>前沿上的 {frontier.length} 款模型：同价位没有更高分，同分数没有更低价</caption>
+            <thead><tr><th scope="col">#</th><th scope="col">模型</th><th scope="col">厂商</th><th scope="col" class="numeric">Arena 分</th><th scope="col" class="numeric">单次成本</th><th scope="col" class="numeric">相对前沿最低</th><th scope="col">对比</th></tr></thead>
+            <tbody>{frontier.map((point, position) => {
+              const cheapest = frontier[0].price;
+              return <tr><td class="rank-cell"><span class="rank-number">{String(position + 1).padStart(2, '0')}</span></td>
+                <th scope="row"><a class="model-link" href={modelUrl(base, point.modelId)}><Fragment set:html={mark(catalog, point.providerId, base)} /><span class="model-name">{escapeHtml(point.name)}</span></a></th>
+                <td class="provider-cell">{escapeHtml(point.provider.shortName)}</td>
+                <td class="numeric">{point.score}</td>
+                <td class="numeric">¥{money(point.price, true)}</td>
+                <td class="numeric ratio-cell"><span class="ratio">{+(point.price / cheapest).toFixed(2)}×</span></td>
+                <td><a class="text-button" href={`${pathFor(base, 'compare/')}?ids=${point.modelId}`}>加入对比</a></td></tr>;
+            })}</tbody>
+          </table>
+        </div>
+      </section>
+    ))}
+    <p class="data-footnote">分数来自 Arena 官方榜（Bradley–Terry 估算，含置信区间）。不同分类的分数不可横向比较，只能在同一张图内看相对位置。价格按标准费率与参考汇率折算，不含缓存、批量与低峰优惠。</p>
+  </main>
+</Layout>
+<script>
+  import '../scripts/value';
+</script>

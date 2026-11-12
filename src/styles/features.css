@@ -1,0 +1,196 @@
+/* Feature layer: insights, favorites, compare, value map, monthly planner, charts, open data. */
+
+/* ---------- 最近动态 ---------- */
+.insights { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; margin: 0 0 22px; }
+.insight-card { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 18px 20px; }
+.insight-card header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.insight-kicker { font-size: 11px; font-weight: 650; letter-spacing: .08em; color: #0071e3; text-transform: uppercase; }
+.insight-card h3 { font-size: 15px; font-weight: 600; letter-spacing: -.02em; }
+.insight-list { display: flex; flex-direction: column; gap: 2px; list-style: none; margin: 0; padding: 0; }
+.insight-list li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid #f0f0f2; }
+.insight-list li:last-child { border-bottom: 0; }
+.insight-model { display: inline-flex; align-items: center; gap: 8px; min-width: 0; font-size: 13.5px; font-weight: 500; color: var(--ink); }
+.insight-model .provider-mark { width: 22px; height: 22px; border-radius: 7px; font-size: 10px; }
+.insight-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.insight-meta { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; font-size: 11.5px; color: #86868b; font-variant-numeric: tabular-nums; }
+.insight-delta { font-weight: 600; }
+.insight-delta.down { color: #0a7d5a; }
+.insight-delta.adjust { color: #6e6e73; font-weight: 500; }
+.insight-delta.up { color: #c2410c; }
+.insight-empty { font-size: 12.5px; color: #86868b; justify-content: flex-start; }
+
+/* ---------- 行内收藏 / 对比 ---------- */
+.model-cell { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.row-tools { display: inline-flex; gap: 2px; flex-shrink: 0; }
+.icon-button { display: inline-grid; place-items: center; width: 26px; height: 26px; border: 2px solid transparent; border-radius: 8px; background: none; color: #c0c0c6; font-size: 14px; line-height: 1; cursor: pointer; }
+.icon-button:hover { background: #f2f2f4; color: #6e6e73; }
+.icon-button.is-active { color: #0071e3; background: #eff5ff; }
+.icon-button[data-compare-toggle].is-active { color: #fff; background: #0071e3; }
+.mobile-result .row-tools { margin-left: auto; }
+.favorites-filter { margin: 4px 0 10px; }
+.favorites-filter .filter-count { margin-left: auto; }
+
+/* ---------- 浮动对比条 ---------- */
+.compare-bar { position: fixed; left: 0; right: 0; bottom: 18px; z-index: 40; display: flex; justify-content: center; padding: 0 16px; }
+.compare-bar[hidden] { display: none; }
+.compare-bar-inner { display: flex; align-items: center; gap: 14px; padding: 10px 12px 10px 20px; border-radius: 999px; background: #1d1d1fee; color: #fff; box-shadow: 0 12px 32px #0000002e; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+.compare-bar-inner p { font-size: 13px; font-weight: 500; }
+.compare-bar-inner .text-button { color: #ffffffcc; }
+.compare-bar-inner .primary-button { background: #fff; color: #1d1d1f; border-radius: 999px; padding: 8px 16px; }
+
+/* ---------- 按月算账 ---------- */
+.monthly { margin: 26px 0 0; padding: 24px; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; }
+.monthly-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 16px; }
+.monthly-head h2 { font-size: 21px; font-weight: 650; letter-spacing: -.03em; }
+.monthly-head p { margin-top: 6px; font-size: 13px; color: var(--muted); }
+.monthly-controls { display: flex; gap: 14px; flex-wrap: wrap; }
+.monthly-controls label, .migration-controls label { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--muted); }
+.monthly-controls input { width: 120px; }
+.monthly-summary { font-size: 13.5px; color: #424245; margin-bottom: 14px; line-height: 1.6; }
+.monthly-summary strong { color: var(--ink); }
+.monthly-list { display: flex; flex-direction: column; gap: 2px; list-style: none; margin: 0; padding: 0; }
+.monthly-list li { display: grid; grid-template-columns: 34px minmax(0, 1fr) minmax(80px, 1.1fr) auto; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 1px solid #f0f0f2; }
+.monthly-list li:first-child .monthly-amount { color: #0a7d5a; }
+.monthly-rank { font-size: 11px; color: #a1a1a6; font-variant-numeric: tabular-nums; }
+.monthly-model { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink); min-width: 0; }
+.monthly-model span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.monthly-model .provider-mark { width: 20px; height: 20px; border-radius: 6px; font-size: 9px; }
+.monthly-track { display: block; height: 6px; border-radius: 999px; background: #f0f0f2; overflow: hidden; }
+.monthly-track i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #0071e3, #64b5ff); }
+.monthly-amount { font-size: 13.5px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.monthly-foot, .migration-foot { margin-top: 14px; font-size: 11.5px; color: #86868b; line-height: 1.6; }
+.monthly-empty { font-size: 13px; color: #86868b; }
+
+/* ---------- 汇率 ---------- */
+.fx-field { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.fx-field input { width: 74px; padding: 4px 8px; font-size: 12px; text-align: right; }
+.fx-field small { color: #a1a1a6; }
+.fx-field .text-button { font-size: 12px; }
+
+/* ---------- 分享 ---------- */
+.share-actions { display: flex; gap: 10px; align-items: center; }
+.share-image-hint { margin-top: 12px; font-size: 11.5px; color: #86868b; }
+
+/* ---------- 价格历史图 ---------- */
+.history-chart { margin: 14px 0 18px; padding: 0; }
+.history-chart svg { width: 100%; height: auto; display: block; border-radius: 14px; background: #fafafc; padding: 6px 4px; box-sizing: border-box; }
+.chart-grid { stroke: #e8e8ed; stroke-width: 1; stroke-dasharray: 3 5; }
+.chart-line { fill: none; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+.chart-input { stroke: #0071e3; }
+.chart-output { stroke: #f0a33c; }
+.chart-dot { fill: #0071e3; }
+.chart-dot-output { fill: #f0a33c; }
+.chart-label { font-size: 10px; fill: #86868b; font-variant-numeric: tabular-nums; }
+.chart-date { font-size: 10px; fill: #a1a1a6; }
+.chart-value { font-size: 10px; fill: #424245; font-variant-numeric: tabular-nums; }
+.chart-bar-input { fill: #0071e3; opacity: .85; }
+.chart-bar-output { fill: #f0a33c; opacity: .8; }
+.history-chart figcaption { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 8px; font-size: 11px; color: #6e6e73; }
+.chart-legend { display: inline-flex; align-items: center; gap: 6px; }
+.chart-legend i { width: 14px; height: 3px; border-radius: 2px; }
+.legend-input { background: #0071e3; }
+.legend-output { background: #f0a33c; }
+.chart-empty { font-size: 12.5px; }
+
+/* ---------- 迁移计算器 ---------- */
+.migration-controls { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin: 12px 0 16px; }
+.migration-controls input { width: 140px; }
+.migration-self { font-size: 13px; color: #424245; margin-bottom: 10px; }
+.migration-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.migration-table th[scope="row"] { text-align: left; font-weight: 500; }
+.migration-table th[scope="row"] a { color: var(--ink); }
+.migration-bar { display: block; height: 5px; max-width: 140px; margin-top: 6px; border-radius: 999px; background: #ececee; overflow: hidden; }
+.migration-bar i { display: block; height: 100%; background: #0071e3; border-radius: 999px; }
+.saving-tag { font-size: 11.5px; font-weight: 600; color: #0a7d5a; background: #e8f7f0; padding: 2px 8px; border-radius: 999px; }
+.dearer-tag { font-size: 11.5px; color: #c2410c; background: #fdf1ea; padding: 2px 8px; border-radius: 999px; }
+
+/* ---------- 对比页 ---------- */
+.compare-page .back-link, .value-page .back-link, .api-page .back-link { align-self: center; margin-top: 18px; }
+.compare-picker { background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: 18px 20px; margin-bottom: 18px; }
+.compare-picker .search-box { max-width: 460px; }
+.compare-suggestions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.compare-suggestion { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px; background: #fff; font-size: 12.5px; color: var(--ink); cursor: pointer; }
+.compare-suggestion:hover { border-color: #0071e3; color: #0071e3; }
+.compare-suggestion-price { font-size: 11px; color: #86868b; font-variant-numeric: tabular-nums; }
+.compare-hint { margin-top: 12px; font-size: 12px; color: #86868b; }
+.compare-panel { margin-top: 8px; }
+.compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.compare-head th { position: sticky; top: 0; z-index: 2; background: #fff; text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); font-size: 12px; font-weight: 600; color: #6e6e73; }
+.compare-head .compare-provider { display: flex; align-items: center; gap: 8px; margin-top: 4px; font-size: 11.5px; font-weight: 400; color: #86868b; }
+.compare-head .compare-remove { border: 0; background: none; color: #a1a1a6; cursor: pointer; font-size: 15px; padding: 2px 6px; border-radius: 6px; }
+.compare-head .compare-remove:hover { background: #f2f2f4; color: #1d1d1f; }
+.compare-table tbody th, .compare-table tbody td { padding: 11px 14px; border-bottom: 1px solid #f0f0f2; text-align: left; vertical-align: middle; }
+.compare-table tbody th { font-weight: 500; color: #6e6e73; font-size: 12px; white-space: nowrap; }
+.compare-value { font-variant-numeric: tabular-nums; font-weight: 500; }
+.compare-best { color: #0a7d5a; }
+.compare-meter { display: block; height: 4px; width: var(--bar); border-radius: 999px; background: #0071e3; opacity: .3; margin-bottom: 4px; }
+.best-badge { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px; background: #e8f7f0; color: #0a7d5a; font-size: 10.5px; font-weight: 600; }
+.compare-note { margin-top: 14px; font-size: 11.5px; color: #86868b; }
+.compare-scroll { background: #fff; border: 1px solid var(--line); border-radius: 18px; }
+
+/* ---------- 性价比图 ---------- */
+.value-intro { max-width: 860px; margin: 0 auto 20px; text-align: center; font-size: 13.5px; color: #424245; line-height: 1.7; }
+.value-intro strong { color: var(--ink); }
+.value-intro .muted { margin-top: 8px; font-size: 12.5px; color: #86868b; }
+.value-tabs { display: flex; justify-content: center; gap: 6px; margin-bottom: 16px; padding: 4px; background: #f0f0f2; border-radius: 999px; width: fit-content; margin-inline: auto; }
+.value-tabs button { border: 0; background: none; padding: 7px 18px; border-radius: 999px; font-size: 13px; color: #6e6e73; cursor: pointer; }
+.value-tabs button[aria-selected="true"] { background: #fff; color: var(--ink); font-weight: 600; box-shadow: 0 1px 3px #0000001a; }
+.value-board { background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: 20px; margin-bottom: 18px; }
+.value-board[hidden] { display: none; }
+.scatter-figure { margin: 0; }
+.scatter-figure figcaption { font-size: 12.5px; color: #6e6e73; margin-bottom: 10px; }
+.scatter-grid { stroke: #eeeef1; stroke-width: 1; }
+.scatter-axis { stroke: #d2d2d7; stroke-width: 1; }
+.scatter-tick { font-size: 10px; fill: #a1a1a6; font-variant-numeric: tabular-nums; }
+.scatter-axis-label { font-size: 11px; fill: #86868b; }
+.scatter-frontier { stroke: #1d1d1f; stroke-width: 1.4; stroke-dasharray: 5 5; opacity: .45; }
+.scatter-label { font-size: 10.5px; fill: #1d1d1f; font-weight: 500; }
+.value-meta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 12px; font-size: 11.5px; color: #86868b; }
+.value-meta a { color: #0071e3; }
+.frontier-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 16px; }
+.frontier-table caption { text-align: left; font-size: 12px; color: #86868b; padding-bottom: 10px; }
+.frontier-table th, .frontier-table td { padding: 9px 12px; border-bottom: 1px solid #f0f0f2; text-align: left; }
+.frontier-table thead th { font-size: 11.5px; color: #6e6e73; font-weight: 600; }
+.frontier-table .ratio { font-variant-numeric: tabular-nums; }
+.provider-cell { color: #6e6e73; font-size: 12.5px; }
+
+/* ---------- 开放数据页 ---------- */
+.api-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin-bottom: 26px; }
+.api-card { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+.api-card h2 { font-size: 15px; font-weight: 600; }
+.api-card p { font-size: 12.5px; color: #6e6e73; line-height: 1.65; flex: 1; }
+.api-links { display: flex; align-items: center; gap: 12px; margin-top: 6px; }
+.api-links .primary-button { padding: 8px 14px; font-size: 12.5px; }
+.api-section { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 22px; margin-bottom: 16px; }
+.api-section h2 { font-size: 17px; font-weight: 650; margin-bottom: 12px; letter-spacing: -.02em; }
+.api-section p, .api-rules { font-size: 13px; color: #424245; line-height: 1.7; }
+.api-fields { display: grid; gap: 10px; }
+.api-fields div { display: grid; grid-template-columns: minmax(180px, 240px) 1fr; gap: 14px; padding-bottom: 10px; border-bottom: 1px solid #f0f0f2; }
+.api-fields dt code { font-size: 12px; color: #0071e3; }
+.api-fields dd { font-size: 12.5px; color: #424245; }
+.api-code { background: #1d1d1f; color: #f5f5f7; border-radius: 12px; padding: 16px 18px; overflow-x: auto; margin: 12px 0; }
+.api-code code { font-size: 12px; line-height: 1.7; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.api-rules { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+
+@media (max-width: 900px) {
+  .monthly-list li { grid-template-columns: 28px minmax(0, 1fr) auto; }
+  .monthly-track { display: none; }
+  .value-board { padding: 14px; }
+}
+@media (max-width: 680px) {
+  .insights { grid-template-columns: 1fr; }
+  .compare-bar-inner { flex-wrap: wrap; justify-content: center; gap: 8px; padding: 10px 14px; border-radius: 18px; }
+  .compare-bar-inner p { width: 100%; text-align: center; }
+  .monthly { padding: 16px; }
+  .monthly-controls input { width: 96px; }
+  .api-fields div { grid-template-columns: 1fr; gap: 4px; }
+  .value-tabs { width: 100%; overflow-x: auto; }
+  .compare-scroll { border-radius: 14px; }
+}
+
+@media (max-width: 680px) {
+  .favorites-filter { display: flex; width: 100%; margin-top: 12px; }
+  .fx-field { flex-wrap: wrap; }
+  .fx-field small { flex-basis: 100%; }
+}
+.mobile-result .row-tools .icon-button { min-width: 34px; }

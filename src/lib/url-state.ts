@@ -9,6 +9,11 @@ function numeric(value: string | null, fallback: number, max: number, integer = 
   const number = Number(value);
   return Number.isFinite(number) && number >= 0 && number <= max && (!integer || Number.isSafeInteger(number)) ? number : fallback;
 }
+export function fxRate(value: string | null): number | null {
+  if (value === null || value.trim() === '') return null;
+  const rate = Number(value);
+  return Number.isFinite(rate) && rate >= 1 && rate <= 100 ? Math.round(rate * 100) / 100 : null;
+}
 export function parseFilters(search: string): Filters {
   const p = new URLSearchParams(search);
   const scenario = choice(p.get('scenario'), ['chat', 'long', 'code', 'custom'], 'chat');
@@ -26,6 +31,7 @@ export function parseFilters(search: string): Filters {
     outputTokens: scenario === 'custom' ? numeric(p.get('out'), 1000, 10_000_000) : preset.output,
     billing: choice(p.get('billing'), ['standard', 'cache', 'batch', 'offpeak', 'promotion'], 'standard'),
     cachePercent: numeric(p.get('hit'), 50, 100), query: (p.get('q') ?? '').trim().slice(0, 100),
+    fx: p.has('fx') ? fxRate(p.get('fx')) : null, favoriteOnly: p.get('fav') === '1',
   };
 }
 export function serializeFilters(filters: Filters): string {
@@ -43,6 +49,8 @@ export function serializeFilters(filters: Filters): string {
   if (filters.billing !== 'standard') p.set('billing', filters.billing);
   if (filters.cachePercent !== 50) p.set('hit', String(filters.cachePercent));
   if (filters.query) p.set('q', filters.query);
+  if (filters.fx !== null && filters.fx !== defaultFilters.fx) p.set('fx', String(filters.fx));
+  if (filters.favoriteOnly) p.set('fav', '1');
   const query = p.toString();
   return query ? `?${query}` : '';
 }
