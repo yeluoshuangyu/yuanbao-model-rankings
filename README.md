@@ -2,17 +2,24 @@
 
 中文主流 AI 模型价格、性能与鹈鹕作品榜。Astro + TypeScript + 静态 JSON，仅依赖 GitHub Repository / Actions / Pages。
 
-当前产品基线：[PRD v3.0](PRD.md)。发布状态、网址和实跑证据：[发布验收记录](docs/RELEASE-v3.0.md)、[9 月 14 日自动更新修复记录](docs/WORKFLOW-FIX-2026-09-14.md)。
+当前产品基线：[PRD v3.0](PRD.md)。本次迭代说明：[v3.1 发布说明](docs/RELEASE-v3.1.md)；上一版发布验收：[v3.0 验收记录](docs/RELEASE-v3.0.md)、[9 月 14 日自动更新修复记录](docs/WORKFLOW-FIX-2026-09-14.md)。
 
 ## 当前功能
 
-- 价格：12 家厂商、66 条费率与永久详情，默认显示 64 条。输入、输出、任务成本排序；筛选、场景用量、自定义计算、优惠选项、分享与 URL 恢复。
+六个页面：价格排行榜、性价比、模型对比、性能排行榜、大模型科目三、开放数据。
+
+- 价格排行榜：12 家厂商、161 条费率与永久详情，默认显示 152 条。输入、输出、任务成本排序；筛选、场景用量、自定义计算、优惠选项、分享与 URL 恢复。
+- 首页也做决策工具：最近上架 / 最近调价两张卡、按当前筛选的月账单估算、可改汇率（默认 $1 = ¥7.00）、模型收藏（localStorage）与「只看我的收藏」、下载榜单分享图（Canvas 导出 PNG）。
+- 性价比：Arena 分 × 价格散点图（内联 SVG，无图表库），标出帕累托前沿，并列出前沿模型表；文本、编程、视觉三张榜分开画，不与智能体榜混用分数。
+- 模型对比：勾选 2–4 款并排比较阶梯价、缓存、上下文、三种场景单次成本与性能分，对比清单写进 URL 可直接分享。
+- 详情页：原币阶梯表、价格走势折线（单条记录时改画阶梯图）、场景计算器、迁移计算器（按月账单列出更省/更贵的同类模型）。
 - 性能：综合文本 241、网页编程 103、视觉理解 113、智能体 36 条模型/配置记录。各自保留官方指标、日期、名次，不跨分类拼分。
+- 开放数据：`/data/*.json` 与 `/data/models.csv` 五个端点的字段说明和示例；CSV 共 22 列，含人民币换算与任务成本。
 - 大模型科目三：17 份 HTML 原作，按源宝人工总分从高到低展示，同分并列，左侧竖线从夯到拉。五项各 2 分，总分 10 分，可展开明细；保留小窗预览、放大、下载、筛选和分享，不显示 GIF 或测试记录。
 - 统一彩色厂商 Logo、冠军卡、桌面/手机布局和社区页脚。标志资源及许可见 [Logo 说明](public/logos/README.md)。
 - 价格自动更新、异常审核、追加历史及 Pages 自动构建发布；覆盖与失败边界见下文。
 
-价格、性能数量为 2026-09-14 自动更新后的快照；科目三数量更新至 2026-09-23，性能记录包含不同配置，不能相加作为独立型号数。历史 v2 文件仅用于追溯，不覆盖当前 PRD。
+价格数量为 2026-11-12 逐条核对官方定价页后的快照；性能数量为 2026-09-14 自动更新后的快照；科目三数量更新至 2026-09-23。性能记录包含不同配置，不能相加作为独立型号数。历史 v2 文件仅用于追溯，不覆盖当前 PRD。
 
 ## 本地开发与校验
 
@@ -27,6 +34,17 @@ npm test
 npm run build
 npm run validate:build
 ```
+
+视觉回归快照（需要本机装 Chrome/Chromium/Edge）：
+
+```bash
+npm run snap                        # 生成 .shots/*.html（自包含，可直接打开）
+npm run snap -- --shot              # 顺便截 1440px 整页 PNG 到 .shots/shots-1440/
+npm run snap -- --shot --width=390  # 手机宽度
+npm run snap -- --shot --only=home,value --chrome=/path/to/chrome
+```
+
+快照会剥离脚本、内联 CSS，并用同一批 `src/lib` 函数把客户端渲染的区块（月账单、对比表、迁移表）预先填好；分享图是 Canvas 绘制的，所以额外用 esbuild 打包一份真实渲染出来。找不到 Chrome 时只出 HTML、不报错。
 
 项目子路径校验：
 
@@ -44,12 +62,14 @@ BASE_PATH=/yuanbao-model-rankings/ npm run validate:build
 | `src/data/catalog.json` | 官方原币费率、12 家厂商白名单、来源、模型规格 |
 | `src/data/exchange-rates.json` | 独立参考汇率，目前 $1 = ¥7.00，非实时外汇报价 |
 | `src/data/verification.json` | 与价格快照对应的核验状态 |
-| `src/data/price-history.json` | 追加式历史，当前 66 模型 / 70 事件 |
+| `src/data/price-history.json` | 追加式历史，当前 161 模型 / 179 事件 |
 | `src/data/performance*.json` | 四个独立性能分类快照 |
 | `data/performance/` | 性能历史及来源配置 |
 | `src/data/pelican.json` | 白猫作品、历史 AI 评分、原作引用及核验状态 |
 | `data/pelican/manual-scores-*.json` | 源宝回传的 10 分制人工评分与源表追溯信息 |
-| `src/lib/`、`src/scripts/` | 校验、计价、排序与页面交互 |
+| `src/lib/`、`src/scripts/` | 校验、计价、排序与页面交互；`render.ts` 同构渲染，服务端与客户端共用 |
+| `src/pages/data/*.ts` | 静态 JSON 与 CSV 端点（`prerender = true`） |
+| `research/` | 逐家厂商的调研产出，含官网原文证据 |
 | `scripts/providers/`、`scripts/pricing/` | 独立厂商 Adapter、安全门槛、历史与事务 |
 | `.github/workflows/` | CI、Pages、价格和性能更新 |
 
