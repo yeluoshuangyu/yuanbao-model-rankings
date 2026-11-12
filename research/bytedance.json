@@ -458,7 +458,7 @@
       "rates": [
         {
           "label": "不分档（页面条件列为「-」）",
-          "upToInputTokens": null,
+          "upToInputTokens": 1000000,
           "input": 1.2,
           "output": 3.6,
           "cacheRead": null,

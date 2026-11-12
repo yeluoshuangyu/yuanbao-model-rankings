@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-11-12T03:55:59.445Z",
+  "checkedAt": "2026-11-12T04:07:18.360Z",
   "catalogHash": "b97039e4774714ecbbc41db0c42e69e8fc883147eba13b618ab087abad4dcd75",
   "providers": {
     "openai": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.189Z",
-      "lastSuccessAt": null,
-      "verification": "unverified",
-      "reason": "HTTP 403，保留上次有效价格"
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
     },
     "anthropic": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": null,
-      "verification": "unverified",
-      "reason": "本次直连重定向至地区不可用页面；人工核对第一方 API 的 Base Input、Output 和缓存读取列，不绕过地区限制。"
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
     },
     "google": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": null,
-      "verification": "unverified",
-      "reason": "fetch failed"
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.360Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.360Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://ai.google.dev/gemini-api/docs/pricing）"
     },
     "xai": {
       "status": "fresh",
@@ -40,24 +40,24 @@
     },
     "bytedance": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:46.710Z",
-      "lastSuccessAt": "2026-09-12T09:49:46.710Z",
-      "verification": "auto_verified",
-      "reason": "成功 6；待审核 0；缺失 0；新模型待收录 1"
+      "lastCheckedAt": "2026-11-12T04:04:11.821Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.821Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://docs.volcengine.com/docs/82379/1544106）"
     },
     "alibaba": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.210Z",
-      "lastSuccessAt": "2026-09-12T09:49:57.210Z",
-      "verification": "auto_verified",
-      "reason": "成功 15；待审核 0；缺失 0；新模型待收录 39"
+      "lastCheckedAt": "2026-11-12T04:04:11.759Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.759Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）"
     },
     "moonshot": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.211Z",
-      "lastSuccessAt": "2026-09-12T09:49:57.211Z",
-      "verification": "auto_verified",
-      "reason": "成功 4；待审核 0；缺失 0；新模型待收录 0"
+      "lastCheckedAt": "2026-11-12T04:04:50.718Z",
+      "lastSuccessAt": "2026-11-12T04:04:50.718Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://platform.kimi.com/docs/pricing/chat）"
     },
     "zhipu": {
       "status": "fresh",
@@ -75,54 +75,54 @@
     },
     "baidu": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:58.246Z",
-      "lastSuccessAt": "2026-09-12T09:49:58.246Z",
-      "verification": "auto_verified",
-      "reason": "成功 2；待审核 0；缺失 0；新模型待收录 2"
+      "lastCheckedAt": "2026-11-12T04:04:50.779Z",
+      "lastSuccessAt": "2026-11-12T04:04:50.779Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya）"
     },
     "tencent": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:58.247Z",
-      "lastSuccessAt": "2026-09-12T09:49:58.247Z",
-      "verification": "auto_verified",
-      "reason": "成功 1；待审核 0；缺失 0；新模型待收录 6"
+      "lastCheckedAt": "2026-11-12T04:04:50.838Z",
+      "lastSuccessAt": "2026-11-12T04:04:50.838Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://cloud.tencent.cn/document/product/1729/97731）"
     }
   },
   "models": {
     "qwen-flash": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.210Z",
-      "lastSuccessAt": "2026-09-12T09:49:57.210Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "lastCheckedAt": "2026-11-12T04:04:11.759Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.759Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）"
     },
     "qwen3-7-flash": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.210Z",
-      "lastSuccessAt": "2026-09-12T09:49:57.210Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "lastCheckedAt": "2026-11-12T04:04:11.759Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.759Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）"
     },
     "qwen3-8-flash": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.210Z",
-      "lastSuccessAt": "2026-09-12T09:49:57.210Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "lastCheckedAt": "2026-11-12T04:04:11.759Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.759Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）"
     },
     "qwen3-8-max": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.210Z",
-      "lastSuccessAt": "2026-09-12T09:49:57.210Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "lastCheckedAt": "2026-11-12T04:04:11.759Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.759Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）"
     },
     "qwen3-max": {
-      "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.210Z",
+      "status": "stale",
+      "lastCheckedAt": "2026-11-12T04:04:50.838Z",
       "lastSuccessAt": "2026-09-12T09:49:57.210Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "verification": "manual_verified",
+      "reason": "官方定价页已不再列出该型号，费率未能在 2026-11-12 复核。"
     },
     "qwen-flash-singapore": {
       "status": "fresh",
@@ -146,46 +146,46 @@
       "reason": "标准输入、输出和已适配计费条件核验成功"
     },
     "gpt-5-6-luna": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.189Z",
-      "lastSuccessAt": null,
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
       "verification": "manual_verified",
-      "reason": "HTTP 403，保留上次有效价格"
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
     },
     "claude-haiku-4-5": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": null,
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
       "verification": "manual_verified",
-      "reason": "本次直连重定向至地区不可用页面；人工核对第一方 API 的 Base Input、Output 和缓存读取列，不绕过地区限制。"
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
     },
     "claude-sonnet-5": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": null,
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
       "verification": "manual_verified",
-      "reason": "本次直连重定向至地区不可用页面；人工核对第一方 API 的 Base Input、Output 和缓存读取列，不绕过地区限制。"
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
     },
     "claude-opus-5": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": null,
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
       "verification": "manual_verified",
-      "reason": "本次直连重定向至地区不可用页面；人工核对第一方 API 的 Base Input、Output 和缓存读取列，不绕过地区限制。"
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
     },
     "claude-sonnet-4": {
       "status": "deprecated",
-      "lastCheckedAt": null,
-      "lastSuccessAt": null,
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
       "verification": "manual_verified",
-      "reason": "v2.0 人工核验快照，等待自动检查"
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
     },
     "gemini-2-5-flash-lite": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": null,
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.360Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.360Z",
       "verification": "manual_verified",
-      "reason": "fetch failed"
+      "reason": "人工核对官方定价页（https://ai.google.dev/gemini-api/docs/pricing）"
     },
     "grok-4-6": {
       "status": "fresh",
@@ -196,17 +196,17 @@
     },
     "doubao-seed-2-0-mini": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:46.710Z",
-      "lastSuccessAt": "2026-09-12T09:49:46.710Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "lastCheckedAt": "2026-11-12T04:04:11.821Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.821Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://docs.volcengine.com/docs/82379/1544106）"
     },
     "doubao-seed-2-0-lite": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:46.710Z",
-      "lastSuccessAt": "2026-09-12T09:49:46.710Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "lastCheckedAt": "2026-11-12T04:04:11.821Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.821Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://docs.volcengine.com/docs/82379/1544106）"
     },
     "glm-4-7-flash": {
       "status": "fresh",
@@ -237,235 +237,235 @@
       "reason": "官方公告已排定下线日期（2026-11-18），标记为仅存量。"
     },
     "ernie-4-5-turbo-32k": {
-      "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:58.246Z",
+      "status": "stale",
+      "lastCheckedAt": "2026-11-12T04:04:50.838Z",
       "lastSuccessAt": "2026-09-12T09:49:58.246Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "verification": "manual_verified",
+      "reason": "官方定价页已不再列出该型号，费率未能在 2026-11-12 复核。"
     },
     "ernie-4-5-turbo-128k-preview": {
-      "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:58.246Z",
+      "status": "stale",
+      "lastCheckedAt": "2026-11-12T04:04:50.838Z",
       "lastSuccessAt": "2026-09-12T09:49:58.246Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "verification": "manual_verified",
+      "reason": "官方定价页已不再列出该型号，费率未能在 2026-11-12 复核。"
     },
     "hunyuan-a13b": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:58.247Z",
-      "lastSuccessAt": "2026-09-12T09:49:58.247Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "lastCheckedAt": "2026-11-12T04:04:50.838Z",
+      "lastSuccessAt": "2026-11-12T04:04:50.838Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://cloud.tencent.cn/document/product/1729/97731）"
     },
     "gpt-6-astra": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.189Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
       "verification": "manual_verified",
-      "reason": "HTTP 403，保留上次有效价格"
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
     },
     "gpt-5-6-terra": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.189Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
       "verification": "manual_verified",
-      "reason": "HTTP 403，保留上次有效价格"
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
     },
     "gpt-5-5": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.189Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
       "verification": "manual_verified",
-      "reason": "HTTP 403，保留上次有效价格"
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
     },
     "gpt-5-4": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.189Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
       "verification": "manual_verified",
-      "reason": "HTTP 403，保留上次有效价格"
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
     },
     "gpt-5-4-mini": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.189Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
       "verification": "manual_verified",
-      "reason": "HTTP 403，保留上次有效价格"
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
     },
     "gpt-5-3-codex": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.189Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
       "verification": "manual_verified",
-      "reason": "HTTP 403，保留上次有效价格"
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
     },
     "claude-fable-5-1": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
       "verification": "manual_verified",
-      "reason": "本次直连重定向至地区不可用页面；人工核对第一方 API 的 Base Input、Output 和缓存读取列，不绕过地区限制。"
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
     },
     "claude-fable-5": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
       "verification": "manual_verified",
-      "reason": "本次直连重定向至地区不可用页面；人工核对第一方 API 的 Base Input、Output 和缓存读取列，不绕过地区限制。"
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
     },
     "claude-opus-4-8": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
       "verification": "manual_verified",
-      "reason": "本次直连重定向至地区不可用页面；人工核对第一方 API 的 Base Input、Output 和缓存读取列，不绕过地区限制。"
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
     },
     "claude-opus-4-7": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
       "verification": "manual_verified",
-      "reason": "本次直连重定向至地区不可用页面；人工核对第一方 API 的 Base Input、Output 和缓存读取列，不绕过地区限制。"
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
     },
     "claude-opus-4-6": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
       "verification": "manual_verified",
-      "reason": "本次直连重定向至地区不可用页面；人工核对第一方 API 的 Base Input、Output 和缓存读取列，不绕过地区限制。"
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
     },
     "claude-opus-4-5": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
       "verification": "manual_verified",
-      "reason": "本次直连重定向至地区不可用页面；人工核对第一方 API 的 Base Input、Output 和缓存读取列，不绕过地区限制。"
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
     },
     "claude-sonnet-4-6": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
       "verification": "manual_verified",
-      "reason": "本次直连重定向至地区不可用页面；人工核对第一方 API 的 Base Input、Output 和缓存读取列，不绕过地区限制。"
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
     },
     "claude-sonnet-4-5": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "deprecated",
+      "lastCheckedAt": "2026-11-12T00:00:00.000Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
       "verification": "manual_verified",
-      "reason": "本次直连重定向至地区不可用页面；人工核对第一方 API 的 Base Input、Output 和缓存读取列，不绕过地区限制。"
+      "reason": "官方公告已排定退役日期（2026-11-30），标记为仅存量。"
     },
     "gemini-3-5-flash": {
       "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
+      "lastCheckedAt": "2026-11-12T00:00:00.000Z",
       "lastSuccessAt": "2026-09-12T08:43:24.260Z",
       "verification": "manual_verified",
-      "reason": "fetch failed"
+      "reason": "官方定价页已不再列出该型号，费率未能在 2026-11-12 复核。"
     },
     "gemini-3-5-flash-lite": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.360Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.360Z",
       "verification": "manual_verified",
-      "reason": "fetch failed"
+      "reason": "人工核对官方定价页（https://ai.google.dev/gemini-api/docs/pricing）"
     },
     "gemini-3-1-flash-lite": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.360Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.360Z",
       "verification": "manual_verified",
-      "reason": "fetch failed"
+      "reason": "人工核对官方定价页（https://ai.google.dev/gemini-api/docs/pricing）"
     },
     "gemini-3-flash-preview": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.360Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.360Z",
       "verification": "manual_verified",
-      "reason": "fetch failed"
+      "reason": "人工核对官方定价页（https://ai.google.dev/gemini-api/docs/pricing）"
     },
     "gemini-2-5-flash": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.360Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.360Z",
       "verification": "manual_verified",
-      "reason": "fetch failed"
+      "reason": "人工核对官方定价页（https://ai.google.dev/gemini-api/docs/pricing）"
     },
     "gemini-3-1-pro-preview": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.360Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.360Z",
       "verification": "manual_verified",
-      "reason": "fetch failed"
+      "reason": "人工核对官方定价页（https://ai.google.dev/gemini-api/docs/pricing）"
     },
     "gemini-2-5-pro": {
-      "status": "stale",
-      "lastCheckedAt": "2026-09-12T09:49:36.206Z",
-      "lastSuccessAt": "2026-09-12T08:43:24.260Z",
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.360Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.360Z",
       "verification": "manual_verified",
-      "reason": "fetch failed"
+      "reason": "人工核对官方定价页（https://ai.google.dev/gemini-api/docs/pricing）"
     },
     "qwen3-7-max": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.210Z",
-      "lastSuccessAt": "2026-09-12T09:49:57.210Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "lastCheckedAt": "2026-11-12T04:04:11.759Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.759Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）"
     },
     "qwen3-7-max-preview": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.210Z",
-      "lastSuccessAt": "2026-09-12T09:49:57.210Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "lastCheckedAt": "2026-11-12T04:04:11.759Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.759Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）"
     },
     "qwen3-6-max-preview": {
-      "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.210Z",
+      "status": "stale",
+      "lastCheckedAt": "2026-11-12T04:04:50.838Z",
       "lastSuccessAt": "2026-09-12T09:49:57.210Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "verification": "manual_verified",
+      "reason": "官方定价页已不再列出该型号，费率未能在 2026-11-12 复核。"
     },
     "qwen3-6-flash": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.210Z",
-      "lastSuccessAt": "2026-09-12T09:49:57.210Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "lastCheckedAt": "2026-11-12T04:04:11.759Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.759Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）"
     },
     "qwen3-7-plus": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.210Z",
-      "lastSuccessAt": "2026-09-12T09:49:57.210Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "lastCheckedAt": "2026-11-12T04:04:11.759Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.759Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）"
     },
     "qwen3-6-plus": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.210Z",
-      "lastSuccessAt": "2026-09-12T09:49:57.210Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "lastCheckedAt": "2026-11-12T04:04:11.759Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.759Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）"
     },
     "qwen3-coder-plus": {
-      "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.210Z",
+      "status": "stale",
+      "lastCheckedAt": "2026-11-12T04:04:50.838Z",
       "lastSuccessAt": "2026-09-12T09:49:57.210Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "verification": "manual_verified",
+      "reason": "官方定价页已不再列出该型号，费率未能在 2026-11-12 复核。"
     },
     "qwen3-coder-flash": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.210Z",
-      "lastSuccessAt": "2026-09-12T09:49:57.210Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "lastCheckedAt": "2026-11-12T04:04:11.759Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.759Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）"
     },
     "qwen3-coder-next": {
-      "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.210Z",
+      "status": "stale",
+      "lastCheckedAt": "2026-11-12T04:04:50.838Z",
       "lastSuccessAt": "2026-09-12T09:49:57.210Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "verification": "manual_verified",
+      "reason": "官方定价页已不再列出该型号，费率未能在 2026-11-12 复核。"
     },
     "minimax-m3": {
       "status": "fresh",
@@ -476,31 +476,31 @@
     },
     "kimi-k3": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.211Z",
-      "lastSuccessAt": "2026-09-12T09:49:57.211Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "lastCheckedAt": "2026-11-12T04:04:50.718Z",
+      "lastSuccessAt": "2026-11-12T04:04:50.718Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://platform.kimi.com/docs/pricing/chat）"
     },
     "kimi-k2-7-code": {
-      "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.211Z",
-      "lastSuccessAt": "2026-09-12T09:49:57.211Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "status": "deprecated",
+      "lastCheckedAt": "2026-11-12T04:04:50.838Z",
+      "lastSuccessAt": "2026-11-12T04:04:50.718Z",
+      "verification": "manual_verified",
+      "reason": "官方公告已排定下线（2026 年 12 月底）。"
     },
     "kimi-k2-7-code-highspeed": {
-      "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.211Z",
-      "lastSuccessAt": "2026-09-12T09:49:57.211Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "status": "deprecated",
+      "lastCheckedAt": "2026-11-12T04:04:50.838Z",
+      "lastSuccessAt": "2026-11-12T04:04:50.718Z",
+      "verification": "manual_verified",
+      "reason": "官方公告已排定下线（2026 年 12 月底）。"
     },
     "kimi-k2-6": {
-      "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:57.211Z",
-      "lastSuccessAt": "2026-09-12T09:49:57.211Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "status": "deprecated",
+      "lastCheckedAt": "2026-11-12T04:04:50.838Z",
+      "lastSuccessAt": "2026-11-12T04:04:50.718Z",
+      "verification": "manual_verified",
+      "reason": "官方公告已排定下线（2026 年 12 月底）。"
     },
     "glm-5-3": {
       "status": "fresh",
@@ -525,31 +525,31 @@
     },
     "doubao-seed-2-1-pro": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:46.710Z",
-      "lastSuccessAt": "2026-09-12T09:49:46.710Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "lastCheckedAt": "2026-11-12T04:04:11.821Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.821Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://docs.volcengine.com/docs/82379/1544106）"
     },
     "doubao-seed-2-1-turbo": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:46.710Z",
-      "lastSuccessAt": "2026-09-12T09:49:46.710Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "lastCheckedAt": "2026-11-12T04:04:11.821Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.821Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://docs.volcengine.com/docs/82379/1544106）"
     },
     "doubao-seed-2-0-pro": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:46.710Z",
-      "lastSuccessAt": "2026-09-12T09:49:46.710Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "lastCheckedAt": "2026-11-12T04:04:11.821Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.821Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://docs.volcengine.com/docs/82379/1544106）"
     },
     "doubao-seed-2-0-code": {
       "status": "fresh",
-      "lastCheckedAt": "2026-09-12T09:49:46.710Z",
-      "lastSuccessAt": "2026-09-12T09:49:46.710Z",
-      "verification": "auto_verified",
-      "reason": "标准输入、输出和已适配计费条件核验成功"
+      "lastCheckedAt": "2026-11-12T04:04:11.821Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.821Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://docs.volcengine.com/docs/82379/1544106）"
     },
     "grok-4-7": {
       "status": "fresh",
@@ -795,6 +795,426 @@
       "lastSuccessAt": "2026-11-12T03:55:59.445Z",
       "verification": "manual_verified",
       "reason": "人工核对官方定价页（https://platform.minimax.cn/docs/guides/pricing-paygo）"
+    },
+    "qwen-max": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:11.759Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.759Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）"
+    },
+    "qwen3-5-plus": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:11.759Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.759Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）"
+    },
+    "qwen-plus": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:11.759Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.759Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）"
+    },
+    "qwen3-5-flash": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:11.759Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.759Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）"
+    },
+    "qwen-long": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:11.759Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.759Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）"
+    },
+    "qwen3-vl-plus": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:11.759Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.759Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）"
+    },
+    "qwen3-8-2-4t-a95b": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:11.759Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.759Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）"
+    },
+    "qwen3-8-27b": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:11.759Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.759Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）"
+    },
+    "doubao-seed-evolving": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:11.821Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.821Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://docs.volcengine.com/docs/82379/1544106）"
+    },
+    "doubao-seed-2-1-lite": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:11.821Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.821Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://docs.volcengine.com/docs/82379/1544106）"
+    },
+    "doubao-seed-character": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:11.821Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.821Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://docs.volcengine.com/docs/82379/1544106）"
+    },
+    "doubao-seed-translation": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:11.821Z",
+      "lastSuccessAt": "2026-11-12T04:04:11.821Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://docs.volcengine.com/docs/82379/1544106）"
+    },
+    "kimi-k3-1-pro": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:50.718Z",
+      "lastSuccessAt": "2026-11-12T04:04:50.718Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://platform.kimi.com/docs/pricing/chat）"
+    },
+    "kimi-k3-1-pro-highspeed": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:50.718Z",
+      "lastSuccessAt": "2026-11-12T04:04:50.718Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://platform.kimi.com/docs/pricing/chat）"
+    },
+    "ernie-5-5-flash": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:50.779Z",
+      "lastSuccessAt": "2026-11-12T04:04:50.779Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya）"
+    },
+    "ernie-light-dt-1-0": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:50.779Z",
+      "lastSuccessAt": "2026-11-12T04:04:50.779Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya）"
+    },
+    "ernie-5-1": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:50.779Z",
+      "lastSuccessAt": "2026-11-12T04:04:50.779Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya）"
+    },
+    "hunyuan-role-latest": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:50.838Z",
+      "lastSuccessAt": "2026-11-12T04:04:50.838Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://cloud.tencent.cn/document/product/1729/97731）"
+    },
+    "hunyuan-translation": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:50.838Z",
+      "lastSuccessAt": "2026-11-12T04:04:50.838Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://cloud.tencent.cn/document/product/1729/97731）"
+    },
+    "hunyuan-translation-lite": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:50.838Z",
+      "lastSuccessAt": "2026-11-12T04:04:50.838Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://cloud.tencent.cn/document/product/1729/97731）"
+    },
+    "hunyuan-vision-1-5-instruct": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:50.838Z",
+      "lastSuccessAt": "2026-11-12T04:04:50.838Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://cloud.tencent.cn/document/product/1729/97731）"
+    },
+    "hunyuan-t1-vision": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:50.838Z",
+      "lastSuccessAt": "2026-11-12T04:04:50.838Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://cloud.tencent.cn/document/product/1729/97731）"
+    },
+    "hunyuan-turbos-vision-video": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:04:50.838Z",
+      "lastSuccessAt": "2026-11-12T04:04:50.838Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://cloud.tencent.cn/document/product/1729/97731）"
+    },
+    "gpt-6-1-sol": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-6-1-terra": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-6-luna": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-6-sol": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-5-6-sol": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-5-5-pro": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-5-4-pro": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-5-4-nano": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-5-2": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-5-2-pro": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-5-1": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-5": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-5-mini": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-5-nano": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-5-pro": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-4-1": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-4-1-mini": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-4o": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-4o-mini": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "o3-pro": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "o3": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "chat-latest": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-6-cyber": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "gpt-5-6-cyber": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.237Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.237Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://developers.openai.com/api/docs/pricing）"
+    },
+    "claude-fable-5-2": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
+    },
+    "claude-mythos-5-2": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
+    },
+    "claude-mythos-5-1": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
+    },
+    "claude-mythos-5": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
+    },
+    "claude-opus-5-5": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
+    },
+    "claude-opus-4-1": {
+      "status": "deprecated",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
+    },
+    "claude-opus-4": {
+      "status": "deprecated",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
+    },
+    "claude-sonnet-5-5": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
+    },
+    "claude-haiku-5-5": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.299Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.299Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://platform.claude.com/docs/en/about-claude/pricing）"
+    },
+    "gemini-4-carbon": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.360Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.360Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://ai.google.dev/gemini-api/docs/pricing）"
+    },
+    "gemini-4-argon": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.360Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.360Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://ai.google.dev/gemini-api/docs/pricing）"
+    },
+    "gemini-3-8-flash": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.360Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.360Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://ai.google.dev/gemini-api/docs/pricing）"
+    },
+    "gemini-3-6-flash": {
+      "status": "fresh",
+      "lastCheckedAt": "2026-11-12T04:07:18.360Z",
+      "lastSuccessAt": "2026-11-12T04:07:18.360Z",
+      "verification": "manual_verified",
+      "reason": "人工核对官方定价页（https://ai.google.dev/gemini-api/docs/pricing）"
     }
   }
 }

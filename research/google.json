@@ -1,0 +1,486 @@
+{
+  "providerId": "google",
+  "sourceId": "google-pricing",
+  "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+  "retrievedAt": "2026-11-12",
+  "notes": "口径：取 Gemini API 定价页 Standard（付费档）tab 的 Paid Tier 价格，USD / 1M tokens。Batch tab 价格为 Standard 的一半，按 batchFactor=0.5 记录。Gemini 表格以「Free Tier」与「Paid Tier」两列呈现，Free tier 一律不收录。按输入长度分档的模型（gemini-3.1-pro-preview、gemini-2.5-pro）拆为 <=200k 与 >200k 两档，末档对齐上下文上限。contextScope 记为 input（该表格以输入 token 数作为分档依据）。只收文本/多模态 token 计费模型，未收录 TTS / Transcribe / Live / 图像（Nano Banana）/ Embedding / Robotics / Gemini Decision（无输出 token，按分类模型处理）/ Gemma 4（付费档 Not available）。页面未提供上下文窗口，contextTokens 与 maxOutputTokens 取自各模型页 docs/models/<apiId>。",
+  "models": [
+    {
+      "id": "gemini-4-carbon",
+      "name": "Gemini 4 Carbon",
+      "apiId": "gemini-4-carbon",
+      "providerId": "google",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · Gemini API",
+      "description": "Gemini 4 系列旗舰，面向复杂推理与大规模多模态理解。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1048576,
+      "contextScope": "input",
+      "maxInputTokens": null,
+      "maxOutputTokens": 65536,
+      "currency": "USD",
+      "sourceId": "google-pricing",
+      "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-4-carbon",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "页面未按输入长度分档，单一费率。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。",
+        "页面标注为限时价，另有生效日期与后续涨价：$2.00 through November 30, 2026. / $4.00 starting December 1, 2026.",
+        "模型页原文 Max output：Max output 65,536 (default synchronous) / up to 1,048,576 (with long decode)（maxOutputTokens 取默认同步值 65,536）。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,048,576 Token",
+          "upToInputTokens": 1048576,
+          "input": 2.0,
+          "output": 10.0,
+          "cacheRead": 0.1,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "Gemini 4 Carbon | Input price / Not available / $2.00 through November 30, 2026. / $4.00 starting December 1, 2026. || Output price (including thinking tokens) / Not available / $10.00 through November 30, 2026. / $20.00 starting December 1, 2026."
+    },
+    {
+      "id": "gemini-4-argon",
+      "name": "Gemini 4 Argon",
+      "apiId": "gemini-4-argon",
+      "providerId": "google",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · Gemini API",
+      "description": "Gemini 4 系列另一旗舰档位，定价与 Carbon 相同。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1048576,
+      "contextScope": "input",
+      "maxInputTokens": null,
+      "maxOutputTokens": 65536,
+      "currency": "USD",
+      "sourceId": "google-pricing",
+      "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-4-argon",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "页面未按输入长度分档，单一费率。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。",
+        "页面标注为限时价，另有生效日期与后续涨价：$2.00 through November 30, 2026. / $4.00 starting December 1, 2026.",
+        "模型页原文 Max output：Max output 65,536 (default synchronous) / up to 1,048,576 (with long decode)（maxOutputTokens 取默认同步值 65,536）。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,048,576 Token",
+          "upToInputTokens": 1048576,
+          "input": 2.0,
+          "output": 10.0,
+          "cacheRead": 0.1,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "Gemini 4 Argon | Input price / Not available / $2.00 through November 30, 2026. / $4.00 starting December 1, 2026. || Output price (including thinking tokens) / Not available / $10.00 through November 30, 2026. / $20.00 starting December 1, 2026."
+    },
+    {
+      "id": "gemini-3-8-flash",
+      "name": "Gemini 3.8 Flash",
+      "apiId": "gemini-3.8-flash",
+      "providerId": "google",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · Gemini API",
+      "description": "面向长周期软件工程、自主 agent 与企业工作流的高智能 Flash 模型。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1048576,
+      "contextScope": "input",
+      "maxInputTokens": null,
+      "maxOutputTokens": 65536,
+      "currency": "USD",
+      "sourceId": "google-pricing",
+      "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "页面未按输入长度分档，单一费率。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。",
+        "页面标注为限时价，另有生效日期与后续涨价：$0.75 through December 31, 2026. / $1.50 starting January 1, 2027."
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,048,576 Token",
+          "upToInputTokens": 1048576,
+          "input": 0.75,
+          "output": 3.75,
+          "cacheRead": 0.075,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "Gemini 3.8 Flash | Input price / Free of charge / $0.75 through December 31, 2026. / $1.50 starting January 1, 2027. || Output price (including thinking tokens) / Free of charge / $3.75 through December 31, 2026. / $7.50 starting January 1, 2027."
+    },
+    {
+      "id": "gemini-3-6-flash",
+      "name": "Gemini 3.6 Flash",
+      "apiId": "gemini-3.6-flash",
+      "providerId": "google",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · Gemini API",
+      "description": "上一代 Flash 主力，兼顾智能与成本。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 1048576,
+      "contextScope": "input",
+      "maxInputTokens": null,
+      "maxOutputTokens": 65536,
+      "currency": "USD",
+      "sourceId": "google-pricing",
+      "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-3.6-flash",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "页面未按输入长度分档，单一费率。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。",
+        "页面标注为限时价，另有生效日期与后续涨价：$0.75 through December 31, 2026. / $1.50 starting January 1, 2027."
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,048,576 Token",
+          "upToInputTokens": 1048576,
+          "input": 0.75,
+          "output": 3.75,
+          "cacheRead": 0.075,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "Gemini 3.6 Flash | Input price / Free of charge / $0.75 through December 31, 2026. / $1.50 starting January 1, 2027. || Output price (including thinking tokens) / Free of charge / $3.75 through December 31, 2026. / $7.50 starting January 1, 2027."
+    },
+    {
+      "id": "gemini-3-5-flash-lite",
+      "name": "Gemini 3.5 Flash-Lite",
+      "apiId": "gemini-3.5-flash-lite",
+      "providerId": "google",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · Gemini API",
+      "description": "Flash-Lite 轻量档，面向高并发低成本场景。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 1048576,
+      "contextScope": "input",
+      "maxInputTokens": null,
+      "maxOutputTokens": 65536,
+      "currency": "USD",
+      "sourceId": "google-pricing",
+      "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash-lite",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "页面未按输入长度分档，单一费率。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,048,576 Token",
+          "upToInputTokens": 1048576,
+          "input": 0.3,
+          "output": 2.5,
+          "cacheRead": 0.03,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "Gemini 3.5 Flash-Lite | Input price / Free of charge / $0.30 (text / image / video / audio) || Output price (including thinking tokens) / Free of charge / $2.50"
+    },
+    {
+      "id": "gemini-3-1-flash-lite",
+      "name": "Gemini 3.1 Flash-Lite",
+      "apiId": "gemini-3.1-flash-lite",
+      "providerId": "google",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · Gemini API",
+      "description": "上一代轻量档，适合高并发 agent 任务、翻译与简单数据处理。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 1048576,
+      "contextScope": "input",
+      "maxInputTokens": null,
+      "maxOutputTokens": 65536,
+      "currency": "USD",
+      "sourceId": "google-pricing",
+      "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-lite",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "页面未按输入长度分档，单一费率。",
+        "音频输入单独计价：输入 $0.5（文本/图像/视频 $0.25）；音频缓存读取 $0.05（文本/图像/视频 $0.025）；输出与文本同价。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,048,576 Token",
+          "upToInputTokens": 1048576,
+          "input": 0.25,
+          "output": 1.5,
+          "cacheRead": 0.025,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "Gemini 3.1 Flash-Lite | Input price / Free of charge / $0.25 (text / image / video) / $0.50 (audio) || Output price (including thinking tokens) / Free of charge / $1.50"
+    },
+    {
+      "id": "gemini-3-1-pro-preview",
+      "name": "Gemini 3.1 Pro Preview",
+      "apiId": "gemini-3.1-pro-preview",
+      "providerId": "google",
+      "status": "preview",
+      "region": "global",
+      "regionLabel": "全球 · Gemini API",
+      "description": "第三代 Pro 模型（预览版），面向多模态理解、agentic 能力与 vibe-coding。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1048576,
+      "contextScope": "input",
+      "maxInputTokens": null,
+      "maxOutputTokens": 65536,
+      "currency": "USD",
+      "sourceId": "google-pricing",
+      "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-3.1-pro-preview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "按输入长度分档：prompt > 200k 时整段请求进入高价档（页面原文 \"prompts > 200k tokens\"）。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "提示不超过 200,000 Token",
+          "upToInputTokens": 200000,
+          "input": 2.0,
+          "output": 12.0,
+          "cacheRead": 0.2,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "提示超过 200,000 Token（至上下文上限）",
+          "upToInputTokens": 1048576,
+          "input": 4.0,
+          "output": 18.0,
+          "cacheRead": 0.4,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "Gemini 3.1 Pro Preview | Input price / Not available / $2.00, prompts <= 200k tokens / $4.00, prompts > 200k tokens || Output price (including thinking tokens) / Not available / $12.00, prompts <= 200k tokens / $18.00, prompts > 200k"
+    },
+    {
+      "id": "gemini-3-flash-preview",
+      "name": "Gemini 3 Flash Preview",
+      "apiId": "gemini-3-flash-preview",
+      "providerId": "google",
+      "status": "preview",
+      "region": "global",
+      "regionLabel": "全球 · Gemini API",
+      "description": "Gemini 3 代 Flash 预览版。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 1048576,
+      "contextScope": "input",
+      "maxInputTokens": null,
+      "maxOutputTokens": 65536,
+      "currency": "USD",
+      "sourceId": "google-pricing",
+      "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-3-flash-preview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "页面未按输入长度分档，单一费率。",
+        "音频输入单独计价：输入 $1.0（文本/图像/视频 $0.5）；音频缓存读取 $0.1（文本/图像/视频 $0.05）；输出与文本同价。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,048,576 Token",
+          "upToInputTokens": 1048576,
+          "input": 0.5,
+          "output": 3.0,
+          "cacheRead": 0.05,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "Gemini 3 Flash Preview | Input price / Free of charge / $0.50 (text / image / video) / $1.00 (audio) || Output price (including thinking tokens) / Free of charge / $3.00"
+    },
+    {
+      "id": "gemini-2-5-pro",
+      "name": "Gemini 2.5 Pro",
+      "apiId": "gemini-2.5-pro",
+      "providerId": "google",
+      "status": "deprecated",
+      "region": "global",
+      "regionLabel": "全球 · Gemini API",
+      "description": "上一代 Pro 模型，已被官方标记弃用。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1048576,
+      "contextScope": "input",
+      "maxInputTokens": null,
+      "maxOutputTokens": 65536,
+      "currency": "USD",
+      "sourceId": "google-pricing",
+      "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-2.5-pro",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "按输入长度分档：prompt > 200k 时整段请求进入高价档（页面原文 \"prompts > 200k tokens\"）。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。",
+        "页面提示已弃用：2026-12-01 起所有 gemini-2.5-pro 请求将自动路由到 Gemini 3.8 Flash。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "提示不超过 200,000 Token",
+          "upToInputTokens": 200000,
+          "input": 1.25,
+          "output": 10.0,
+          "cacheRead": 0.125,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "提示超过 200,000 Token（至上下文上限）",
+          "upToInputTokens": 1048576,
+          "input": 2.5,
+          "output": 15.0,
+          "cacheRead": 0.25,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "Gemini 2.5 Pro | Input price / Free of charge / $1.25, prompts <= 200k tokens / $2.50, prompts > 200k tokens || Output price (including thinking tokens) / Free of charge / $10.00, prompts <= 200k tokens / $15.00, prompts > 200k"
+    },
+    {
+      "id": "gemini-2-5-flash",
+      "name": "Gemini 2.5 Flash",
+      "apiId": "gemini-2.5-flash",
+      "providerId": "google",
+      "status": "deprecated",
+      "region": "global",
+      "regionLabel": "全球 · Gemini API",
+      "description": "上一代 Flash 模型，已被官方标记弃用。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 1048576,
+      "contextScope": "input",
+      "maxInputTokens": null,
+      "maxOutputTokens": 65536,
+      "currency": "USD",
+      "sourceId": "google-pricing",
+      "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "页面未按输入长度分档，单一费率。",
+        "音频输入单独计价：输入 $1.0（文本/图像/视频 $0.3）；音频缓存读取 $0.1（文本/图像/视频 $0.03）；输出与文本同价。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。",
+        "页面提示已弃用：2026-12-01 起请求将自动路由到 Gemini 3.5 Flash-Lite。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,048,576 Token",
+          "upToInputTokens": 1048576,
+          "input": 0.3,
+          "output": 2.5,
+          "cacheRead": 0.03,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "Gemini 2.5 Flash | Input price / Free of charge / $0.30 (text / image / video) / $1.00 (audio) || Output price (including thinking tokens) / Free of charge / $2.50"
+    },
+    {
+      "id": "gemini-2-5-flash-lite",
+      "name": "Gemini 2.5 Flash-Lite",
+      "apiId": "gemini-2.5-flash-lite",
+      "providerId": "google",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · Gemini API",
+      "description": "上一代轻量模型，页面明确仍在提供。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 1048576,
+      "contextScope": "input",
+      "maxInputTokens": null,
+      "maxOutputTokens": 65536,
+      "currency": "USD",
+      "sourceId": "google-pricing",
+      "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash-lite",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "页面未按输入长度分档，单一费率。",
+        "音频输入单独计价：输入 $0.3（文本/图像/视频 $0.1）；音频缓存读取 $0.03（文本/图像/视频 $0.01）；输出与文本同价。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,048,576 Token",
+          "upToInputTokens": 1048576,
+          "input": 0.1,
+          "output": 0.4,
+          "cacheRead": 0.01,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "Gemini 2.5 Flash-Lite | Input price (text, image, video) / Free of charge / $0.10 (text / image / video) / $0.30 (audio) || Output price (including thinking tokens) / Free of charge / $0.40"
+    }
+  ]
+}

@@ -1,0 +1,278 @@
+{
+  "providerId": "tencent",
+  "sourceId": "tencent-pricing",
+  "sourceUrl": "https://cloud.tencent.cn/document/product/1729/97731",
+  "retrievedAt": "2026-11-12",
+  "notes": "抓取说明：该页为客户端渲染，HTML 里没有表格，但页面 SSR 的 window.__staticRouterHydrationData（JSON.parse 字符串）内 product-article 段含完整 article.body HTML，直接用 lxml 解析即可拿到原文表格；文档标题「混元生文计费概述」，页面标注最近更新时间 2026-06-26。价格表原文单位是「刊例价（每 百万 tokens）」，全国区人民币。\n重要变化：本页当前「token 后付费」表只列 10 个产品——Hunyuan-a13b、Hunyuan-role-latest、Hunyuan-translation、Hunyuan-translation-lite、Tencent HY Vision 1.5 Instruct、Hunyuan-turbos-vision、Hunyuan-t1-vision、Hunyuan-turbos-vision-video、Hunyuan-embedding、腾讯元器；hunyuan-t1、hunyuan-turbos、hunyuan-large 等原旗舰型号及其 0-32k/32k-128k/128k+ 分档价格已不在本页出现，同站「产品概述」（/document/product/1729/104753）的模型列表也已不含这些型号，故无法给出其当前价格（未凭记忆补写）。此外页面每个型号只给单一价，已没有任何按输入长度分档的价格。\n排除项：Hunyuan-embedding（向量化，0.7 元/百万 tokens）与腾讯元器（平台服务，100 元/百万 tokens）不属于文本/多模态对话 LLM，未收录；Hunyuan-turbos-vision 在定价页有价（输入 3 元 / 输出 9 元 每百万 tokens），但产品概述与 API 文档均未给出该型号的最大输入/输出 Token 数，无法构造可靠的分档上界，故只在此记录、未建条目。\n页面顶部公告原文：「为进一步提升大模型服务体验，腾讯混元大模型相关功能将逐步迁移至 TokenHub。迁移后，原平台将不再新增模型能力，并停止支持新购模型服务。用户已购买的模型服务可继续使用，暂不受影响。如需开通新的模型服务或使用更多模型能力，请前往 TokenHub。」",
+  "models": [
+    {
+      "id": "hunyuan-a13b",
+      "name": "Hunyuan-a13b",
+      "apiId": "hunyuan-a13b",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "混元第一个混合推理模型（MoE 总参 80B、激活 13B），hunyuan-standard-256K 的升级版本，默认慢思考，可通过指令切换快慢思考。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": null,
+      "contextScope": "combined",
+      "maxInputTokens": 224000,
+      "maxOutputTokens": 32000,
+      "currency": "CNY",
+      "specSource": "https://cloud.tencent.cn/document/product/1729/97731",
+      "notes": [
+        "后付费刊例价原文：「Hunyuan-a13b 输入：0.5元 输出：2元」，单位为每百万 tokens，即 0.50 / 2.00 元/百万 Token。",
+        "最大输入 224k / 最大输出 32k 取自同站「产品概述」（https://cloud.tencent.cn/document/product/1729/104753）。",
+        "免费额度：首次开通获 100 万 tokens 共享资源包，有效期 1 年（不是价格，未计入费率）。",
+        "页面顶部公告原文：「为进一步提升大模型服务体验，腾讯混元大模型相关功能将逐步迁移至 TokenHub。迁移后，原平台将不再新增模型能力，并停止支持新购模型服务。用户已购买的模型服务可继续使用，暂不受影响。如需开通新的模型服务或使用更多模型能力，请前往 TokenHub。」",
+        "上下文窗口总长页面未给出；此处上下文按 null，阶梯上界取同站「产品概述」给出的最大输入 Token 数。",
+        "仓库既有条目记 contextTokens=256,000；本页与产品概述均未给出上下文窗口，仅给最大输入 224k、最大输出 32k（两者之和恰为 256k），因页面未明示总窗口，此处 contextTokens 仍置 null，未把推断写成原文。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 224,000 Token（页面最大输入上限）",
+          "upToInputTokens": 224000,
+          "input": 0.5,
+          "output": 2.0,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Hunyuan-a13b | 输入：0.5元 输出：2元 |（表头：产品名 | 刊例价（每 百万 tokens））"
+    },
+    {
+      "id": "hunyuan-role-latest",
+      "name": "Hunyuan-role-latest",
+      "apiId": "hunyuan-role-latest",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "混元角色扮演模型，面向 AI 数字分身、角色扮演与情感陪聊场景，强化角色一致性与多轮对话连贯性。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": null,
+      "contextScope": "combined",
+      "maxInputTokens": 28000,
+      "maxOutputTokens": 4000,
+      "currency": "CNY",
+      "specSource": "https://cloud.tencent.cn/document/product/1729/97731",
+      "notes": [
+        "后付费刊例价原文：「Hunyuan-role-latest 输入：2.4元 输出：9.6元」，即 2.40 / 9.60 元/百万 Token。",
+        "最大输入 28k / 最大输出 4k 取自同站「产品概述」。",
+        "页面顶部公告原文：「为进一步提升大模型服务体验，腾讯混元大模型相关功能将逐步迁移至 TokenHub。迁移后，原平台将不再新增模型能力，并停止支持新购模型服务。用户已购买的模型服务可继续使用，暂不受影响。如需开通新的模型服务或使用更多模型能力，请前往 TokenHub。」",
+        "上下文窗口总长页面未给出；此处上下文按 null，阶梯上界取同站「产品概述」给出的最大输入 Token 数。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 28,000 Token（页面最大输入上限）",
+          "upToInputTokens": 28000,
+          "input": 2.4,
+          "output": 9.6,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Hunyuan-role-latest | 输入：2.4元 输出：9.6元 |（表头：产品名 | 刊例价（每 百万 tokens））"
+    },
+    {
+      "id": "hunyuan-translation",
+      "name": "Hunyuan-translation",
+      "apiId": "hunyuan-translation",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "混元翻译专项模型，支持 33 种语言互译与 5 种民族语言互译。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": null,
+      "contextScope": "combined",
+      "maxInputTokens": 4000,
+      "maxOutputTokens": 4000,
+      "currency": "CNY",
+      "specSource": "https://cloud.tencent.cn/document/product/1729/97731",
+      "notes": [
+        "后付费刊例价原文：「Hunyuan-translation 输入：1.2元 输出：3.6元」，即 1.20 / 3.60 元/百万 Token。",
+        "最大输入 4k / 最大输出 4k 取自同站「产品概述」。",
+        "页面顶部公告原文：「为进一步提升大模型服务体验，腾讯混元大模型相关功能将逐步迁移至 TokenHub。迁移后，原平台将不再新增模型能力，并停止支持新购模型服务。用户已购买的模型服务可继续使用，暂不受影响。如需开通新的模型服务或使用更多模型能力，请前往 TokenHub。」",
+        "上下文窗口总长页面未给出；此处上下文按 null，阶梯上界取同站「产品概述」给出的最大输入 Token 数。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 4,000 Token（页面最大输入上限）",
+          "upToInputTokens": 4000,
+          "input": 1.2,
+          "output": 3.6,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Hunyuan-translation | 输入：1.2元 输出：3.6元 |（表头：产品名 | 刊例价（每 百万 tokens））"
+    },
+    {
+      "id": "hunyuan-translation-lite",
+      "name": "Hunyuan-translation-lite",
+      "apiId": "hunyuan-translation-lite",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "混元翻译轻量模型，基于混元 2B-Dense 基座做翻译专项优化，支持多语种互译。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": null,
+      "contextScope": "combined",
+      "maxInputTokens": 4000,
+      "maxOutputTokens": 4000,
+      "currency": "CNY",
+      "specSource": "https://cloud.tencent.cn/document/product/1729/97731",
+      "notes": [
+        "后付费刊例价原文：「Hunyuan-translation-lite 输入：1元 输出：3元」，即 1.00 / 3.00 元/百万 Token。",
+        "最大输入 4k / 最大输出 4k 取自同站「产品概述」。",
+        "页面顶部公告原文：「为进一步提升大模型服务体验，腾讯混元大模型相关功能将逐步迁移至 TokenHub。迁移后，原平台将不再新增模型能力，并停止支持新购模型服务。用户已购买的模型服务可继续使用，暂不受影响。如需开通新的模型服务或使用更多模型能力，请前往 TokenHub。」",
+        "上下文窗口总长页面未给出；此处上下文按 null，阶梯上界取同站「产品概述」给出的最大输入 Token 数。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 4,000 Token（页面最大输入上限）",
+          "upToInputTokens": 4000,
+          "input": 1.0,
+          "output": 3.0,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Hunyuan-translation-lite | 输入：1元 输出：3元 |（表头：产品名 | 刊例价（每 百万 tokens））"
+    },
+    {
+      "id": "hunyuan-vision-1-5-instruct",
+      "name": "Tencent HY Vision 1.5 Instruct",
+      "apiId": "hunyuan-vision-1.5-instruct",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "基于文本 TurboS 基座的图生文快思考模型，在图像基础识别与图像分析推理上较上一版有明显提升。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": null,
+      "contextScope": "combined",
+      "maxInputTokens": 24000,
+      "maxOutputTokens": 16000,
+      "currency": "CNY",
+      "specSource": "https://cloud.tencent.cn/document/product/1729/97731",
+      "notes": [
+        "后付费刊例价原文：「Tencent HY Vision 1.5 Instruct 输入：3元 输出：9元」，即 3.00 / 9.00 元/百万 Token。",
+        "API 调用名 hunyuan-vision-1.5-instruct；最大输入 24k / 最大输出 16k 取自同站「产品概述」。",
+        "页面顶部公告原文：「为进一步提升大模型服务体验，腾讯混元大模型相关功能将逐步迁移至 TokenHub。迁移后，原平台将不再新增模型能力，并停止支持新购模型服务。用户已购买的模型服务可继续使用，暂不受影响。如需开通新的模型服务或使用更多模型能力，请前往 TokenHub。」",
+        "上下文窗口总长页面未给出；此处上下文按 null，阶梯上界取同站「产品概述」给出的最大输入 Token 数。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 24,000 Token（页面最大输入上限）",
+          "upToInputTokens": 24000,
+          "input": 3.0,
+          "output": 9.0,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Tencent HY Vision 1.5 Instruct | 输入：3元 输出：9元 |（表头：产品名 | 刊例价（每 百万 tokens））"
+    },
+    {
+      "id": "hunyuan-t1-vision",
+      "name": "Hunyuan-t1-vision",
+      "apiId": "hunyuan-t1-vision",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "混元视觉深度思考模型，覆盖通用图文问答、视觉定位、OCR、图表与拍题解题等任务。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": null,
+      "contextScope": "combined",
+      "maxInputTokens": 28000,
+      "maxOutputTokens": 20000,
+      "currency": "CNY",
+      "specSource": "https://cloud.tencent.cn/document/product/1729/97731",
+      "notes": [
+        "后付费刊例价原文：「Hunyuan-t1-vision 输入：3元 输出：9元」，即 3.00 / 9.00 元/百万 Token。",
+        "「产品概述」中该型号的版本名为 hunyuan-t1-vision-20250916，最大输入 28k / 最大输出 20k。",
+        "页面顶部公告原文：「为进一步提升大模型服务体验，腾讯混元大模型相关功能将逐步迁移至 TokenHub。迁移后，原平台将不再新增模型能力，并停止支持新购模型服务。用户已购买的模型服务可继续使用，暂不受影响。如需开通新的模型服务或使用更多模型能力，请前往 TokenHub。」",
+        "上下文窗口总长页面未给出；此处上下文按 null，阶梯上界取同站「产品概述」给出的最大输入 Token 数。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 28,000 Token（页面最大输入上限）",
+          "upToInputTokens": 28000,
+          "input": 3.0,
+          "output": 9.0,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Hunyuan-t1-vision | 输入：3元 输出：9元 |（表头：产品名 | 刊例价（每 百万 tokens））"
+    },
+    {
+      "id": "hunyuan-turbos-vision-video",
+      "name": "Hunyuan-turbos-vision-video",
+      "apiId": "hunyuan-turbos-vision-video",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "混元视频理解模型，基于混元 turbos-vision，支持视频描述与视频内容问答。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": null,
+      "contextScope": "combined",
+      "maxInputTokens": 24000,
+      "maxOutputTokens": 8000,
+      "currency": "CNY",
+      "specSource": "https://cloud.tencent.cn/document/product/1729/97731",
+      "notes": [
+        "后付费刊例价原文：「Hunyuan-turbos-vision-video 输入：3元 输出：9元」，即 3.00 / 9.00 元/百万 Token。",
+        "最大输入 24k / 最大输出 8k 取自同站「产品概述」。",
+        "页面顶部公告原文：「为进一步提升大模型服务体验，腾讯混元大模型相关功能将逐步迁移至 TokenHub。迁移后，原平台将不再新增模型能力，并停止支持新购模型服务。用户已购买的模型服务可继续使用，暂不受影响。如需开通新的模型服务或使用更多模型能力，请前往 TokenHub。」",
+        "上下文窗口总长页面未给出；此处上下文按 null，阶梯上界取同站「产品概述」给出的最大输入 Token 数。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 24,000 Token（页面最大输入上限）",
+          "upToInputTokens": 24000,
+          "input": 3.0,
+          "output": 9.0,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Hunyuan-turbos-vision-video | 输入：3元 输出：9元 |（表头：产品名 | 刊例价（每 百万 tokens））"
+    }
+  ]
+}

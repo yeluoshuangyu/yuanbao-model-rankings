@@ -1,0 +1,139 @@
+{
+  "providerId": "baidu",
+  "sourceId": "baidu-pricing",
+  "sourceUrl": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+  "retrievedAt": "2026-11-12",
+  "notes": "抓取说明：该页是 Gatsby 文档站（无 __NEXT_DATA__，页面标注「更新时间：2026-11-11」），但价格表格为服务端直出 HTML，用 lxml 解析 //table 即可拿到全部原文数字，不需要 JS 渲染。页面价格单位全部是「元/千tokens」，本记录按 ×1000 折算为元/百万 Token（与既有 baidu-pricing 来源的换算口径一致）。收录范围：只收百度自研 ERNIE 文本/多模态模型。该页同时转售第三方模型（DeepSeek-V4.1-Flash、DeepSeek-V4-Pro、GLM-5.x 系列、Kimi-K2.6、Qwen3.5 系列）——它们属于其它厂商的自有模型，故不在此文件重复收录；向量化（Embedding-V1/tao-8k/bge/Qwen3-Embedding）、重排序、OCR、图像/视频生成，以及「微调模型按 token 后付费价格」里的 SFT 基座价（ERNIE-Speed-8K、ERNIE-Lite-*）均按 SPEC 排除。原 catalog 里的 ernie-4.5-turbo-32k / ernie-4.5-turbo-128k-preview 在当前定价页已不再出现，页面无价格可核，故未写入本文件（需另行确认是否已下线）。",
+  "models": [
+    {
+      "id": "ernie-5-5-flash",
+      "name": "ERNIE-5.5-Flash",
+      "apiId": "ernie-5.5-flash-preview",
+      "status": "preview",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千帆上的 ERNIE 5.5 Flash 文本生成模型，1M 上下文，页面按高峰/空闲时段差异化定价。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": 1000000,
+      "currency": "CNY",
+      "specSource": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "notes": [
+        "原文单位元/千tokens：输入 活动价 0.001 / 原价 0.002；命中缓存 活动价 0.0001 / 原价 0.0002；输出 活动价 0.004 / 原价 0.008。此处取「原价」×1000，即 2.00 / 0.20 / 8.00 元/百万 Token。",
+        "页面同时给限时活动价（1.00 / 0.10 / 4.00 元/百万 Token，恰为原价 5 折）；按 SPEC 促销不进基础费率，promotion 置 null，活动价记于此。",
+        "页面分「高峰时段：8:00-22:00」与「空闲时段：22:00-次日8:00」两档，空闲价为高峰价 5 折（输入 0.001、缓存 0.0001、输出 0.004 元/千tokens），故 offPeakFactor 记 0.5。",
+        "status 记为 preview：定价页与模型列表页的版本名称均为 ERNIE-5.5-Flash-Preview，API 接入点 ID 为 ernie-5.5-flash-preview。",
+        "上下文 1M / 最大输入 1M / 最大输出 1M 取自同站「模型列表」（https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j）；定价页只写 1M，本记录按 1,000,000 Token 处理。",
+        "批量推理列为「-」，无 Batch 折扣。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token（高峰时段价格，空闲时段 5 折）",
+          "upToInputTokens": 1000000,
+          "input": 2.0,
+          "output": 8.0,
+          "cacheRead": 0.2,
+          "batchFactor": null,
+          "offPeakFactor": 0.5,
+          "promotion": null
+        }
+      ],
+      "evidence": "ERNIE-5.5-Flash | ERNIE-5.5-Flash-Preview | 输入（高峰时段：8:00-22:00）活动价：0.001 原价：0.002 | 元/千tokens；命中缓存（高峰时段）活动价：0.0001 原价：0.0002；输出（高峰时段）活动价：0.004 原价：0.008。"
+    },
+    {
+      "id": "ernie-light-dt-1-0",
+      "name": "ERNIE-Light-DT",
+      "apiId": "ernie-light-dt-1.0",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千帆 ERNIE-Light-DT 轻量文本生成模型，1M 上下文、最大输出 128k，单一费率不分时段。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": 128000,
+      "currency": "CNY",
+      "specSource": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "notes": [
+        "原文单位元/千tokens：输入 0.008，命中缓存 0.0008，输出 0.028；×1000 即 8.00 / 0.80 / 28.00 元/百万 Token。",
+        "该型号页面只给一档价格，未按时段或输入长度分档，offPeakFactor / batchFactor 均为 null。",
+        "上下文 1M / 最大输入 1M / 最大输出 128k 取自同站「模型列表」（https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j），本记录按 1,000,000 与 128,000 Token 处理。",
+        "批量推理列为「-」，无 Batch 折扣。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 8.0,
+          "output": 28.0,
+          "cacheRead": 0.8,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "ERNIE-Light-DT | ERNIE-Light-DT-1.0 | 推理服务 | 输入 0.008 | 命中缓存 0.0008 | 输出 0.028 | 元/千tokens"
+    },
+    {
+      "id": "ernie-5-1",
+      "name": "ERNIE 5.1",
+      "apiId": "ernie-5.1",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千帆 ERNIE 5.1 文本生成模型，128k 上下文，按输入长度 32k 分界两档计价。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 128000,
+      "contextScope": "combined",
+      "maxInputTokens": 119000,
+      "maxOutputTokens": 65536,
+      "currency": "CNY",
+      "specSource": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "notes": [
+        "原文单位元/千tokens：输入<=32k 0.004、输出 0.018；32k<输入<=128k 输入 0.006、输出 0.022。×1000 即 4.00/18.00 与 6.00/22.00 元/百万 Token。",
+        "阶梯按定价页原文「输入<=32k」「32k<输入<=128k」两档，最后一档上界取上下文 128k = 128,000 Token。",
+        "页面未给该型号缓存命中价，cacheRead 为 null。",
+        "上下文 128k / 最大输入 119k / 最大输出 [1，65536] 取自同站「模型列表」（https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j）。",
+        "批量推理列为「-」，无 Batch 折扣。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 4.0,
+          "output": 18.0,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入 32,000 至 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 6.0,
+          "output": 22.0,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "ERNIE 5.1 | ERNIE-5.1 | 输入（输入<=32k）0.004 | 输出（输入<=32k）0.018 | 输入（32k<输入<=128k）0.006 | 输出（32k<输入<=128k）0.022 | 元/千tokens"
+    }
+  ]
+}

@@ -1,0 +1,916 @@
+{
+  "providerId": "anthropic",
+  "sourceId": "anthropic-pricing",
+  "sourceUrl": "https://platform.claude.com/docs/en/about-claude/pricing",
+  "retrievedAt": "2026-11-12",
+  "notes": "口径：取 Claude API（第一方）标准按量价格，USD / 1M tokens（页面用 MTok 表示）。Batch API 输入/输出均为 5 折（batchFactor=0.5）；缓存读取（cache hits）取表中 \"Cache hits and refreshes\" 列，缓存写入价（5 分钟 / 1 小时）字段未设，写入每条 notes。长上下文：页面 Long context pricing 段说明 Claude 4.6 及之后的模型（Haiku 5.5 除外）在全 1M 窗口内按标准价计费，即不再有 >200K 输入翻倍的长上下文档溢价，因此未拆阶梯；仅 Haiku 5.5 按 100K 提示长度分两档。上下文窗口与最大输出取自 models/overview 汇总表。未收录：region 加价（Bedrock/Google Cloud 区域端点 +10%）、inference_geo:us 的 1.1 倍、fast mode 档、云市场（AWS CCU / Foundry）计费。Mythos 系列与 Opus 4.1/4、Sonnet 4 依页面原样收录。",
+  "models": [
+    {
+      "id": "claude-fable-5-2",
+      "name": "Claude Fable 5.2",
+      "apiId": "claude-fable-5-2",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "面向高难度推理与长周期 agent 工作的前沿模型，Fable 系列当前旗舰。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $10 / 1 小时 $16（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $4 / output $20 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。",
+        "另有 Fast mode（输出速度最高 2.5 倍，整段上下文适用）：$16 输入 / $80 输出 每 MTok；不可与 Batch 同用。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 8.0,
+          "output": 40.0,
+          "cacheRead": 0.2,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Fable 5.2 | $8 / MTok | $10 / MTok | $16 / MTok | $0.20 / MTok<sup>1</sup> | $40 / MTok |"
+    },
+    {
+      "id": "claude-mythos-5-2",
+      "name": "Claude Mythos 5.2",
+      "apiId": "claude-mythos-5-2",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "与 Fable 5.2 同价的受限访问版本，需通过 Anthropic 验证计划（如 Cyber Verification Program）后才能调用。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $10 / 1 小时 $16（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $4 / output $20 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。",
+        "官方标注 limited availability：需通过 Anthropic 验证计划申请访问。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 8.0,
+          "output": 40.0,
+          "cacheRead": 0.2,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Mythos 5.2 ([limited availability](https://support.claude.com/en/articles/14604842)) | $8 / MTok | $10 / MTok | $16 / MTok | $0.20 / MTok<sup>1</sup> | $40 / MTok |"
+    },
+    {
+      "id": "claude-fable-5-1",
+      "name": "Claude Fable 5.1",
+      "apiId": "claude-fable-5-1",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "上一代 Fable 旗舰，用于高难度推理与长周期 agent 任务。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $12.5 / 1 小时 $20（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $5 / output $25 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 10.0,
+          "output": 50.0,
+          "cacheRead": 0.25,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Fable 5.1 | $10 / MTok | $12.50 / MTok | $20 / MTok | $0.25 / MTok<sup>1</sup> | $50 / MTok |"
+    },
+    {
+      "id": "claude-mythos-5-1",
+      "name": "Claude Mythos 5.1",
+      "apiId": "claude-mythos-5-1",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "Fable 5.1 的受限访问版本，需通过 Anthropic 验证计划。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $12.5 / 1 小时 $20（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $5 / output $25 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。",
+        "官方标注 limited availability：需通过 Anthropic 验证计划申请访问。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 10.0,
+          "output": 50.0,
+          "cacheRead": 0.25,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Mythos 5.1 ([limited availability](https://support.claude.com/en/articles/14604842)) | $10 / MTok | $12.50 / MTok | $20 / MTok | $0.25 / MTok<sup>1</sup> | $50 / MTok |"
+    },
+    {
+      "id": "claude-fable-5",
+      "name": "Claude Fable 5",
+      "apiId": "claude-fable-5",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "Fable 系列首代旗舰。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $12.5 / 1 小时 $20（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $5 / output $25 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 10.0,
+          "output": 50.0,
+          "cacheRead": 1.0,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Fable 5 | $10 / MTok | $12.50 / MTok | $20 / MTok | $1 / MTok | $50 / MTok |"
+    },
+    {
+      "id": "claude-mythos-5",
+      "name": "Claude Mythos 5",
+      "apiId": "claude-mythos-5",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "Fable 5 的受限访问版本，需通过 Anthropic 验证计划。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $12.5 / 1 小时 $20（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $5 / output $25 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。",
+        "官方标注 limited availability：需通过 Anthropic 验证计划申请访问。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 10.0,
+          "output": 50.0,
+          "cacheRead": 1.0,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Mythos 5 ([limited availability](https://support.claude.com/en/articles/14604842)) | $10 / MTok | $12.50 / MTok | $20 / MTok | $1 / MTok | $50 / MTok |"
+    },
+    {
+      "id": "claude-opus-5-5",
+      "name": "Claude Opus 5.5",
+      "apiId": "claude-opus-5-5",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "面向长时间 agentic 编程与知识工作的主力模型，官方推荐默认选择。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $5 / 1 小时 $8（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $2 / output $10 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。",
+        "另有 Fast mode（输出速度最高 2.5 倍，整段上下文适用）：$8 输入 / $40 输出 每 MTok；不可与 Batch 同用。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 4.0,
+          "output": 20.0,
+          "cacheRead": 0.2,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Opus 5.5 | $4 / MTok | $5 / MTok | $8 / MTok | $0.20 / MTok<sup>2</sup> | $20 / MTok |"
+    },
+    {
+      "id": "claude-opus-5",
+      "name": "Claude Opus 5",
+      "apiId": "claude-opus-5",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "上一代 Opus 主力模型。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $6.25 / 1 小时 $10（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $2.5 / output $12.5 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。",
+        "另有 Fast mode（输出速度最高 2.5 倍，整段上下文适用）：$10 输入 / $50 输出 每 MTok；不可与 Batch 同用。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 5.0,
+          "output": 25.0,
+          "cacheRead": 0.5,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Opus 5 | $5 / MTok | $6.25 / MTok | $10 / MTok | $0.50 / MTok | $25 / MTok |"
+    },
+    {
+      "id": "claude-opus-4-8",
+      "name": "Claude Opus 4.8",
+      "apiId": "claude-opus-4-8",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "Opus 4.x 系列较新版本。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $6.25 / 1 小时 $10（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $2.5 / output $12.5 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。",
+        "另有 Fast mode（输出速度最高 2.5 倍，整段上下文适用）：$10 输入 / $50 输出 每 MTok；不可与 Batch 同用。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 5.0,
+          "output": 25.0,
+          "cacheRead": 0.5,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Opus 4.8 | $5 / MTok | $6.25 / MTok | $10 / MTok | $0.50 / MTok | $25 / MTok |"
+    },
+    {
+      "id": "claude-opus-4-7",
+      "name": "Claude Opus 4.7",
+      "apiId": "claude-opus-4-7",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "引入新分词器的 Opus 版本（同文本约多 30% token）。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $6.25 / 1 小时 $10（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $2.5 / output $12.5 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 5.0,
+          "output": 25.0,
+          "cacheRead": 0.5,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Opus 4.7 | $5 / MTok | $6.25 / MTok | $10 / MTok | $0.50 / MTok | $25 / MTok |"
+    },
+    {
+      "id": "claude-opus-4-6",
+      "name": "Claude Opus 4.6",
+      "apiId": "claude-opus-4-6",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "支持 1M 上下文与自适应思考的 Opus 版本。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $6.25 / 1 小时 $10（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $2.5 / output $12.5 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 5.0,
+          "output": 25.0,
+          "cacheRead": 0.5,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Opus 4.6 | $5 / MTok | $6.25 / MTok | $10 / MTok | $0.50 / MTok | $25 / MTok |"
+    },
+    {
+      "id": "claude-opus-4-5",
+      "name": "Claude Opus 4.5",
+      "apiId": "claude-opus-4-5",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "200K 上下文的 Opus 版本。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 200000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 64000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $6.25 / 1 小时 $10（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $2.5 / output $12.5 每 MTok）。",
+        "上下文窗口为 200K，页面未给出长上下文档溢价。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 200,000 Token",
+          "upToInputTokens": 200000,
+          "input": 5.0,
+          "output": 25.0,
+          "cacheRead": 0.5,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Opus 4.5 | $5 / MTok | $6.25 / MTok | $10 / MTok | $0.50 / MTok | $25 / MTok |"
+    },
+    {
+      "id": "claude-opus-4-1",
+      "name": "Claude Opus 4.1",
+      "apiId": "claude-opus-4-1",
+      "providerId": "anthropic",
+      "status": "retired",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "已退役的 Opus 版本，仅在 Google Cloud（Google managed）与 Bedrock 等平台继续提供。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 200000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 32000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $18.75 / 1 小时 $30（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $7.5 / output $37.5 每 MTok）。",
+        "上下文窗口为 200K，页面未给出长上下文档溢价。",
+        "官方标注 retired：仅在合作云平台（Google Cloud / Bedrock）继续提供。",
+        "模型概述页已下线，规格取自定价页与 models 汇总表。",
+        "本条目保留仅为对照，状态为 retired。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 200,000 Token",
+          "upToInputTokens": 200000,
+          "input": 15.0,
+          "output": 75.0,
+          "cacheRead": 1.5,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Opus 4.1 ([retired, except on Claude Models on Google Cloud (Google managed) and Bedrock](https://platform.claude.com/docs/en/about-claude/model-deprecations)) | $15 / MTok | $18.75 / MTok | $30 / MTok | $1.50 / MTok | $75 / MTok |"
+    },
+    {
+      "id": "claude-opus-4",
+      "name": "Claude Opus 4",
+      "apiId": "claude-opus-4",
+      "providerId": "anthropic",
+      "status": "retired",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "已退役的 Opus 4，仅在 Google Cloud（Google managed）等平台继续提供。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 200000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 32000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $18.75 / 1 小时 $30（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $7.5 / output $37.5 每 MTok）。",
+        "上下文窗口为 200K，页面未给出长上下文档溢价。",
+        "官方标注 retired：仅在合作云平台继续提供。",
+        "模型概述页已下线，规格取自定价页与 models 汇总表。",
+        "本条目保留仅为对照，状态为 retired。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 200,000 Token",
+          "upToInputTokens": 200000,
+          "input": 15.0,
+          "output": 75.0,
+          "cacheRead": 1.5,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Opus 4 ([retired, except on Claude Models on Google Cloud (Google managed)](https://platform.claude.com/docs/en/about-claude/model-deprecations)) | $15 / MTok | $18.75 / MTok | $30 / MTok | $1.50 / MTok | $75 / MTok |"
+    },
+    {
+      "id": "claude-sonnet-5-5",
+      "name": "Claude Sonnet 5.5",
+      "apiId": "claude-sonnet-5-5",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "速度与智能平衡最好的主力模型，适合大规模生产负载。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $2.5 / 1 小时 $4（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $1 / output $5 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 2.0,
+          "output": 10.0,
+          "cacheRead": 0.1,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Sonnet 5.5 | $2 / MTok | $2.50 / MTok | $4 / MTok | $0.10 / MTok<sup>2</sup> | $10 / MTok |"
+    },
+    {
+      "id": "claude-sonnet-5",
+      "name": "Claude Sonnet 5",
+      "apiId": "claude-sonnet-5",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "上一代 Sonnet 主力模型，$2/$10 已转为标准价。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $2.5 / 1 小时 $4（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $1 / output $5 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。",
+        "页面注：$2/$10 原为 2026-08-31 前的引入期价格，现已转为标准价，原定 2026-09-01 的涨价取消。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 2.0,
+          "output": 10.0,
+          "cacheRead": 0.2,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Sonnet 5 | $2 / MTok<sup>3</sup> | $2.50 / MTok | $4 / MTok | $0.20 / MTok | $10 / MTok<sup>3</sup> |"
+    },
+    {
+      "id": "claude-sonnet-4-6",
+      "name": "Claude Sonnet 4.6",
+      "apiId": "claude-sonnet-4-6",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "1M 上下文的 Sonnet 版本。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $3.75 / 1 小时 $6（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $1.5 / output $7.5 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 3.0,
+          "output": 15.0,
+          "cacheRead": 0.3,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Sonnet 4.6 | $3 / MTok | $3.75 / MTok | $6 / MTok | $0.30 / MTok | $15 / MTok |"
+    },
+    {
+      "id": "claude-sonnet-4-5",
+      "name": "Claude Sonnet 4.5",
+      "apiId": "claude-sonnet-4-5",
+      "providerId": "anthropic",
+      "status": "deprecated",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "200K 上下文的 Sonnet 版本，已被官方标记弃用。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 200000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 64000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $3.75 / 1 小时 $6（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $1.5 / output $7.5 每 MTok）。",
+        "上下文窗口为 200K，页面未给出长上下文档溢价。",
+        "弃用信息（model-deprecations 页）：2026-09-30 起标记 Deprecated，预计 2026-11-30 退役，建议迁移到 Claude Sonnet 4.6 或更新版本。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 200,000 Token",
+          "upToInputTokens": 200000,
+          "input": 3.0,
+          "output": 15.0,
+          "cacheRead": 0.3,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Sonnet 4.5 | $3 / MTok | $3.75 / MTok | $6 / MTok | $0.30 / MTok | $15 / MTok |"
+    },
+    {
+      "id": "claude-sonnet-4",
+      "name": "Claude Sonnet 4",
+      "apiId": "claude-sonnet-4",
+      "providerId": "anthropic",
+      "status": "retired",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "已退役的 Sonnet 4，仅在合作云平台继续提供。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 200000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 64000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $3.75 / 1 小时 $6（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $1.5 / output $7.5 每 MTok）。",
+        "上下文窗口为 200K，页面未给出长上下文档溢价。",
+        "官方标注 retired：仅在合作云平台（Google Cloud / Bedrock）继续提供。",
+        "模型概述页已下线，规格取自定价表。",
+        "本条目保留仅为对照，状态为 retired。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 200,000 Token",
+          "upToInputTokens": 200000,
+          "input": 3.0,
+          "output": 15.0,
+          "cacheRead": 0.3,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Sonnet 4 ([retired, except on Claude Models on Google Cloud (Google managed) and Bedrock](https://platform.claude.com/docs/en/about-claude/model-deprecations)) | $3 / MTok | $3.75 / MTok | $6 / MTok | $0.30 / MTok | $15 / MTok |"
+    },
+    {
+      "id": "claude-haiku-5-5",
+      "name": "Claude Haiku 5.5",
+      "apiId": "claude-haiku-5-5",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "面向高并发、低延迟任务（分类、抽取、路由）的轻量模型，按提示长度分档计价。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "按提示长度分档：提示超过 100,000 Token 时整个请求按高价档计费（含缓存读/写的输入 token 全部计入）。",
+        "页面原文：Claude Haiku 5.5 is priced by prompt length: a request whose prompt is over 100,000 tokens pays higher prices.",
+        "缓存写入价（页面原文）：5 分钟 $0.125 / 1 小时 $0.2（每 MTok，≤100K 档），>100K 档为 $0.625 / $1。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $0.25 / output $1.25 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "提示不超过 100,000 Token",
+          "upToInputTokens": 100000,
+          "input": 0.1,
+          "output": 0.5,
+          "cacheRead": 0.01,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "提示超过 100,000 Token（至上下文上限）",
+          "upToInputTokens": 1000000,
+          "input": 0.5,
+          "output": 2.5,
+          "cacheRead": 0.05,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Haiku 5.5 (for prompts up to 100,000 tokens) | $0.10 / MTok | $0.125 / MTok | $0.20 / MTok | $0.01 / MTok | $0.50 / MTok | || | Claude Haiku 5.5 (for prompts over 100,000 tokens) | $0.50 / MTok | $0.625 / MTok | $1 / MTok | $0.05 / MTok | $2.50 / MTok |"
+    },
+    {
+      "id": "claude-haiku-4-5",
+      "name": "Claude Haiku 4.5",
+      "apiId": "claude-haiku-4-5",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "200K 上下文的上一代 Haiku 轻量模型。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 200000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 64000,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $1.25 / 1 小时 $2（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $0.5 / output $2.5 每 MTok）。",
+        "上下文窗口为 200K，页面未给出长上下文档溢价。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 200,000 Token",
+          "upToInputTokens": 200000,
+          "input": 1.0,
+          "output": 5.0,
+          "cacheRead": 0.1,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| Claude Haiku 4.5 | $1 / MTok | $1.25 / MTok | $2 / MTok | $0.10 / MTok | $5 / MTok |"
+    }
+  ]
+}

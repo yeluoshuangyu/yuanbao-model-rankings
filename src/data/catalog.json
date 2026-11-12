@@ -108,7 +108,7 @@
       "title": "OpenAI API 官方定价",
       "url": "https://developers.openai.com/api/docs/pricing",
       "retrieval": "page",
-      "notes": "采用 Standard 列，区分 272K 输入阈值。"
+      "notes": "口径：仅取 Standard 档费率（单价为 USD / 1M tokens）。页面另给 Batch、Flex（同为 Standard 的 5 折）、Fast（2 倍）与 Ultrafast（仅 gpt-6-astra / gpt-6.1-sol）四档，Fast/Ultrafast 未收录，仅写入 notes。上下文规格取自 https://developers.openai.com/api/docs/models/<apiId>；页面表头区分 Short context（≤272K 输入）与 Long context（>272K 输入），故 1.05M 上下文模型拆为 272K / 上下文上限两档。缓存写入价未设字段，写入 notes。未收录：gpt-5-search-api（搜索专用，无模型规格页）、gpt-6-astra-law（仅促销价）、gpt-6-rosalind / gpt-rosalind-research / gpt-rosalind-discovery / gpt-5.5-cyber-preview（申请制且无公开模型规格页，上下文无法取得）、gpt-oss-120b / gpt-oss-20b（开放权重，定价页无 API 单价）、omni-moderation（审核模型）、图像/语音/转写模型（按规范排除）。区域处理与 FedRAMP 端点加价 10%，未计入。"
     },
     {
       "id": "anthropic-pricing",
@@ -116,7 +116,7 @@
       "title": "Claude API 官方定价",
       "url": "https://platform.claude.com/docs/en/about-claude/pricing",
       "retrieval": "page",
-      "notes": "采用第一方 API 费率；缓存栏仅表示读取价格。"
+      "notes": "口径：取 Claude API（第一方）标准按量价格，USD / 1M tokens（页面用 MTok 表示）。Batch API 输入/输出均为 5 折（batchFactor=0.5）；缓存读取（cache hits）取表中 \"Cache hits and refreshes\" 列，缓存写入价（5 分钟 / 1 小时）字段未设，写入每条 notes。长上下文：页面 Long context pricing 段说明 Claude 4.6 及之后的模型（Haiku 5.5 除外）在全 1M 窗口内按标准价计费，即不再有 >200K 输入翻倍的长上下文档溢价，因此未拆阶梯；仅 Haiku 5.5 按 100K 提示长度分两档。上下文窗口与最大输出取自 models/overview 汇总表。未收录：region 加价（Bedrock/Google Cloud 区域端点 +10%）、inference_geo:us 的 1.1 倍、fast mode 档、云市场（AWS CCU / Foundry）计费。Mythos 系列与 Opus 4.1/4、Sonnet 4 依页面原样收录。"
     },
     {
       "id": "google-pricing",
@@ -124,7 +124,7 @@
       "title": "Gemini API 官方定价",
       "url": "https://ai.google.dev/gemini-api/docs/pricing",
       "retrieval": "page",
-      "notes": "采用 Standard 付费层文本费率，不使用免费配额。"
+      "notes": "口径：取 Gemini API 定价页 Standard（付费档）tab 的 Paid Tier 价格，USD / 1M tokens。Batch tab 价格为 Standard 的一半，按 batchFactor=0.5 记录。Gemini 表格以「Free Tier」与「Paid Tier」两列呈现，Free tier 一律不收录。按输入长度分档的模型（gemini-3.1-pro-preview、gemini-2.5-pro）拆为 <=200k 与 >200k 两档，末档对齐上下文上限。contextScope 记为 input（该表格以输入 token 数作为分档依据）。只收文本/多模态 token 计费模型，未收录 TTS / Transcribe / Live / 图像（Nano Banana）/ Embedding / Robotics / Gemini Decision（无输出 token，按分类模型处理）/ Gemma 4（付费档 Not available）。页面未提供上下文窗口，contextTokens 与 maxOutputTokens 取自各模型页 docs/models/<apiId>。"
     },
     {
       "id": "xai-pricing",
@@ -156,7 +156,7 @@
       "title": "阿里云百炼官方模型价格",
       "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "retrieval": "page",
-      "notes": "采用华北2（北京）标准原价；国际地域单列。"
+      "notes": "价格全部取自官方定价页「文本生成-千问」「文本生成-千问-开源版」章节的「华北2（北京）」地域标签页；页面单价单位即「元/百万 Token」，本文件 currency=CNY，无需从元/千 Token 换算、阶梯计费规则原文：单价取决于单次请求的输入 Token 总量，该请求的所有 Token 均按对应阶梯的单价结算（因此档位上界即单次请求输入 Token 上限，contextScope 记为 input）、页面只列原价：Batch 调用按实时推理价格 50% 计费（仅在该模型行标注「Batch调用半价」时 batchFactor=0.5），上下文缓存另有折扣、限时活动价（如 qwen3.7-plus 限时 8 折）计入 notes 而不作为基础费率，promotion 一律 null、缓存命中单价未逐模型给出（页面仅说明通常按输入价 10% 计费，且 qwen3.8-max / qwen3.8-flash / qwen3.8-2.4t-a95b 有例外、部分模型分地域），故 cacheRead 统一留空、思考模式价格不同的模型（如 qwen-plus 输出 8/24/64 元）只收「非思考模式」档，差异写入该模型 notes；思考与非思考同价的模型按单一价格收录、contextTokens 取该模型最后一档输入 Token 上界；qwen-max（页面标注「无阶梯计价」）与 qwen-long（表中无长度分档）页面未给上下文长度，contextTokens 与 upToInputTokens 留空而非猜测、页面当前已查无 qwen-turbo、qwen3-max、qwen3.6-max-preview、qwen3-coder-plus、qwen3-coder-next 的条目（这些在 catalog.json 中已存在），本次无法从定价页取到其价格，需另行核实是否已下线、百炼页面同时列出第三方模型（DeepSeek、Kimi、GLM、MiniMax、MiMo、Stepfun、Unisound、Ling 等），属转售，未收录；embedding/rerank/OCR/语音/图像/视频/Omni-Realtime 等非文本对话模型也未收录、快照别名（qwen3.8-max-0902、qwen3.7-max-2026-05-20、qwen-plus-latest、qwen3.7-plus-2026-05-26 等）与主条目同价，未单独建条目"
     },
     {
       "id": "zhipu-pricing",
@@ -180,7 +180,7 @@
       "title": "百度千帆官方模型服务计费",
       "url": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
       "retrieval": "page",
-      "notes": "元/千 tokens 乘以 1000 转换为元/百万 Token。"
+      "notes": "抓取说明：该页是 Gatsby 文档站（无 __NEXT_DATA__，页面标注「更新时间：2026-11-11」），但价格表格为服务端直出 HTML，用 lxml 解析 //table 即可拿到全部原文数字，不需要 JS 渲染。页面价格单位全部是「元/千tokens」，本记录按 ×1000 折算为元/百万 Token（与既有 baidu-pricing 来源的换算口径一致）。收录范围：只收百度自研 ERNIE 文本/多模态模型。该页同时转售第三方模型（DeepSeek-V4.1-Flash、DeepSeek-V4-Pro、GLM-5.x 系列、Kimi-K2.6、Qwen3.5 系列）——它们属于其它厂商的自有模型，故不在此文件重复收录；向量化（Embedding-V1/tao-8k/bge/Qwen3-Embedding）、重排序、OCR、图像/视频生成，以及「微调模型按 token 后付费价格」里的 SFT 基座价（ERNIE-Speed-8K、ERNIE-Lite-*）均按 SPEC 排除。原 catalog 里的 ernie-4.5-turbo-32k / ernie-4.5-turbo-128k-preview 在当前定价页已不再出现，页面无价格可核，故未写入本文件（需另行确认是否已下线）。"
     },
     {
       "id": "tencent-pricing",
@@ -188,7 +188,7 @@
       "title": "腾讯混元官方生文价格",
       "url": "https://cloud.tencent.cn/document/product/1729/97731",
       "retrieval": "page",
-      "notes": "原平台仅供存量服务；新购已迁移至 TokenHub。"
+      "notes": "抓取说明：该页为客户端渲染，HTML 里没有表格，但页面 SSR 的 window.__staticRouterHydrationData（JSON.parse 字符串）内 product-article 段含完整 article.body HTML，直接用 lxml 解析即可拿到原文表格；文档标题「混元生文计费概述」，页面标注最近更新时间 2026-06-26。价格表原文单位是「刊例价（每 百万 tokens）」，全国区人民币。\n重要变化：本页当前「token 后付费」表只列 10 个产品——Hunyuan-a13b、Hunyuan-role-latest、Hunyuan-translation、Hunyuan-translation-lite、Tencent HY Vision 1.5 Instruct、Hunyuan-turbos-vision、Hunyuan-t1-vision、Hunyuan-turbos-vision-video、Hunyuan-embedding、腾讯元器；hunyuan-t1、hunyuan-turbos、hunyuan-large 等原旗舰型号及其 0-32k/32k-128k/128k+ 分档价格已不在本页出现，同站「产品概述」（/document/product/1729/104753）的模型列表也已不含这些型号，故无法给出其当前价格（未凭记忆补写）。此外页面每个型号只给单一价，已没有任何按输入长度分档的价格。\n排除项：Hunyuan-embedding（向量化，0.7 元/百万 tokens）与腾讯元器（平台服务，100 元/百万 tokens）不属于文本/多模态对话 LLM，未收录；Hunyuan-turbos-vision 在定价页有价（输入 3 元 / 输出 9 元 每百万 tokens），但产品概述与 API 文档均未给出该型号的最大输入/输出 Token 数，无法构造可靠的分档上界，故只在此记录、未建条目。\n页面顶部公告原文：「为进一步提升大模型服务体验，腾讯混元大模型相关功能将逐步迁移至 TokenHub。迁移后，原平台将不再新增模型能力，并停止支持新购模型服务。用户已购买的模型服务可继续使用，暂不受影响。如需开通新的模型服务或使用更多模型能力，请前往 TokenHub。」"
     },
     {
       "id": "reviewed-gpt-6-astra",
@@ -242,9 +242,9 @@
       "id": "kimi-official-pricing",
       "providerId": "moonshot",
       "title": "Kimi 官方中国区 API 定价",
-      "url": "https://platform.kimi.com/docs/pricing/chat.md",
+      "url": "https://platform.kimi.com/docs/pricing/chat",
       "retrieval": "page",
-      "notes": "官方 Markdown 原文的 DocTable 数据；人民币每百万 Token，标准输入取缓存未命中列。"
+      "notes": "抓取说明：https://platform.kimi.com/docs/pricing/chat.md 的 markdown 导出里两张价格表是空表（<table><thead><tr /></thead><tbody /></tbody></table>），因此改用同页 HTML 内嵌的 RSC 数据（DocTable 定义）取原文数字，价格单位原文为 ¥/MTok，即元/百万 Token，页面亦注明「此处 1 MTok = 1,000,000 tokens」。platform.moonshot.cn 会 301 到 platform.kimi.com 同一内容。K3.1 Pro / K3 的 quickstart 均写明「上下文长度为 1M tokens，计费不按上下文长度分段」，故各记单档；K2 系列为 256K 上下文（表内记 262,144 tokens）。Batch API 为「标准价格的 60%」，Batch 页明确只支持 kimi-k3.1-pro、kimi-k3、kimi-k2.7-code、kimi-k2.6 四款，两个 highspeed 变体不在其中，故其 batchFactor 为 null。K3 系列缓存写入按 TTL 单独计费（5min / 1h），SPEC 无对应字段，逐条记在各模型 notes 里；K2 系列页面明确不支持缓存写入。models.md 把 kimi-latest、moonshot-v1-8k/32k/128k/auto、moonshot-v1-*-vision-preview、kimi-k2-* 均列入「已下线模型」，定价页已无价格，故不建条目。Web Search 等工具调用费与文件接口费用不属于模型费率，未收录。"
     },
     {
       "id": "glm-official-pricing",
@@ -260,7 +260,7 @@
       "title": "火山方舟官方 API 模型价格",
       "url": "https://docs.volcengine.com/docs/82379/1544106",
       "retrieval": "page",
-      "notes": "官网公开文档接口返回的模型价格表，采用中国区常规在线推理、非音频输入。低延迟、TPM 保障包、批量推理与扣子价格不混入标准费率。"
+      "notes": "价格全部取自「大语言模型 → 在线推理（常规）」表，单位即页面标注的元/M token（元/百万 Token），本文件 currency=CNY 无需换算；页面 K token 按 1,000 计（故 32K=32,000、256K=256,000、1024K=1,024,000）、分段计费原文：请求输入 200K tokens 满足「输入长度 (128, 256]」条件时，输入输出 token 按 输入 2.4 元/M token、输出 24 元/M token 单价计费，即整次请求按命中档位单价结算（contextScope 记为 input，档位上界即页面给出的输入长度上限）、Batch 折算：页面「批量推理」表逐模型给出约为常规价 50% 的单价（如 doubao-seed-2.1-pro 3.00/15.00、doubao-seed-2.0-pro 1.6/8.0），故 batchFactor=0.5；该表未收录 doubao-seed-evloving 与 doubao-seed-character，二者 batchFactor 留空、另有「在线推理（低延迟）」约为常规 2 倍、「在线推理（低优）」约为常规 50%（缓存命中价与常规相同），均未作为基础费率收录；「在线推理（TPM 保障包）」页面标注「暂无支持的模型」、缓存命中价取表中「缓存命中(非音频)」列；缓存存储费 0.017 元/M token/小时 另计，未计入 cacheRead。音频输入/音频缓存命中价单列（如 doubao-seed-2.1-lite 音频输入 12.00），未作为主费率、页面当前已无 Doubao-Seed-1.6 / 1.8 / Doubao-1.5-pro 以及任何带 thinking/深度思考命名的独立模型行（全页检索无结果），这些系列无法从现行定价页取数，未收录且未凭记忆补数、同表第三方模型（glm-5.3-flash、glm-5.2、kimi-k3.1-pro、deepseek-v4 系列）为转售，不属本 providerId，未收录；表中「调整前价格，2026-08-21/08-28 起不适用」的行按失效价处理，未收录、未收录：视频生成、图片生成、3D 生成、向量模型、模型精调、模型单元、Managed Agents、工具插件、Coding/Agent Plan"
     },
     {
       "id": "doubao-seed-2-0-mini-manual-pricing",
@@ -304,22 +304,22 @@
       "status": "active",
       "region": "mainland",
       "regionLabel": "中国大陆",
-      "description": "适合高频对话和长文本处理的千问轻量模型。",
+      "description": "千问 Flash 经典轻量模型，最低输入价档。",
       "useCases": [
         "chat",
-        "long",
-        "code"
+        "long"
       ],
       "contextTokens": 1000000,
-      "contextScope": "combined",
+      "contextScope": "input",
       "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "alibaba-pricing",
       "specSource": null,
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "北京地域；各档费率作用于该请求的全部输入和输出 Token。",
-        "缓存折扣尚未独立核验，缓存价留空。"
+        "价格取自「华北2（北京）」地域标签页；能力等同于 qwen-flash-2025-07-28。",
+        "非思考和思考模式同价；Batch 调用 5 折。",
+        "新加坡等海外地域单独定价，本文件只收中国大陆地域。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -353,7 +353,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "maxInputTokens": 1000000
     },
     {
       "id": "qwen3-7-flash",
@@ -363,20 +364,22 @@
       "status": "active",
       "region": "mainland",
       "regionLabel": "中国大陆",
-      "description": "支持思考与非思考模式，按输入长度阶梯计费。",
+      "description": "千问 Flash 上一代，32K 内极低价。",
       "useCases": [
         "chat",
-        "long",
-        "code"
+        "long"
       ],
       "contextTokens": 1000000,
-      "contextScope": "combined",
+      "contextScope": "input",
       "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "alibaba-pricing",
       "specSource": null,
-      "verifiedAt": "2026-09-12",
-      "notes": [],
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页。",
+        "非思考和思考模式同价；Batch 调用 5 折；能力等同于 qwen3.7-flash-2026-07-15。"
+      ],
       "zeroPriceReason": null,
       "rates": [
         {
@@ -409,7 +412,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "maxInputTokens": 1000000
     },
     {
       "id": "qwen3-8-flash",
@@ -419,20 +423,23 @@
       "status": "active",
       "region": "mainland",
       "regionLabel": "中国大陆",
-      "description": "支持百万 Token 输入的千问 Flash 系列模型。",
+      "description": "千问 Flash 旗舰级轻量模型，单档低价。",
       "useCases": [
         "chat",
-        "long",
-        "code"
+        "long"
       ],
       "contextTokens": 1000000,
-      "contextScope": "combined",
+      "contextScope": "input",
       "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "alibaba-pricing",
       "specSource": null,
-      "verifiedAt": "2026-09-12",
-      "notes": [],
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页。",
+        "非思考和思考模式同价；行内未标注 Batch 半价，batchFactor 留空。",
+        "上下文缓存折扣按模型单独定义（与常见的 10% 命中折扣不同），页面未在此行给出命中单价，cacheRead 留空。"
+      ],
       "zeroPriceReason": null,
       "rates": [
         {
@@ -445,7 +452,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "maxInputTokens": 1000000
     },
     {
       "id": "qwen3-8-max",
@@ -455,20 +463,26 @@
       "status": "active",
       "region": "mainland",
       "regionLabel": "中国大陆",
-      "description": "千问 Max 系列，支持长文本与复杂任务。",
+      "description": "千问 Max 系列旗舰，面向复杂推理、长文本与编程。",
       "useCases": [
         "chat",
         "long",
         "code"
       ],
       "contextTokens": 1000000,
-      "contextScope": "combined",
+      "contextScope": "input",
       "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "alibaba-pricing",
       "specSource": null,
-      "verifiedAt": "2026-09-12",
-      "notes": [],
+      "verifiedAt": "2026-11-12",
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页，单位已是元/百万 Token。",
+        "页面标注「非思考和思考模式」同价，本条按该单一价格收录。",
+        "Batch 调用按实时推理价格 50% 计费（行内标注「Batch调用半价」）。",
+        "上下文缓存另有折扣，页面未在此行给出逐模型命中单价，cacheRead 留空。",
+        "价格档只有 0<Token≤1M 一档，故上下文上限记为 1,000,000。"
+      ],
       "zeroPriceReason": null,
       "rates": [
         {
@@ -481,7 +495,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "maxInputTokens": 1000000
     },
     {
       "id": "qwen3-max",
@@ -504,7 +519,9 @@
       "sourceId": "alibaba-pricing",
       "specSource": null,
       "verifiedAt": "2026-09-12",
-      "notes": [],
+      "notes": [
+        "2026-11-12 复核：官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）已不再列出该型号，费率沿用 2026-09-12 快照，可能已下架或已迁移，请以控制台实际可调用型号为准。"
+      ],
       "zeroPriceReason": null,
       "rates": [
         {
@@ -671,10 +688,9 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球 · 官方 API",
-      "description": "面向高频调用和成本敏感任务的 GPT 模型。",
+      "description": "GPT-5.6 系列中面向成本敏感负载的轻量档位。",
       "useCases": [
         "chat",
-        "long",
         "code"
       ],
       "contextTokens": 1050000,
@@ -683,15 +699,16 @@
       "currency": "USD",
       "sourceId": "openai-pricing",
       "specSource": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "输入超过 272K 时，全请求输入费率翻倍、输出费率为 1.5 倍。",
-        "缓存读取估算不包含 1.25 倍输入费率的首次写入费用。"
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "输入超过 272,000 Token 时按长上下文档计价（模型页原文：prompts with more than 272K input tokens are priced at 2x input and cache rates and 1.5x output for the full request）。",
+        "缓存写入价（页面原文）：30 分钟 $0.25 / 12 小时 $0.50（每 1M Token），未计入 cacheRead。"
       ],
       "zeroPriceReason": null,
       "rates": [
         {
-          "label": "输入不超过 272,000 Token",
+          "label": "输入不超过 272,000 Token（短上下文）",
           "upToInputTokens": 272000,
           "input": 0.2,
           "output": 1.2,
@@ -701,7 +718,7 @@
           "promotion": null
         },
         {
-          "label": "输入不超过 1,050,000 Token",
+          "label": "输入不超过 1,050,000 Token（长上下文）",
           "upToInputTokens": 1050000,
           "input": 0.4,
           "output": 1.8,
@@ -710,7 +727,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "maxInputTokens": 922000
     },
     {
       "id": "claude-haiku-4-5",
@@ -720,10 +738,9 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球 · 官方 API",
-      "description": "Claude 官方 API，支持对话、编程与文档分析。",
+      "description": "200K 上下文的上一代 Haiku 轻量模型。",
       "useCases": [
         "chat",
-        "long",
         "code"
       ],
       "contextTokens": 200000,
@@ -731,10 +748,12 @@
       "maxOutputTokens": 64000,
       "currency": "USD",
       "sourceId": "anthropic-pricing",
-      "specSource": "https://platform.claude.com/docs/en/models/overview",
-      "verifiedAt": "2026-09-12",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "缓存价格仅为已命中缓存的读取单价，不包含首次写入和延长缓存的费用。"
+        "缓存写入价（页面原文）：5 分钟 $1.25 / 1 小时 $2（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $0.5 / output $2.5 每 MTok）。",
+        "上下文窗口为 200K，页面未给出长上下文档溢价。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -758,7 +777,7 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球 · 官方 API",
-      "description": "Claude 官方 API，支持对话、编程与文档分析。",
+      "description": "上一代 Sonnet 主力模型，$2/$10 已转为标准价。",
       "useCases": [
         "chat",
         "long",
@@ -769,10 +788,13 @@
       "maxOutputTokens": 128000,
       "currency": "USD",
       "sourceId": "anthropic-pricing",
-      "specSource": "https://platform.claude.com/docs/en/models/overview",
-      "verifiedAt": "2026-09-12",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "缓存价格仅为已命中缓存的读取单价，不包含首次写入和延长缓存的费用。"
+        "缓存写入价（页面原文）：5 分钟 $2.5 / 1 小时 $4（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $1 / output $5 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。",
+        "页面注：$2/$10 原为 2026-08-31 前的引入期价格，现已转为标准价，原定 2026-09-01 的涨价取消。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -796,7 +818,7 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球 · 官方 API",
-      "description": "Claude 官方 API，支持对话、编程与文档分析。",
+      "description": "上一代 Opus 主力模型。",
       "useCases": [
         "chat",
         "long",
@@ -807,10 +829,13 @@
       "maxOutputTokens": 128000,
       "currency": "USD",
       "sourceId": "anthropic-pricing",
-      "specSource": "https://platform.claude.com/docs/en/models/overview",
-      "verifiedAt": "2026-09-12",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "缓存价格仅为已命中缓存的读取单价，不包含首次写入和延长缓存的费用。"
+        "缓存写入价（页面原文）：5 分钟 $6.25 / 1 小时 $10（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $2.5 / output $12.5 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。",
+        "另有 Fast mode（输出速度最高 2.5 倍，整段上下文适用）：$10 输入 / $50 输出 每 MTok；不可与 Batch 同用。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -834,22 +859,25 @@
       "status": "retired",
       "region": "global",
       "regionLabel": "全球 · 第一方历史 API",
-      "description": "已从 Anthropic 第一方 API 退役，保留历史价格与永久详情 URL。",
+      "description": "已退役的 Sonnet 4，仅在合作云平台继续提供。",
       "useCases": [
         "chat",
-        "long",
-        "code"
+        "long"
       ],
-      "contextTokens": null,
+      "contextTokens": 200000,
       "contextScope": "combined",
-      "maxOutputTokens": null,
+      "maxOutputTokens": 64000,
       "currency": "USD",
       "sourceId": "anthropic-pricing",
-      "specSource": null,
-      "verifiedAt": "2026-09-12",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "官方定价页已标记第一方 API 退役；第三方云可用性不纳入本榜。",
-        "上下文规格未重新核验，历史价仅供回溯。"
+        "缓存写入价（页面原文）：5 分钟 $3.75 / 1 小时 $6（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $1.5 / output $7.5 每 MTok）。",
+        "上下文窗口为 200K，页面未给出长上下文档溢价。",
+        "官方标注 retired：仅在合作云平台（Google Cloud / Bedrock）继续提供。",
+        "模型概述页已下线，规格取自定价表。",
+        "本条目保留仅为对照，状态为 retired。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -873,10 +901,9 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球 · Gemini API",
-      "description": "适合轻量问答、分类与信息提取的 Gemini 模型。",
+      "description": "上一代轻量模型，页面明确仍在提供。",
       "useCases": [
         "chat",
-        "long",
         "code"
       ],
       "contextTokens": 1048576,
@@ -885,10 +912,11 @@
       "currency": "USD",
       "sourceId": "google-pricing",
       "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash-lite",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "使用付费层文本输入费率，不纳入免费测试额度。",
-        "缓存读取估算未含每百万 Token 每小时 $1 的存储费用。"
+        "页面未按输入长度分档，单一费率。",
+        "音频输入单独计价：输入 $0.3（文本/图像/视频 $0.1）；音频缓存读取 $0.03（文本/图像/视频 $0.01）；输出与文本同价。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -962,54 +990,52 @@
       "status": "active",
       "region": "mainland",
       "regionLabel": "中国大陆",
-      "description": "火山方舟官方服务，按请求输入长度分档计费。",
+      "description": "方舟最小号文本模型，按输入长度三档计费。",
       "useCases": [
         "chat",
-        "long",
-        "code"
+        "long"
       ],
       "contextTokens": 256000,
-      "contextScope": "combined",
-      "maxInputTokens": 224000,
-      "maxOutputTokens": 128000,
+      "contextScope": "input",
+      "maxInputTokens": 256000,
+      "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "doubao-seed-2-0-mini-manual-pricing",
       "specSource": "https://docs.volcengine.com/docs/82379/1330310",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "已从扣子搜索索引迁移为火山方舟官方常规在线推理价；文本输入价与音频输入价分开。",
-        "最大输入 224K、总上下文 256K、最大回答 128K；展示标识为价格系列，实际调用以控制台模型 ID 为准。",
-        "缓存读取已核验，不含缓存存储费；批量优惠未纳入。"
+        "价格取自「在线推理（常规）」表，取「非音频」列；音频输入为 3.0 / 6.0 / 12.0。",
+        "批量推理表 0.1 / 0.2 / 0.4 与 1.0 / 2.0 / 4.0，为常规 50%，batchFactor=0.5。"
       ],
       "zeroPriceReason": null,
       "rates": [
         {
-          "label": "输入不超过 32,000 Token",
+          "label": "输入长度 ≤ 32,000 Token",
           "upToInputTokens": 32000,
           "input": 0.2,
           "output": 2,
           "cacheRead": 0.04,
-          "batchFactor": null,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         },
         {
-          "label": "输入不超过 128,000 Token",
+          "label": "输入长度 ≤ 128,000 Token",
           "upToInputTokens": 128000,
           "input": 0.4,
           "output": 4,
           "cacheRead": 0.08,
-          "batchFactor": null,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         },
         {
-          "label": "输入不超过 256,000 Token",
+          "label": "输入长度 ≤ 256,000 Token",
           "upToInputTokens": 256000,
           "input": 0.8,
           "output": 8,
           "cacheRead": 0.16,
-          "batchFactor": null,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         }
@@ -1023,54 +1049,52 @@
       "status": "active",
       "region": "mainland",
       "regionLabel": "中国大陆",
-      "description": "火山方舟官方服务，按请求输入长度分档计费。",
+      "description": "方舟轻量模型，按输入长度三档计费。",
       "useCases": [
         "chat",
-        "long",
-        "code"
+        "long"
       ],
       "contextTokens": 256000,
-      "contextScope": "combined",
-      "maxInputTokens": 224000,
-      "maxOutputTokens": 128000,
+      "contextScope": "input",
+      "maxInputTokens": 256000,
+      "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "doubao-seed-2-0-lite-manual-pricing",
       "specSource": "https://docs.volcengine.com/docs/82379/1330310",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "已从扣子搜索索引迁移为火山方舟官方常规在线推理价；文本输入价与音频输入价分开。",
-        "最大输入 224K、总上下文 256K、最大回答 128K；展示标识为价格系列，实际调用以控制台模型 ID 为准。",
-        "缓存读取已核验，不含缓存存储费；批量优惠未纳入。"
+        "价格取自「在线推理（常规）」表，取「非音频」列；音频输入为 9.0 / 13.5 / 27.0。",
+        "批量推理表 0.3 / 0.45 / 0.9 与 1.8 / 2.7 / 5.4，为常规 50%，batchFactor=0.5。"
       ],
       "zeroPriceReason": null,
       "rates": [
         {
-          "label": "输入不超过 32,000 Token",
+          "label": "输入长度 ≤ 32,000 Token",
           "upToInputTokens": 32000,
           "input": 0.6,
           "output": 3.6,
           "cacheRead": 0.12,
-          "batchFactor": null,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         },
         {
-          "label": "输入不超过 128,000 Token",
+          "label": "输入长度 ≤ 128,000 Token",
           "upToInputTokens": 128000,
           "input": 0.9,
           "output": 5.4,
           "cacheRead": 0.18,
-          "batchFactor": null,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         },
         {
-          "label": "输入不超过 256,000 Token",
+          "label": "输入长度 ≤ 256,000 Token",
           "upToInputTokens": 256000,
           "input": 1.8,
           "output": 10.8,
           "cacheRead": 0.36,
-          "batchFactor": null,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         }
@@ -1255,7 +1279,8 @@
       "specSource": null,
       "verifiedAt": "2026-09-12",
       "notes": [
-        "使用按量后付费在线费率；搜索增强按次收费，未含在文本 Token 估算中。"
+        "使用按量后付费在线费率；搜索增强按次收费，未含在文本 Token 估算中。",
+        "2026-11-12 复核：官方定价页（https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya）已不再列出该型号，费率沿用 2026-09-12 快照，可能已下架或已迁移，请以控制台实际可调用型号为准。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -1293,7 +1318,8 @@
       "specSource": null,
       "verifiedAt": "2026-09-12",
       "notes": [
-        "预览模型能力与费率以厂商正式服务约定为准。"
+        "预览模型能力与费率以厂商正式服务约定为准。",
+        "2026-11-12 复核：官方定价页（https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya）已不再列出该型号，费率沿用 2026-09-12 快照，可能已下架或已迁移，请以控制台实际可调用型号为准。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -1317,27 +1343,31 @@
       "status": "deprecated",
       "region": "mainland",
       "regionLabel": "中国大陆",
-      "description": "腾讯混元原平台的存量按量付费模型。",
+      "description": "混元第一个混合推理模型（MoE 总参 80B、激活 13B），hunyuan-standard-256K 的升级版本，默认慢思考，可通过指令切换快慢思考。",
       "useCases": [
         "chat",
-        "code"
+        "long"
       ],
       "contextTokens": null,
       "contextScope": "combined",
-      "maxOutputTokens": null,
+      "maxOutputTokens": 32000,
       "currency": "CNY",
       "sourceId": "tencent-pricing",
-      "specSource": null,
-      "verifiedAt": "2026-09-12",
+      "specSource": "https://cloud.tencent.cn/document/product/1729/97731",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "原平台停止新购服务，已购买用户可继续使用；新用户应核对 TokenHub 现行费率。",
-        "原平台 API 上下文及最大输出未重新核验，暂不参与上下文下限筛选。"
+        "后付费刊例价原文：「Hunyuan-a13b 输入：0.5元 输出：2元」，单位为每百万 tokens，即 0.50 / 2.00 元/百万 Token。",
+        "最大输入 224k / 最大输出 32k 取自同站「产品概述」（https://cloud.tencent.cn/document/product/1729/104753）。",
+        "免费额度：首次开通获 100 万 tokens 共享资源包，有效期 1 年（不是价格，未计入费率）。",
+        "页面顶部公告原文：「为进一步提升大模型服务体验，腾讯混元大模型相关功能将逐步迁移至 TokenHub。迁移后，原平台将不再新增模型能力，并停止支持新购模型服务。用户已购买的模型服务可继续使用，暂不受影响。如需开通新的模型服务或使用更多模型能力，请前往 TokenHub。」",
+        "上下文窗口总长页面未给出；此处上下文按 null，阶梯上界取同站「产品概述」给出的最大输入 Token 数。",
+        "仓库既有条目记 contextTokens=256,000；本页与产品概述均未给出上下文窗口，仅给最大输入 224k、最大输出 32k（两者之和恰为 256k），因页面未明示总窗口，此处 contextTokens 仍置 null，未把推断写成原文。"
       ],
       "zeroPriceReason": null,
       "rates": [
         {
-          "label": "输入不超过 256,000 Token",
-          "upToInputTokens": 256000,
+          "label": "输入不超过 224,000 Token（页面最大输入上限）",
+          "upToInputTokens": 224000,
           "input": 0.5,
           "output": 2,
           "cacheRead": null,
@@ -1345,7 +1375,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "maxInputTokens": 224000
     },
     {
       "id": "gpt-6-astra",
@@ -1355,7 +1386,7 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "GPT-6 Astra 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "OpenAI 当前最强旗舰，面向最吃算力的复杂推理、编程与长周期任务。",
       "useCases": [
         "chat",
         "long",
@@ -1367,15 +1398,16 @@
       "currency": "USD",
       "sourceId": "reviewed-gpt-6-astra",
       "specSource": "https://developers.openai.com/api/docs/models/gpt-6-astra",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "超过 272K 输入后整次请求输入与缓存价格翻倍、输出为 1.5 倍。",
-        "不包含数据驻留附加费、Fast mode、缓存写入或工具调用费用。"
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "输入超过 272,000 Token 时按长上下文档计价（模型页原文：prompts with more than 272K input tokens are priced at 2x input and cache rates and 1.5x output for the full request）。",
+        "缓存写入价（页面原文）：30 分钟 $12.50 / 12 小时 $25.00（每 1M Token），未计入 cacheRead。"
       ],
       "zeroPriceReason": null,
       "rates": [
         {
-          "label": "输入不超过 272,000 Token",
+          "label": "输入不超过 272,000 Token（短上下文）",
           "upToInputTokens": 272000,
           "input": 10,
           "output": 50,
@@ -1385,7 +1417,7 @@
           "promotion": null
         },
         {
-          "label": "输入不超过 1,050,000 Token",
+          "label": "输入不超过 1,050,000 Token（长上下文）",
           "upToInputTokens": 1050000,
           "input": 20,
           "output": 75,
@@ -1394,7 +1426,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "maxInputTokens": 922000
     },
     {
       "id": "gpt-5-6-terra",
@@ -1404,10 +1437,9 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "GPT-5.6 Terra 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "GPT-5.6 系列中平衡智能与成本的档位。",
       "useCases": [
         "chat",
-        "long",
         "code"
       ],
       "contextTokens": 1050000,
@@ -1416,15 +1448,16 @@
       "currency": "USD",
       "sourceId": "reviewed-gpt-5-6-terra",
       "specSource": "https://developers.openai.com/api/docs/models/gpt-5.6-terra",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "超过 272K 输入后整次请求输入与缓存价格翻倍、输出为 1.5 倍。",
-        "不包含数据驻留附加费、Fast mode、缓存写入或工具调用费用。"
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "输入超过 272,000 Token 时按长上下文档计价（模型页原文：prompts with more than 272K input tokens are priced at 2x input and cache rates and 1.5x output for the full request）。",
+        "缓存写入价（页面原文）：30 分钟 $2.50 / 12 小时 $5.00（每 1M Token），未计入 cacheRead。"
       ],
       "zeroPriceReason": null,
       "rates": [
         {
-          "label": "输入不超过 272,000 Token",
+          "label": "输入不超过 272,000 Token（短上下文）",
           "upToInputTokens": 272000,
           "input": 2,
           "output": 12,
@@ -1434,7 +1467,7 @@
           "promotion": null
         },
         {
-          "label": "输入不超过 1,050,000 Token",
+          "label": "输入不超过 1,050,000 Token（长上下文）",
           "upToInputTokens": 1050000,
           "input": 4,
           "output": 18,
@@ -1443,7 +1476,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "maxInputTokens": 922000
     },
     {
       "id": "gpt-5-5",
@@ -1453,7 +1487,7 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "GPT-5.5 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "面向编程与专业工作的主力模型，支持 1.05M 上下文。",
       "useCases": [
         "chat",
         "long",
@@ -1465,30 +1499,30 @@
       "currency": "USD",
       "sourceId": "reviewed-gpt-5-5",
       "specSource": "https://developers.openai.com/api/docs/models/gpt-5.5",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "超过 272K 输入后整次请求输入与缓存价格翻倍、输出为 1.5 倍。",
-        "不包含数据驻留附加费、Fast mode、缓存写入或工具调用费用。"
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "输入超过 272,000 Token 时按长上下文档计价（模型页原文：prompts with more than 272K input tokens are priced at 2x input and cache rates and 1.5x output for the full request）。"
       ],
       "zeroPriceReason": null,
       "rates": [
         {
-          "label": "输入不超过 272,000 Token",
+          "label": "输入不超过 272,000 Token（短上下文）",
           "upToInputTokens": 272000,
           "input": 5,
           "output": 30,
           "cacheRead": 0.5,
-          "batchFactor": null,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         },
         {
-          "label": "输入不超过 1,050,000 Token",
+          "label": "输入不超过 1,050,000 Token（长上下文）",
           "upToInputTokens": 1050000,
           "input": 10,
           "output": 45,
           "cacheRead": 1,
-          "batchFactor": null,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         }
@@ -1502,7 +1536,7 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "GPT-5.4 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "更经济的编程与专业工作模型。",
       "useCases": [
         "chat",
         "long",
@@ -1514,30 +1548,30 @@
       "currency": "USD",
       "sourceId": "reviewed-gpt-5-4",
       "specSource": "https://developers.openai.com/api/docs/models/gpt-5.4",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "超过 272K 输入后整次请求输入与缓存价格翻倍、输出为 1.5 倍。",
-        "不包含数据驻留附加费、Fast mode、缓存写入或工具调用费用。"
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "输入超过 272,000 Token 时按长上下文档计价（模型页原文：prompts with more than 272K input tokens are priced at 2x input and cache rates and 1.5x output for the full request）。"
       ],
       "zeroPriceReason": null,
       "rates": [
         {
-          "label": "输入不超过 272,000 Token",
+          "label": "输入不超过 272,000 Token（短上下文）",
           "upToInputTokens": 272000,
           "input": 2.5,
           "output": 15,
           "cacheRead": 0.25,
-          "batchFactor": null,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         },
         {
-          "label": "输入不超过 1,050,000 Token",
+          "label": "输入不超过 1,050,000 Token（长上下文）",
           "upToInputTokens": 1050000,
           "input": 5,
           "output": 22.5,
           "cacheRead": 0.5,
-          "batchFactor": null,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         }
@@ -1551,10 +1585,9 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "GPT-5.4 Mini 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "GPT-5.4 的轻量档，面向编程、computer use 与子 agent。",
       "useCases": [
         "chat",
-        "long",
         "code"
       ],
       "contextTokens": 400000,
@@ -1563,9 +1596,10 @@
       "currency": "USD",
       "sourceId": "reviewed-gpt-5-4-mini",
       "specSource": "https://developers.openai.com/api/docs/models/gpt-5.4-mini",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "仅比较文本 Token；Fast mode、工具调用及地区附加费不计入。"
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "页面仅列单一费率，未区分短/长上下文档。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -1575,11 +1609,12 @@
           "input": 0.75,
           "output": 4.5,
           "cacheRead": 0.075,
-          "batchFactor": null,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "maxInputTokens": 272000
     },
     {
       "id": "gpt-5-3-codex",
@@ -1589,10 +1624,8 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "GPT-5.3 Codex 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "面向长周期 agent 编程的 Codex 模型；官方已标记 Deprecated。",
       "useCases": [
-        "chat",
-        "long",
         "code"
       ],
       "contextTokens": 400000,
@@ -1601,9 +1634,10 @@
       "currency": "USD",
       "sourceId": "reviewed-gpt-5-3-codex",
       "specSource": "https://developers.openai.com/api/docs/models/gpt-5.3-codex",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "仅比较文本 Token；Fast mode、工具调用及地区附加费不计入。"
+        "价格取自页面 Specialized models 表（Codex / ChatGPT 分类）。",
+        "页面 Batch 表未列该模型，且模型页标注 Batch 端点不支持，batchFactor 记 null。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -1617,7 +1651,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "maxInputTokens": 272000
     },
     {
       "id": "claude-fable-5-1",
@@ -1627,7 +1662,7 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "Claude Fable 5.1 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "上一代 Fable 旗舰，用于高难度推理与长周期 agent 任务。",
       "useCases": [
         "chat",
         "long",
@@ -1638,11 +1673,12 @@
       "maxOutputTokens": 128000,
       "currency": "USD",
       "sourceId": "anthropic-pricing",
-      "specSource": "https://platform.claude.com/docs/en/models/fable-5-1/overview",
-      "verifiedAt": "2026-09-12",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "第一方 API 全球路由标准价；缓存栏为读取价，不含写入。",
-        "1M 上下文按同一标准单价计费；不含 US-only 和 Fast 附加费。"
+        "缓存写入价（页面原文）：5 分钟 $12.5 / 1 小时 $20（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $5 / output $25 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -1666,7 +1702,7 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "Claude Fable 5 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "Fable 系列首代旗舰。",
       "useCases": [
         "chat",
         "long",
@@ -1674,14 +1710,15 @@
       ],
       "contextTokens": 1000000,
       "contextScope": "combined",
-      "maxOutputTokens": null,
+      "maxOutputTokens": 128000,
       "currency": "USD",
       "sourceId": "anthropic-pricing",
-      "specSource": null,
-      "verifiedAt": "2026-09-12",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "第一方 API 全球路由标准价；缓存栏为读取价，不含写入。",
-        "1M 上下文按同一标准单价计费；不含 US-only 和 Fast 附加费。"
+        "缓存写入价（页面原文）：5 分钟 $12.5 / 1 小时 $20（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $5 / output $25 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -1705,7 +1742,7 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "Claude Opus 4.8 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "Opus 4.x 系列较新版本。",
       "useCases": [
         "chat",
         "long",
@@ -1713,14 +1750,16 @@
       ],
       "contextTokens": 1000000,
       "contextScope": "combined",
-      "maxOutputTokens": null,
+      "maxOutputTokens": 128000,
       "currency": "USD",
       "sourceId": "anthropic-pricing",
-      "specSource": null,
-      "verifiedAt": "2026-09-12",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "第一方 API 全球路由标准价；缓存栏为读取价，不含写入。",
-        "1M 上下文按同一标准单价计费；不含 US-only 和 Fast 附加费。"
+        "缓存写入价（页面原文）：5 分钟 $6.25 / 1 小时 $10（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $2.5 / output $12.5 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。",
+        "另有 Fast mode（输出速度最高 2.5 倍，整段上下文适用）：$10 输入 / $50 输出 每 MTok；不可与 Batch 同用。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -1744,7 +1783,7 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "Claude Opus 4.7 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "引入新分词器的 Opus 版本（同文本约多 30% token）。",
       "useCases": [
         "chat",
         "long",
@@ -1752,14 +1791,15 @@
       ],
       "contextTokens": 1000000,
       "contextScope": "combined",
-      "maxOutputTokens": null,
+      "maxOutputTokens": 128000,
       "currency": "USD",
       "sourceId": "anthropic-pricing",
-      "specSource": null,
-      "verifiedAt": "2026-09-12",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "第一方 API 全球路由标准价；缓存栏为读取价，不含写入。",
-        "1M 上下文按同一标准单价计费；不含 US-only 和 Fast 附加费。"
+        "缓存写入价（页面原文）：5 分钟 $6.25 / 1 小时 $10（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $2.5 / output $12.5 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -1783,7 +1823,7 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "Claude Opus 4.6 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "支持 1M 上下文与自适应思考的 Opus 版本。",
       "useCases": [
         "chat",
         "long",
@@ -1791,14 +1831,15 @@
       ],
       "contextTokens": 1000000,
       "contextScope": "combined",
-      "maxOutputTokens": null,
+      "maxOutputTokens": 128000,
       "currency": "USD",
       "sourceId": "anthropic-pricing",
-      "specSource": null,
-      "verifiedAt": "2026-09-12",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "第一方 API 全球路由标准价；缓存栏为读取价，不含写入。",
-        "1M 上下文按同一标准单价计费；不含 US-only 和 Fast 附加费。"
+        "缓存写入价（页面原文）：5 分钟 $6.25 / 1 小时 $10（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $2.5 / output $12.5 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -1822,22 +1863,23 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "Claude Opus 4.5 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "200K 上下文的 Opus 版本。",
       "useCases": [
         "chat",
         "long",
         "code"
       ],
-      "contextTokens": null,
+      "contextTokens": 200000,
       "contextScope": "combined",
-      "maxOutputTokens": null,
+      "maxOutputTokens": 64000,
       "currency": "USD",
       "sourceId": "anthropic-pricing",
-      "specSource": null,
-      "verifiedAt": "2026-09-12",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "第一方 API 全球路由标准价；缓存栏为读取价，不含写入。",
-        "当前只比较输入不超过 200K 的已核验标准费率，更长输入暂不报价。"
+        "缓存写入价（页面原文）：5 分钟 $6.25 / 1 小时 $10（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $2.5 / output $12.5 每 MTok）。",
+        "上下文窗口为 200K，页面未给出长上下文档溢价。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -1861,7 +1903,7 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "Claude Sonnet 4.6 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "1M 上下文的 Sonnet 版本。",
       "useCases": [
         "chat",
         "long",
@@ -1869,14 +1911,15 @@
       ],
       "contextTokens": 1000000,
       "contextScope": "combined",
-      "maxOutputTokens": null,
+      "maxOutputTokens": 128000,
       "currency": "USD",
       "sourceId": "anthropic-pricing",
-      "specSource": null,
-      "verifiedAt": "2026-09-12",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "第一方 API 全球路由标准价；缓存栏为读取价，不含写入。",
-        "1M 上下文按同一标准单价计费；不含 US-only 和 Fast 附加费。"
+        "缓存写入价（页面原文）：5 分钟 $3.75 / 1 小时 $6（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $1.5 / output $7.5 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -1897,25 +1940,27 @@
       "name": "Claude Sonnet 4.5",
       "apiId": "claude-sonnet-4-5",
       "providerId": "anthropic",
-      "status": "active",
+      "status": "deprecated",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "Claude Sonnet 4.5 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "200K 上下文的 Sonnet 版本。",
       "useCases": [
         "chat",
         "long",
         "code"
       ],
-      "contextTokens": null,
+      "contextTokens": 200000,
       "contextScope": "combined",
-      "maxOutputTokens": null,
+      "maxOutputTokens": 64000,
       "currency": "USD",
       "sourceId": "anthropic-pricing",
-      "specSource": null,
-      "verifiedAt": "2026-09-12",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "第一方 API 全球路由标准价；缓存栏为读取价，不含写入。",
-        "当前只比较输入不超过 200K 的已核验标准费率，更长输入暂不报价。"
+        "缓存写入价（页面原文）：5 分钟 $3.75 / 1 小时 $6（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $1.5 / output $7.5 每 MTok）。",
+        "上下文窗口为 200K，页面未给出长上下文档溢价。",
+        "2026-11-12 复核：官方 model-deprecations 页列出 Claude Sonnet 4.5 将于 2026-11-30 退役，标记为仅存量。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -1954,7 +1999,8 @@
       "verifiedAt": "2026-09-12",
       "notes": [
         "采用付费层 Standard 文本输入与输出费率，输出包含思考 Token。",
-        "免费配额、缓存存储、音视频 Token、联网搜索与 Priority 不计入标准榜。"
+        "免费配额、缓存存储、音视频 Token、联网搜索与 Priority 不计入标准榜。",
+        "2026-11-12 复核：官方定价页（https://ai.google.dev/gemini-api/docs/pricing）已不再列出 Gemini 3.5 Flash 章节（现为 3.8 / 3.6 / 3.5-flash-lite），费率沿用 2026-09-12 快照，可能已下架或已停售，请以控制台实际可调用型号为准。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -1978,10 +2024,9 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "Gemini 3.5 Flash-Lite 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "Flash-Lite 轻量档，面向高并发低成本场景。",
       "useCases": [
         "chat",
-        "long",
         "code"
       ],
       "contextTokens": 1048576,
@@ -1990,10 +2035,10 @@
       "currency": "USD",
       "sourceId": "google-pricing",
       "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash-lite",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "采用付费层 Standard 文本输入与输出费率，输出包含思考 Token。",
-        "免费配额、缓存存储、音视频 Token、联网搜索与 Priority 不计入标准榜。"
+        "页面未按输入长度分档，单一费率。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -2017,10 +2062,9 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "Gemini 3.1 Flash-Lite 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "上一代轻量档，适合高并发 agent 任务、翻译与简单数据处理。",
       "useCases": [
         "chat",
-        "long",
         "code"
       ],
       "contextTokens": 1048576,
@@ -2029,10 +2073,11 @@
       "currency": "USD",
       "sourceId": "google-pricing",
       "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-lite",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "采用付费层 Standard 文本输入与输出费率，输出包含思考 Token。",
-        "免费配额、缓存存储、音视频 Token、联网搜索与 Priority 不计入标准榜。"
+        "页面未按输入长度分档，单一费率。",
+        "音频输入单独计价：输入 $0.5（文本/图像/视频 $0.25）；音频缓存读取 $0.05（文本/图像/视频 $0.025）；输出与文本同价。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -2056,10 +2101,9 @@
       "status": "preview",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "Gemini 3 Flash Preview 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "Gemini 3 代 Flash 预览版。",
       "useCases": [
         "chat",
-        "long",
         "code"
       ],
       "contextTokens": 1048576,
@@ -2068,10 +2112,11 @@
       "currency": "USD",
       "sourceId": "google-pricing",
       "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-3-flash-preview",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "采用付费层 Standard 文本输入与输出费率，输出包含思考 Token。",
-        "免费配额、缓存存储、音视频 Token、联网搜索与 Priority 不计入标准榜。"
+        "页面未按输入长度分档，单一费率。",
+        "音频输入单独计价：输入 $1.0（文本/图像/视频 $0.5）；音频缓存读取 $0.1（文本/图像/视频 $0.05）；输出与文本同价。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -2095,10 +2140,9 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "Gemini 2.5 Flash 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "上一代 Flash 模型，已被官方标记弃用。",
       "useCases": [
         "chat",
-        "long",
         "code"
       ],
       "contextTokens": 1048576,
@@ -2107,10 +2151,12 @@
       "currency": "USD",
       "sourceId": "google-pricing",
       "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "采用付费层 Standard 文本输入与输出费率，输出包含思考 Token。",
-        "免费配额、缓存存储、音视频 Token、联网搜索与 Priority 不计入标准榜。"
+        "页面未按输入长度分档，单一费率。",
+        "音频输入单独计价：输入 $1.0（文本/图像/视频 $0.3）；音频缓存读取 $0.1（文本/图像/视频 $0.03）；输出与文本同价。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。",
+        "页面提示已弃用：2026-12-01 起请求将自动路由到 Gemini 3.5 Flash-Lite。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -2134,7 +2180,7 @@
       "status": "preview",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "Gemini 3.1 Pro Preview 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "第三代 Pro 模型（预览版），面向多模态理解、agentic 能力与 vibe-coding。",
       "useCases": [
         "chat",
         "long",
@@ -2146,15 +2192,15 @@
       "currency": "USD",
       "sourceId": "google-pricing",
       "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-3.1-pro-preview",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "超过 200K 输入后整次请求按对应长输入档计费。",
-        "只比较 Standard 付费文本 Token，不含缓存存储与工具费用。"
+        "按输入长度分档：prompt > 200k 时整段请求进入高价档（页面原文 \"prompts > 200k tokens\"）。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。"
       ],
       "zeroPriceReason": null,
       "rates": [
         {
-          "label": "输入不超过 200,000 Token",
+          "label": "提示不超过 200,000 Token",
           "upToInputTokens": 200000,
           "input": 2,
           "output": 12,
@@ -2164,7 +2210,7 @@
           "promotion": null
         },
         {
-          "label": "输入不超过 1,048,576 Token",
+          "label": "提示超过 200,000 Token（至上下文上限）",
           "upToInputTokens": 1048576,
           "input": 4,
           "output": 18,
@@ -2183,7 +2229,7 @@
       "status": "active",
       "region": "global",
       "regionLabel": "全球标准 API",
-      "description": "Gemini 2.5 Pro 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "上一代 Pro 模型，已被官方标记弃用。",
       "useCases": [
         "chat",
         "long",
@@ -2195,15 +2241,16 @@
       "currency": "USD",
       "sourceId": "google-pricing",
       "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-2.5-pro",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "超过 200K 输入后整次请求按对应长输入档计费。",
-        "只比较 Standard 付费文本 Token，不含缓存存储与工具费用。"
+        "按输入长度分档：prompt > 200k 时整段请求进入高价档（页面原文 \"prompts > 200k tokens\"）。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。",
+        "页面提示已弃用：2026-12-01 起所有 gemini-2.5-pro 请求将自动路由到 Gemini 3.8 Flash。"
       ],
       "zeroPriceReason": null,
       "rates": [
         {
-          "label": "输入不超过 200,000 Token",
+          "label": "提示不超过 200,000 Token",
           "upToInputTokens": 200000,
           "input": 1.25,
           "output": 10,
@@ -2213,7 +2260,7 @@
           "promotion": null
         },
         {
-          "label": "输入不超过 1,048,576 Token",
+          "label": "提示超过 200,000 Token（至上下文上限）",
           "upToInputTokens": 1048576,
           "input": 2.5,
           "output": 15,
@@ -2232,22 +2279,23 @@
       "status": "active",
       "region": "mainland",
       "regionLabel": "华北2（北京）",
-      "description": "Qwen3.7 Max 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "千问 Max 上一代旗舰，能力等同于 qwen3.7-max-2026-05-20。",
       "useCases": [
         "chat",
         "long",
         "code"
       ],
-      "contextTokens": null,
-      "contextScope": "combined",
+      "contextTokens": 1000000,
+      "contextScope": "input",
       "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "alibaba-pricing",
       "specSource": null,
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "华北2（北京）官方原价，输入长度决定整次请求单价；不混用国际地域。",
-        "已保留官网完整计价阶梯；模型上下文规格与最大输出暂不填推测值。"
+        "价格取自「华北2（北京）」地域标签页。",
+        "页面注明当前能力等同于 qwen3.7-max-2026-05-20，快照别名不单独建条目。",
+        "非思考和思考模式同价；Batch 调用 5 折。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -2261,7 +2309,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "maxInputTokens": 1000000
     },
     {
       "id": "qwen3-7-max-preview",
@@ -2271,22 +2320,22 @@
       "status": "preview",
       "region": "mainland",
       "regionLabel": "华北2（北京）",
-      "description": "Qwen3.7 Max Preview 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "千问 Max 预览版，仅提供思考模式。",
       "useCases": [
         "chat",
-        "long",
         "code"
       ],
-      "contextTokens": null,
-      "contextScope": "combined",
+      "contextTokens": 1000000,
+      "contextScope": "input",
       "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "alibaba-pricing",
       "specSource": null,
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "华北2（北京）官方原价，输入长度决定整次请求单价；不混用国际地域。",
-        "已保留官网完整计价阶梯；模型上下文规格与最大输出暂不填推测值。"
+        "价格取自「华北2（北京）」地域标签页。",
+        "页面标注「仅思考模式」，无可选的非思考档；行内未标注 Batch 半价，batchFactor 留空。",
+        "status 记为 preview（预览版，能力等同于 qwen3.7-max-2026-05-17）。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -2300,7 +2349,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "maxInputTokens": 1000000
     },
     {
       "id": "qwen3-6-max-preview",
@@ -2325,7 +2375,8 @@
       "verifiedAt": "2026-09-12",
       "notes": [
         "华北2（北京）官方原价，输入长度决定整次请求单价；不混用国际地域。",
-        "已保留官网完整计价阶梯；模型上下文规格与最大输出暂不填推测值。"
+        "已保留官网完整计价阶梯；模型上下文规格与最大输出暂不填推测值。",
+        "2026-11-12 复核：官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）已不再列出该型号，费率沿用 2026-09-12 快照，可能已下架或已迁移，请以控制台实际可调用型号为准。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -2359,22 +2410,21 @@
       "status": "active",
       "region": "mainland",
       "regionLabel": "华北2（北京）",
-      "description": "Qwen3.6 Flash 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "千问 Flash 上一代，输出计价偏高。",
       "useCases": [
         "chat",
-        "long",
-        "code"
+        "long"
       ],
-      "contextTokens": null,
-      "contextScope": "combined",
+      "contextTokens": 1000000,
+      "contextScope": "input",
       "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "alibaba-pricing",
       "specSource": null,
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "华北2（北京）官方原价，输入长度决定整次请求单价；不混用国际地域。",
-        "已保留官网完整计价阶梯；模型上下文规格与最大输出暂不填推测值。"
+        "价格取自「华北2（北京）」地域标签页。",
+        "非思考和思考模式同价；Batch 调用 5 折；能力等同于 qwen3.6-flash-2026-04-16。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -2398,7 +2448,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "maxInputTokens": 1000000
     },
     {
       "id": "qwen3-7-plus",
@@ -2408,23 +2459,23 @@
       "status": "active",
       "region": "mainland",
       "regionLabel": "华北2（北京）",
-      "description": "Qwen3.7 Plus 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "千问 Plus 均衡档，兼顾质量与成本。",
       "useCases": [
         "chat",
-        "long",
-        "code"
+        "long"
       ],
-      "contextTokens": null,
-      "contextScope": "combined",
+      "contextTokens": 1000000,
+      "contextScope": "input",
       "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "alibaba-pricing",
       "specSource": null,
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "华北2（北京）官方原价，输入长度决定整次请求单价；不混用国际地域。",
-        "已保留官网完整计价阶梯；模型上下文规格与最大输出暂不填推测值。",
-        "官网明确标注原价与限时八折；此处记录原价，优惠有效期未完整核验，暂不启用促销价。"
+        "价格取自「华北2（北京）」地域标签页，收录页面「原价」列。",
+        "页面同时标注「限时8折」活动价，属限时活动，promotion 留空并记录于此。",
+        "非思考模式与思考模式（思维链+回答）同价；Batch 调用 5 折。",
+        "能力等同于 qwen3.7-plus-2026-05-26，快照别名不单独建条目。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -2448,7 +2499,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "maxInputTokens": 1000000
     },
     {
       "id": "qwen3-6-plus",
@@ -2458,22 +2510,21 @@
       "status": "active",
       "region": "mainland",
       "regionLabel": "华北2（北京）",
-      "description": "Qwen3.6 Plus 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "千问 Plus 上一代，长上下文档位较陡。",
       "useCases": [
         "chat",
-        "long",
-        "code"
+        "long"
       ],
-      "contextTokens": null,
-      "contextScope": "combined",
+      "contextTokens": 1000000,
+      "contextScope": "input",
       "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "alibaba-pricing",
       "specSource": null,
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "华北2（北京）官方原价，输入长度决定整次请求单价；不混用国际地域。",
-        "已保留官网完整计价阶梯；模型上下文规格与最大输出暂不填推测值。"
+        "价格取自「华北2（北京）」地域标签页。",
+        "思考模式（思维链+回答）与本表输出价相同；行内未标注 Batch 半价，batchFactor 留空。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -2497,7 +2548,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "maxInputTokens": 1000000
     },
     {
       "id": "qwen3-coder-plus",
@@ -2522,7 +2574,8 @@
       "verifiedAt": "2026-09-12",
       "notes": [
         "华北2（北京）官方原价，输入长度决定整次请求单价；不混用国际地域。",
-        "已保留官网完整计价阶梯；模型上下文规格与最大输出暂不填推测值。"
+        "已保留官网完整计价阶梯；模型上下文规格与最大输出暂不填推测值。",
+        "2026-11-12 复核：官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）已不再列出该型号，费率沿用 2026-09-12 快照，可能已下架或已迁移，请以控制台实际可调用型号为准。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -2576,22 +2629,20 @@
       "status": "active",
       "region": "mainland",
       "regionLabel": "华北2（北京）",
-      "description": "Qwen3 Coder Flash 官方文本 API；使用原币标准费率比较输入、输出与任务成本。",
+      "description": "千问代码专用轻量模型，四档输入阶梯。",
       "useCases": [
-        "chat",
-        "long",
         "code"
       ],
-      "contextTokens": null,
-      "contextScope": "combined",
+      "contextTokens": 1000000,
+      "contextScope": "input",
       "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "alibaba-pricing",
       "specSource": null,
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "华北2（北京）官方原价，输入长度决定整次请求单价；不混用国际地域。",
-        "已保留官网完整计价阶梯；模型上下文规格与最大输出暂不填推测值。"
+        "价格取自「华北2（北京）」地域标签页。",
+        "该行未标注 Batch 半价，也未标注上下文缓存折扣，batchFactor / cacheRead 留空。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -2635,7 +2686,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "maxInputTokens": 1000000
     },
     {
       "id": "qwen3-coder-next",
@@ -2660,7 +2712,8 @@
       "verifiedAt": "2026-09-12",
       "notes": [
         "华北2（北京）官方原价，输入长度决定整次请求单价；不混用国际地域。",
-        "已保留官网完整计价阶梯；模型上下文规格与最大输出暂不填推测值。"
+        "已保留官网完整计价阶梯；模型上下文规格与最大输出暂不填推测值。",
+        "2026-11-12 复核：官方定价页（https://help.aliyun.com/zh/model-studio/model-pricing）已不再列出该型号，费率沿用 2026-09-12 快照，可能已下架或已迁移，请以控制台实际可调用型号为准。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -2754,7 +2807,7 @@
       "status": "active",
       "region": "mainland",
       "regionLabel": "中国大陆 · 官方 API",
-      "description": "Kimi K3 的官方 API 标准费率。",
+      "description": "上一代旗舰模型，2.8 万亿参数，基于 KDA 混合线性注意力与注意力残差构建，原生支持视觉理解，100 万 token 上下文。",
       "useCases": [
         "chat",
         "long",
@@ -2765,10 +2818,14 @@
       "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "kimi-official-pricing",
-      "specSource": "https://platform.kimi.com/docs/guide/kimi-k3-quickstart",
-      "verifiedAt": "2026-09-12",
+      "specSource": "https://platform.kimi.com/docs/pricing/chat",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "输入和输出均为按量统一单价，不按上下文长度分段；最大输出未独立核验。"
+        "价格表列：输入 ¥20.00 / MTok，输出 ¥100.00 / MTok，缓存命中 ¥2.00 / MTok。",
+        "缓存写入单列定价：5min ¥20.00 / MTok，1h ¥40.00 / MTok。",
+        "Batch API 支持该模型，费率为标准价格 60%（Batch 页原文 ¥12.00 / ¥60.00 / ¥1.20），batchFactor 记 0.6。",
+        "quickstart 原文：上下文长度为 1M tokens，计费不按上下文长度分段。",
+        "页面未给出最大输入 / 最大输出 Token 数。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -2778,7 +2835,7 @@
           "input": 20,
           "output": 100,
           "cacheRead": 2,
-          "batchFactor": null,
+          "batchFactor": 0.6,
           "offPeakFactor": null,
           "promotion": null
         }
@@ -2789,24 +2846,28 @@
       "name": "Kimi K2.7 Code",
       "apiId": "kimi-k2.7-code",
       "providerId": "moonshot",
-      "status": "active",
+      "status": "deprecated",
       "region": "mainland",
       "regionLabel": "中国大陆 · 官方 API",
-      "description": "Kimi K2.7 Code 的官方 API 标准费率。",
+      "description": "面向编程场景的 K2.7 模型，支持 256K 上下文窗口与思考模式。",
       "useCases": [
-        "chat",
-        "long",
-        "code"
+        "code",
+        "chat"
       ],
       "contextTokens": 262144,
       "contextScope": "combined",
       "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "kimi-official-pricing",
-      "specSource": "https://platform.kimi.com/docs/guide/kimi-k2-7-code-quickstart",
-      "verifiedAt": "2026-09-12",
+      "specSource": "https://platform.kimi.com/docs/pricing/chat",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "缓存未命中为标准输入价；最大输出未独立核验。"
+        "价格表列：输入 ¥6.50 / MTok，输出 ¥27.00 / MTok，缓存命中 ¥1.30 / MTok；K2 表无缓存写入列，Batch 页原文「kimi-k2.7-code、kimi-k2.6 不支持缓存写入」。",
+        "status 记为 deprecated：页面公告「K2 系列模型将于 2026 年 10 月 31 日起停止向新注册用户开放，已注册用户不受影响；我们计划在 12 月底下线所有 K2 系列模型」。",
+        "Batch API 支持该模型，费率为标准价格 60%（Batch 页原文 ¥3.90 / ¥16.20 / ¥0.78），batchFactor 记 0.6。",
+        "上下文：同系列 quickstart 原文「kimi-k2.7-code、kimi-k2.7-code-highspeed、kimi-k2.6 模型均提供 256K 上下文窗口」，定价页写 262,144 tokens。",
+        "页面未给出最大输入 / 最大输出 Token 数。",
+        "官方公告：K2 系列自 2026-10-31 起停止向新注册用户开放，计划 12 月底下线。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -2816,7 +2877,7 @@
           "input": 6.5,
           "output": 27,
           "cacheRead": 1.3,
-          "batchFactor": null,
+          "batchFactor": 0.6,
           "offPeakFactor": null,
           "promotion": null
         }
@@ -2827,24 +2888,28 @@
       "name": "Kimi K2.7 Code 高速版",
       "apiId": "kimi-k2.7-code-highspeed",
       "providerId": "moonshot",
-      "status": "active",
+      "status": "deprecated",
       "region": "mainland",
       "regionLabel": "中国大陆 · 官方 API",
-      "description": "Kimi K2.7 Code 高速版 的官方 API 标准费率。",
+      "description": "Kimi K2.7 Code 的高速版本，同一模型、输出速度约为普通版的 5-6 倍，256K 上下文窗口。",
       "useCases": [
-        "chat",
-        "long",
-        "code"
+        "code",
+        "chat"
       ],
       "contextTokens": 262144,
       "contextScope": "combined",
       "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "kimi-official-pricing",
-      "specSource": "https://platform.kimi.com/docs/guide/kimi-k2-7-code-quickstart",
-      "verifiedAt": "2026-09-12",
+      "specSource": "https://platform.kimi.com/docs/pricing/chat",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "高速版独立费率，不与普通 K2.7 Code 价格混用；最大输出未独立核验。"
+        "价格表列：输入 ¥13.00 / MTok，输出 ¥54.00 / MTok，缓存命中 ¥2.60 / MTok。",
+        "status 记为 deprecated：K2 系列 2026 年 10 月 31 日起停止向新注册用户开放，计划 12 月底下线。",
+        "Batch API 支持列表与价格表均未包含该高速版，batchFactor 为 null。",
+        "上下文：quickstart 原文「kimi-k2.7-code、kimi-k2.7-code-highspeed、kimi-k2.6 模型均提供 256K 上下文窗口」。",
+        "页面未给出最大输入 / 最大输出 Token 数。",
+        "官方公告：K2 系列自 2026-10-31 起停止向新注册用户开放，计划 12 月底下线。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -2865,24 +2930,28 @@
       "name": "Kimi K2.6",
       "apiId": "kimi-k2.6",
       "providerId": "moonshot",
-      "status": "active",
+      "status": "deprecated",
       "region": "mainland",
       "regionLabel": "中国大陆 · 官方 API",
-      "description": "Kimi K2.6 的官方 API 标准费率。",
+      "description": "K2.6 通用模型，支持 256K 上下文窗口，可处理文本与图像理解任务。",
       "useCases": [
         "chat",
-        "long",
-        "code"
+        "long"
       ],
       "contextTokens": 262144,
       "contextScope": "combined",
       "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "kimi-official-pricing",
-      "specSource": "https://platform.kimi.com/docs/guide/kimi-k2-6-quickstart",
-      "verifiedAt": "2026-09-12",
+      "specSource": "https://platform.kimi.com/docs/pricing/chat",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "缓存未命中为标准输入价；最大输出未独立核验。"
+        "价格表列：输入 ¥6.50 / MTok，输出 ¥27.00 / MTok，缓存命中 ¥1.10 / MTok；不支持缓存写入（Batch 页原文）。",
+        "status 记为 deprecated：K2 系列 2026 年 10 月 31 日起停止向新注册用户开放，计划 12 月底下线。",
+        "Batch API 支持该模型，费率为标准价格 60%（Batch 页原文 ¥3.90 / ¥16.20 / ¥0.66），batchFactor 记 0.6。",
+        "上下文：quickstart 原文「kimi-k2.7-code、kimi-k2.7-code-highspeed、kimi-k2.6 模型均提供 256K 上下文窗口」。",
+        "页面未给出最大输入 / 最大输出 Token 数。",
+        "官方公告：K2 系列自 2026-10-31 起停止向新注册用户开放，计划 12 月底下线。"
       ],
       "zeroPriceReason": null,
       "rates": [
@@ -2892,7 +2961,7 @@
           "input": 6.5,
           "output": 27,
           "cacheRead": 1.1,
-          "batchFactor": null,
+          "batchFactor": 0.6,
           "offPeakFactor": null,
           "promotion": null
         }
@@ -3026,33 +3095,34 @@
       "status": "active",
       "region": "mainland",
       "regionLabel": "中国大陆 · 官方 API",
-      "description": "豆包 Seed 2.1 Pro 的官方 API 标准费率。",
+      "description": "方舟旗舰模型，单档 1024K 输入。",
       "useCases": [
         "chat",
         "long",
         "code"
       ],
-      "contextTokens": 256000,
-      "contextScope": "combined",
-      "maxInputTokens": 256000,
-      "maxOutputTokens": 256000,
+      "contextTokens": 1024000,
+      "contextScope": "input",
+      "maxInputTokens": 1024000,
+      "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "doubao-ark-pricing",
       "specSource": "https://docs.volcengine.com/docs/82379/1330310",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "展示标识为官方价目表的模型系列；本次规格对应 doubao-seed-2-1-pro-260628，实际调用需使用控制台支持的模型 ID 或接入点。",
-        "只比较常规在线推理的文本输入、输出；不包含音频输入及缓存存储费用。"
+        "价格取自「在线推理（常规）」表（非音频列），单位元/百万 Token。",
+        "批量推理表同模型为 3.00 / 1.20 / 15.00，恰为常规价 50%，故 batchFactor=0.5。",
+        "缓存存储另计 0.017 元/百万 Token/小时，不属读取价，未计入。"
       ],
       "zeroPriceReason": null,
       "rates": [
         {
-          "label": "输入不超过 256,000 Token",
-          "upToInputTokens": 256000,
+          "label": "输入长度 [0, 1024]K Token",
+          "upToInputTokens": 1024000,
           "input": 6,
           "output": 30,
           "cacheRead": 1.2,
-          "batchFactor": null,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         }
@@ -3066,33 +3136,32 @@
       "status": "active",
       "region": "mainland",
       "regionLabel": "中国大陆 · 官方 API",
-      "description": "豆包 Seed 2.1 Turbo 的官方 API 标准费率。",
+      "description": "方舟高性价比模型，输入上限 256K。",
       "useCases": [
         "chat",
-        "long",
-        "code"
+        "long"
       ],
       "contextTokens": 256000,
-      "contextScope": "combined",
+      "contextScope": "input",
       "maxInputTokens": 256000,
-      "maxOutputTokens": 256000,
+      "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "doubao-ark-pricing",
       "specSource": "https://docs.volcengine.com/docs/82379/1330310",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "展示标识为官方价目表的模型系列；本次规格对应 doubao-seed-2-1-turbo-260628，实际调用需使用控制台支持的模型 ID 或接入点。",
-        "只比较常规在线推理的文本输入、输出；不包含音频输入及缓存存储费用。"
+        "价格取自「在线推理（常规）」表（非音频列），单位元/百万 Token。",
+        "批量推理表为 1.50 / 0.60 / 7.50，为常规 50%，batchFactor=0.5。"
       ],
       "zeroPriceReason": null,
       "rates": [
         {
-          "label": "输入不超过 256,000 Token",
+          "label": "输入长度 [0, 256]K Token",
           "upToInputTokens": 256000,
           "input": 3,
           "output": 15,
           "cacheRead": 0.6,
-          "batchFactor": null,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         }
@@ -3106,53 +3175,54 @@
       "status": "active",
       "region": "mainland",
       "regionLabel": "中国大陆 · 官方 API",
-      "description": "豆包 Seed 2.0 Pro 的官方 API 标准费率。",
+      "description": "方舟上一代旗舰，按输入长度三档计费。",
       "useCases": [
         "chat",
         "long",
         "code"
       ],
       "contextTokens": 256000,
-      "contextScope": "combined",
-      "maxInputTokens": 224000,
-      "maxOutputTokens": 128000,
+      "contextScope": "input",
+      "maxInputTokens": 256000,
+      "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "doubao-ark-pricing",
       "specSource": "https://docs.volcengine.com/docs/82379/1330310",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "展示标识为官方价目表的模型系列；本次规格对应 doubao-seed-2-0-pro-260215，实际调用需使用控制台支持的模型 ID 或接入点。",
-        "只比较常规在线推理的文本输入、输出；不包含音频输入及缓存存储费用。"
+        "价格取自「在线推理（常规）」表（非音频列），单位元/百万 Token。",
+        "分段计费：整次请求的所有 token 按命中档位单价结算（页面示例：输入 200K 时输入 4.8、输出 24.0）。",
+        "批量推理表 1.6 / 2.4 / 4.8 与 8.0 / 12.0 / 24.0，为常规 50%，batchFactor=0.5。"
       ],
       "zeroPriceReason": null,
       "rates": [
         {
-          "label": "输入不超过 32,000 Token",
+          "label": "输入长度 ≤ 32,000 Token",
           "upToInputTokens": 32000,
           "input": 3.2,
           "output": 16,
           "cacheRead": 0.64,
-          "batchFactor": null,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         },
         {
-          "label": "输入不超过 128,000 Token",
+          "label": "输入长度 ≤ 128,000 Token",
           "upToInputTokens": 128000,
           "input": 4.8,
           "output": 24,
           "cacheRead": 0.96,
-          "batchFactor": null,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         },
         {
-          "label": "输入不超过 256,000 Token",
+          "label": "输入长度 ≤ 256,000 Token",
           "upToInputTokens": 256000,
           "input": 9.6,
           "output": 48,
           "cacheRead": 1.92,
-          "batchFactor": null,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         }
@@ -3166,53 +3236,51 @@
       "status": "preview",
       "region": "mainland",
       "regionLabel": "中国大陆 · 官方 API",
-      "description": "豆包 Seed 2.0 Code 的官方 API 标准费率。",
+      "description": "方舟代码专用模型，按输入长度三档计费。",
       "useCases": [
-        "chat",
-        "long",
         "code"
       ],
       "contextTokens": 256000,
-      "contextScope": "combined",
-      "maxInputTokens": 224000,
-      "maxOutputTokens": 128000,
+      "contextScope": "input",
+      "maxInputTokens": 256000,
+      "maxOutputTokens": null,
       "currency": "CNY",
       "sourceId": "doubao-ark-pricing",
       "specSource": "https://docs.volcengine.com/docs/82379/1330310",
-      "verifiedAt": "2026-09-12",
+      "verifiedAt": "2026-11-12",
       "notes": [
-        "展示标识为官方价目表的模型系列；本次规格对应 doubao-seed-2-0-code-preview-260215，实际调用需使用控制台支持的模型 ID 或接入点。",
-        "只比较常规在线推理的文本输入、输出；不包含音频输入及缓存存储费用。"
+        "价格取自「在线推理（常规）」表（非音频列），单位元/百万 Token。",
+        "批量推理表 1.6 / 2.4 / 4.8 与 8.0 / 12.0 / 24.0，为常规 50%，batchFactor=0.5。"
       ],
       "zeroPriceReason": null,
       "rates": [
         {
-          "label": "输入不超过 32,000 Token",
+          "label": "输入长度 ≤ 32,000 Token",
           "upToInputTokens": 32000,
           "input": 3.2,
           "output": 16,
           "cacheRead": 0.64,
-          "batchFactor": null,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         },
         {
-          "label": "输入不超过 128,000 Token",
+          "label": "输入长度 ≤ 128,000 Token",
           "upToInputTokens": 128000,
           "input": 4.8,
           "output": 24,
           "cacheRead": 0.96,
-          "batchFactor": null,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         },
         {
-          "label": "输入不超过 256,000 Token",
+          "label": "输入长度 ≤ 256,000 Token",
           "upToInputTokens": 256000,
           "input": 9.6,
           "output": 48,
           "cacheRead": 1.92,
-          "batchFactor": null,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         }
@@ -4751,6 +4819,2565 @@
           "output": 4,
           "cacheRead": 0.1,
           "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "qwen-max",
+      "name": "Qwen Max",
+      "apiId": "qwen-max",
+      "providerId": "alibaba",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问 Max 经典商用模型，仅支持非思考模式。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": null,
+      "contextScope": "input",
+      "maxOutputTokens": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页。",
+        "页面标注「无阶梯计价」，未给出输入长度分档，也未给出上下文长度，故 upToInputTokens 与 contextTokens 留空而不是猜测。",
+        "仅非思考模式。",
+        "页面标注「无阶梯计价」，官方未公布上下文上限；本表按单档记录，档位上界记为 1,000,000 仅用于排序展示，实际不随输入长度变价。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "alibaba-pricing",
+      "specSource": null,
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "不分档（页面标注「无阶梯计价」）",
+          "upToInputTokens": 1000000,
+          "input": 2.4,
+          "output": 9.6,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "qwen3-5-plus",
+      "name": "Qwen3.5 Plus",
+      "apiId": "qwen3.5-plus",
+      "providerId": "alibaba",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问 Plus 第三代，三档输入阶梯。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页。",
+        "思考模式输出价与表中输出价相同；行内未标注 Batch 半价，batchFactor 留空。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "alibaba-pricing",
+      "specSource": null,
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 0.8,
+          "output": 4.8,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 256,000 Token",
+          "upToInputTokens": 256000,
+          "input": 2,
+          "output": 12,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 4,
+          "output": 24,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "qwen-plus",
+      "name": "Qwen Plus",
+      "apiId": "qwen-plus",
+      "providerId": "alibaba",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问 Plus 经典商用模型，三档输入阶梯。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页，输入/输出取「非思考模式」列。",
+        "同一行还给出思考模式（思维链+回答）输出价 8元 / 24元 / 64元，高于非思考档，按要求只收非思考价。",
+        "Batch 调用 5 折；能力等同于 qwen-plus-2025-12-01。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "alibaba-pricing",
+      "specSource": null,
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 0.8,
+          "output": 2,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 256,000 Token",
+          "upToInputTokens": 256000,
+          "input": 2.4,
+          "output": 20,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 4.8,
+          "output": 48,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "qwen3-5-flash",
+      "name": "Qwen3.5 Flash",
+      "apiId": "qwen3.5-flash",
+      "providerId": "alibaba",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问 Flash 第三代，三档输入阶梯。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页。",
+        "非思考和思考模式同价；Batch 调用 5 折；能力等同于 qwen3.5-flash-2026-02-23。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "alibaba-pricing",
+      "specSource": null,
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 0.2,
+          "output": 2,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 256,000 Token",
+          "upToInputTokens": 256000,
+          "input": 0.8,
+          "output": 8,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 1.2,
+          "output": 12,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "qwen-long",
+      "name": "Qwen Long",
+      "apiId": "qwen-long",
+      "providerId": "alibaba",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问长文档模型，按长文本场景计费。",
+      "useCases": [
+        "long",
+        "chat"
+      ],
+      "contextTokens": null,
+      "contextScope": "input",
+      "maxOutputTokens": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页；该模型表只有一列单价，没有输入长度分档。",
+        "页面未给出上下文长度与最大输出，故 contextTokens / maxOutputTokens 留空而不是猜测。",
+        "Batch 调用 5 折（行内标注「Batch调用半价」）。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "alibaba-pricing",
+      "specSource": null,
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "不分档（页面未给长度阶梯）",
+          "upToInputTokens": 1000000,
+          "input": 0.5,
+          "output": 2,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "qwen3-vl-plus",
+      "name": "Qwen3 VL Plus",
+      "apiId": "qwen3-vl-plus",
+      "providerId": "alibaba",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问视觉理解多模态模型，图像/视频输入按 token 计费。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": 256000,
+      "contextScope": "input",
+      "maxInputTokens": 256000,
+      "maxOutputTokens": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页，输出价为「思维链+回答」。",
+        "行内标注「Batch调用半价」，但仅有「5折」表述、未给批量单价，batchFactor 记 0.5。",
+        "非思考和思考模式同价。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "alibaba-pricing",
+      "specSource": null,
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 1,
+          "output": 10,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 1.5,
+          "output": 15,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 256,000 Token",
+          "upToInputTokens": 256000,
+          "input": 3,
+          "output": 30,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "qwen3-8-2-4t-a95b",
+      "name": "Qwen3.8 2.4T A95B",
+      "apiId": "qwen3.8-2.4t-a95b",
+      "providerId": "alibaba",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问开源版超大稀疏模型（2.4T 总参数），由百炼托管。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页（开源版 Qwen3.8 表）。",
+        "非思考和思考模式同价；该节未标注 Batch 折扣，batchFactor 留空。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "alibaba-pricing",
+      "specSource": null,
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 12,
+          "output": 36,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "qwen3-8-27b",
+      "name": "Qwen3.8 27B",
+      "apiId": "qwen3.8-27b",
+      "providerId": "alibaba",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问开源版 27B 稠密模型，由百炼托管。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页（开源版 Qwen3.8 表）。",
+        "非思考和思考模式同价；该节未标注 Batch 折扣，batchFactor 留空。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "alibaba-pricing",
+      "specSource": null,
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 3,
+          "output": 12,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "doubao-seed-evolving",
+      "name": "豆包 Seed Evolving",
+      "apiId": "doubao-seed-evloving",
+      "providerId": "bytedance",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "方舟自有 Seed 系列迭代模型，单档 1024K 输入。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1024000,
+      "contextScope": "input",
+      "maxInputTokens": 1024000,
+      "maxOutputTokens": null,
+      "notes": [
+        "价格取自「在线推理（常规）」表，输入/输出/缓存命中均为「非音频」列，单位元/百万 Token。",
+        "页面模型名列写作 doubao-seed-evloving（原文如此），apiId 保留页面拼写。",
+        "批量推理表中没有该模型，batchFactor 留空。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "doubao-ark-pricing",
+      "specSource": null,
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入长度 [0, 1024]K Token",
+          "upToInputTokens": 1024000,
+          "input": 6,
+          "output": 30,
+          "cacheRead": 1.2,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "doubao-seed-2-1-lite",
+      "name": "豆包 Seed 2.1 Lite",
+      "apiId": "doubao-seed-2.1-lite",
+      "providerId": "bytedance",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "方舟轻量模型，单档 1024K 输入，支持音频输入。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1024000,
+      "contextScope": "input",
+      "maxInputTokens": 1024000,
+      "maxOutputTokens": null,
+      "notes": [
+        "价格取自「在线推理（常规）」表，取「非音频」输入与缓存命中列；音频输入为 12.00、音频缓存命中 2.40（未作为主费率）。",
+        "批量推理表为 0.40 / 0.16 / 1.35，恰为常规 50%，batchFactor=0.5。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "doubao-ark-pricing",
+      "specSource": null,
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入长度 [0, 1024]K Token",
+          "upToInputTokens": 1024000,
+          "input": 0.8,
+          "output": 2.7,
+          "cacheRead": 0.16,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "doubao-seed-character",
+      "name": "豆包 Seed Character",
+      "apiId": "doubao-seed-character",
+      "providerId": "bytedance",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "方舟角色扮演模型，两档输入计价，缓存命中价不随档位变化。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": 128000,
+      "contextScope": "input",
+      "maxInputTokens": 128000,
+      "maxOutputTokens": null,
+      "notes": [
+        "价格取自「在线推理（常规）」表（非音频列），单位元/百万 Token。",
+        "第二档缓存命中价与原表一致为 0.16（页面如此，非笔误校正）。",
+        "批量推理表无该模型，batchFactor 留空。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "doubao-ark-pricing",
+      "specSource": null,
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入长度 ≤ 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 0.8,
+          "output": 2,
+          "cacheRead": 0.16,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入长度 ≤ 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 1.2,
+          "output": 6,
+          "cacheRead": 0.16,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "doubao-seed-translation",
+      "name": "豆包 Seed Translation",
+      "apiId": "doubao-seed-translation",
+      "providerId": "bytedance",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "方舟翻译专用模型，单一价格不分档。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": null,
+      "contextScope": "input",
+      "maxOutputTokens": null,
+      "notes": [
+        "价格取自「在线推理（常规）」表，单位元/百万 Token。",
+        "该行条件列为「-」，页面未给输入长度分档，也未给缓存存储/缓存命中价，故 upToInputTokens、contextTokens、cacheRead 留空。",
+        "批量推理表为 0.60 / 0.24 / 1.80，为常规 50%，batchFactor=0.5。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "doubao-ark-pricing",
+      "specSource": null,
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "不分档（页面条件列为「-」）",
+          "upToInputTokens": 1000000,
+          "input": 1.2,
+          "output": 3.6,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "kimi-k3-1-pro",
+      "name": "Kimi K3.1 Pro",
+      "apiId": "kimi-k3.1-pro",
+      "providerId": "moonshot",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "3 万亿级参数旗舰模型，支持 100 万 token 上下文与视觉输入，在代码、3D 创作、金融研究与长程 Agent 能力上提升显著。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1048576,
+      "contextScope": "combined",
+      "maxOutputTokens": null,
+      "notes": [
+        "价格表列：输入 ¥13.00 / MTok，输出 ¥68.00 / MTok，缓存命中 ¥1.30 / MTok。",
+        "缓存写入单列定价：5min ¥13.00 / MTok，1h ¥26.00 / MTok；不指定 TTL 时默认 5min。",
+        "Batch API 支持该模型，费率为标准价格 60%（Batch 页原文 ¥7.80 / ¥40.80 / ¥0.78），batchFactor 记 0.6。",
+        "quickstart 原文：上下文长度为 1M tokens，计费不按上下文长度分段，所有用量按统一单价计费。",
+        "页面未给出最大输入 / 最大输出 Token 数。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "kimi-official-pricing",
+      "specSource": "https://platform.kimi.com/docs/pricing/chat",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 1,048,576 Token",
+          "upToInputTokens": 1048576,
+          "input": 13,
+          "output": 68,
+          "cacheRead": 1.3,
+          "batchFactor": 0.6,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "kimi-k3-1-pro-highspeed",
+      "name": "Kimi K3.1 Pro Highspeed",
+      "apiId": "kimi-k3.1-pro-highspeed",
+      "providerId": "moonshot",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "Kimi K3.1 Pro 的高速版本，同等智能，输出速度约为普通版的 2~3 倍。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1048576,
+      "contextScope": "combined",
+      "maxOutputTokens": null,
+      "notes": [
+        "价格表列：输入 ¥26.00 / MTok，输出 ¥136.00 / MTok，缓存命中 ¥1.30 / MTok。",
+        "缓存写入单列定价：5min ¥26.00 / MTok，1h ¥52.00 / MTok。",
+        "Batch API 页的支持列表与价格表均未列出该高速版，故 batchFactor 为 null。",
+        "quickstart 原文：「我们同步推出高速版模型 Kimi K3.1 Pro Highspeed，同等智能，输出速度约 2~3 倍。」",
+        "页面未给出最大输入 / 最大输出 Token 数。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "kimi-official-pricing",
+      "specSource": "https://platform.kimi.com/docs/pricing/chat",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 1,048,576 Token",
+          "upToInputTokens": 1048576,
+          "input": 26,
+          "output": 136,
+          "cacheRead": 1.3,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "ernie-5-5-flash",
+      "name": "ERNIE-5.5-Flash",
+      "apiId": "ernie-5.5-flash-preview",
+      "providerId": "baidu",
+      "status": "preview",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千帆上的 ERNIE 5.5 Flash 文本生成模型，1M 上下文，页面按高峰/空闲时段差异化定价。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": 1000000,
+      "notes": [
+        "原文单位元/千tokens：输入 活动价 0.001 / 原价 0.002；命中缓存 活动价 0.0001 / 原价 0.0002；输出 活动价 0.004 / 原价 0.008。此处取「原价」×1000，即 2.00 / 0.20 / 8.00 元/百万 Token。",
+        "页面同时给限时活动价（1.00 / 0.10 / 4.00 元/百万 Token，恰为原价 5 折）；按 SPEC 促销不进基础费率，promotion 置 null，活动价记于此。",
+        "页面分「高峰时段：8:00-22:00」与「空闲时段：22:00-次日8:00」两档，空闲价为高峰价 5 折（输入 0.001、缓存 0.0001、输出 0.004 元/千tokens），故 offPeakFactor 记 0.5。",
+        "status 记为 preview：定价页与模型列表页的版本名称均为 ERNIE-5.5-Flash-Preview，API 接入点 ID 为 ernie-5.5-flash-preview。",
+        "上下文 1M / 最大输入 1M / 最大输出 1M 取自同站「模型列表」（https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j）；定价页只写 1M，本记录按 1,000,000 Token 处理。",
+        "批量推理列为「-」，无 Batch 折扣。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "baidu-pricing",
+      "specSource": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token（高峰时段价格，空闲时段 5 折）",
+          "upToInputTokens": 1000000,
+          "input": 2,
+          "output": 8,
+          "cacheRead": 0.2,
+          "batchFactor": null,
+          "offPeakFactor": 0.5,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "ernie-light-dt-1-0",
+      "name": "ERNIE-Light-DT",
+      "apiId": "ernie-light-dt-1.0",
+      "providerId": "baidu",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千帆 ERNIE-Light-DT 轻量文本生成模型，1M 上下文、最大输出 128k，单一费率不分时段。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": 128000,
+      "notes": [
+        "原文单位元/千tokens：输入 0.008，命中缓存 0.0008，输出 0.028；×1000 即 8.00 / 0.80 / 28.00 元/百万 Token。",
+        "该型号页面只给一档价格，未按时段或输入长度分档，offPeakFactor / batchFactor 均为 null。",
+        "上下文 1M / 最大输入 1M / 最大输出 128k 取自同站「模型列表」（https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j），本记录按 1,000,000 与 128,000 Token 处理。",
+        "批量推理列为「-」，无 Batch 折扣。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "baidu-pricing",
+      "specSource": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 8,
+          "output": 28,
+          "cacheRead": 0.8,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "ernie-5-1",
+      "name": "ERNIE 5.1",
+      "apiId": "ernie-5.1",
+      "providerId": "baidu",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千帆 ERNIE 5.1 文本生成模型，128k 上下文，按输入长度 32k 分界两档计价。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 128000,
+      "contextScope": "combined",
+      "maxInputTokens": 119000,
+      "maxOutputTokens": 65536,
+      "notes": [
+        "原文单位元/千tokens：输入<=32k 0.004、输出 0.018；32k<输入<=128k 输入 0.006、输出 0.022。×1000 即 4.00/18.00 与 6.00/22.00 元/百万 Token。",
+        "阶梯按定价页原文「输入<=32k」「32k<输入<=128k」两档，最后一档上界取上下文 128k = 128,000 Token。",
+        "页面未给该型号缓存命中价，cacheRead 为 null。",
+        "上下文 128k / 最大输入 119k / 最大输出 [1，65536] 取自同站「模型列表」（https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j）。",
+        "批量推理列为「-」，无 Batch 折扣。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "baidu-pricing",
+      "specSource": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 4,
+          "output": 18,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入 32,000 至 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 6,
+          "output": 22,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "hunyuan-role-latest",
+      "name": "Hunyuan-role-latest",
+      "apiId": "hunyuan-role-latest",
+      "providerId": "tencent",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "混元角色扮演模型，面向 AI 数字分身、角色扮演与情感陪聊场景，强化角色一致性与多轮对话连贯性。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": null,
+      "contextScope": "combined",
+      "maxInputTokens": 28000,
+      "maxOutputTokens": 4000,
+      "notes": [
+        "后付费刊例价原文：「Hunyuan-role-latest 输入：2.4元 输出：9.6元」，即 2.40 / 9.60 元/百万 Token。",
+        "最大输入 28k / 最大输出 4k 取自同站「产品概述」。",
+        "页面顶部公告原文：「为进一步提升大模型服务体验，腾讯混元大模型相关功能将逐步迁移至 TokenHub。迁移后，原平台将不再新增模型能力，并停止支持新购模型服务。用户已购买的模型服务可继续使用，暂不受影响。如需开通新的模型服务或使用更多模型能力，请前往 TokenHub。」",
+        "上下文窗口总长页面未给出；此处上下文按 null，阶梯上界取同站「产品概述」给出的最大输入 Token 数。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "tencent-pricing",
+      "specSource": "https://cloud.tencent.cn/document/product/1729/97731",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 28,000 Token（页面最大输入上限）",
+          "upToInputTokens": 28000,
+          "input": 2.4,
+          "output": 9.6,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "hunyuan-translation",
+      "name": "Hunyuan-translation",
+      "apiId": "hunyuan-translation",
+      "providerId": "tencent",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "混元翻译专项模型，支持 33 种语言互译与 5 种民族语言互译。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": null,
+      "contextScope": "combined",
+      "maxInputTokens": 4000,
+      "maxOutputTokens": 4000,
+      "notes": [
+        "后付费刊例价原文：「Hunyuan-translation 输入：1.2元 输出：3.6元」，即 1.20 / 3.60 元/百万 Token。",
+        "最大输入 4k / 最大输出 4k 取自同站「产品概述」。",
+        "页面顶部公告原文：「为进一步提升大模型服务体验，腾讯混元大模型相关功能将逐步迁移至 TokenHub。迁移后，原平台将不再新增模型能力，并停止支持新购模型服务。用户已购买的模型服务可继续使用，暂不受影响。如需开通新的模型服务或使用更多模型能力，请前往 TokenHub。」",
+        "上下文窗口总长页面未给出；此处上下文按 null，阶梯上界取同站「产品概述」给出的最大输入 Token 数。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "tencent-pricing",
+      "specSource": "https://cloud.tencent.cn/document/product/1729/97731",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 4,000 Token（页面最大输入上限）",
+          "upToInputTokens": 4000,
+          "input": 1.2,
+          "output": 3.6,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "hunyuan-translation-lite",
+      "name": "Hunyuan-translation-lite",
+      "apiId": "hunyuan-translation-lite",
+      "providerId": "tencent",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "混元翻译轻量模型，基于混元 2B-Dense 基座做翻译专项优化，支持多语种互译。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": null,
+      "contextScope": "combined",
+      "maxInputTokens": 4000,
+      "maxOutputTokens": 4000,
+      "notes": [
+        "后付费刊例价原文：「Hunyuan-translation-lite 输入：1元 输出：3元」，即 1.00 / 3.00 元/百万 Token。",
+        "最大输入 4k / 最大输出 4k 取自同站「产品概述」。",
+        "页面顶部公告原文：「为进一步提升大模型服务体验，腾讯混元大模型相关功能将逐步迁移至 TokenHub。迁移后，原平台将不再新增模型能力，并停止支持新购模型服务。用户已购买的模型服务可继续使用，暂不受影响。如需开通新的模型服务或使用更多模型能力，请前往 TokenHub。」",
+        "上下文窗口总长页面未给出；此处上下文按 null，阶梯上界取同站「产品概述」给出的最大输入 Token 数。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "tencent-pricing",
+      "specSource": "https://cloud.tencent.cn/document/product/1729/97731",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 4,000 Token（页面最大输入上限）",
+          "upToInputTokens": 4000,
+          "input": 1,
+          "output": 3,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "hunyuan-vision-1-5-instruct",
+      "name": "Tencent HY Vision 1.5 Instruct",
+      "apiId": "hunyuan-vision-1.5-instruct",
+      "providerId": "tencent",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "基于文本 TurboS 基座的图生文快思考模型，在图像基础识别与图像分析推理上较上一版有明显提升。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": null,
+      "contextScope": "combined",
+      "maxInputTokens": 24000,
+      "maxOutputTokens": 16000,
+      "notes": [
+        "后付费刊例价原文：「Tencent HY Vision 1.5 Instruct 输入：3元 输出：9元」，即 3.00 / 9.00 元/百万 Token。",
+        "API 调用名 hunyuan-vision-1.5-instruct；最大输入 24k / 最大输出 16k 取自同站「产品概述」。",
+        "页面顶部公告原文：「为进一步提升大模型服务体验，腾讯混元大模型相关功能将逐步迁移至 TokenHub。迁移后，原平台将不再新增模型能力，并停止支持新购模型服务。用户已购买的模型服务可继续使用，暂不受影响。如需开通新的模型服务或使用更多模型能力，请前往 TokenHub。」",
+        "上下文窗口总长页面未给出；此处上下文按 null，阶梯上界取同站「产品概述」给出的最大输入 Token 数。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "tencent-pricing",
+      "specSource": "https://cloud.tencent.cn/document/product/1729/97731",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 24,000 Token（页面最大输入上限）",
+          "upToInputTokens": 24000,
+          "input": 3,
+          "output": 9,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "hunyuan-t1-vision",
+      "name": "Hunyuan-t1-vision",
+      "apiId": "hunyuan-t1-vision",
+      "providerId": "tencent",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "混元视觉深度思考模型，覆盖通用图文问答、视觉定位、OCR、图表与拍题解题等任务。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": null,
+      "contextScope": "combined",
+      "maxInputTokens": 28000,
+      "maxOutputTokens": 20000,
+      "notes": [
+        "后付费刊例价原文：「Hunyuan-t1-vision 输入：3元 输出：9元」，即 3.00 / 9.00 元/百万 Token。",
+        "「产品概述」中该型号的版本名为 hunyuan-t1-vision-20250916，最大输入 28k / 最大输出 20k。",
+        "页面顶部公告原文：「为进一步提升大模型服务体验，腾讯混元大模型相关功能将逐步迁移至 TokenHub。迁移后，原平台将不再新增模型能力，并停止支持新购模型服务。用户已购买的模型服务可继续使用，暂不受影响。如需开通新的模型服务或使用更多模型能力，请前往 TokenHub。」",
+        "上下文窗口总长页面未给出；此处上下文按 null，阶梯上界取同站「产品概述」给出的最大输入 Token 数。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "tencent-pricing",
+      "specSource": "https://cloud.tencent.cn/document/product/1729/97731",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 28,000 Token（页面最大输入上限）",
+          "upToInputTokens": 28000,
+          "input": 3,
+          "output": 9,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "hunyuan-turbos-vision-video",
+      "name": "Hunyuan-turbos-vision-video",
+      "apiId": "hunyuan-turbos-vision-video",
+      "providerId": "tencent",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "混元视频理解模型，基于混元 turbos-vision，支持视频描述与视频内容问答。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": null,
+      "contextScope": "combined",
+      "maxInputTokens": 24000,
+      "maxOutputTokens": 8000,
+      "notes": [
+        "后付费刊例价原文：「Hunyuan-turbos-vision-video 输入：3元 输出：9元」，即 3.00 / 9.00 元/百万 Token。",
+        "最大输入 24k / 最大输出 8k 取自同站「产品概述」。",
+        "页面顶部公告原文：「为进一步提升大模型服务体验，腾讯混元大模型相关功能将逐步迁移至 TokenHub。迁移后，原平台将不再新增模型能力，并停止支持新购模型服务。用户已购买的模型服务可继续使用，暂不受影响。如需开通新的模型服务或使用更多模型能力，请前往 TokenHub。」",
+        "上下文窗口总长页面未给出；此处上下文按 null，阶梯上界取同站「产品概述」给出的最大输入 Token 数。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "CNY",
+      "sourceId": "tencent-pricing",
+      "specSource": "https://cloud.tencent.cn/document/product/1729/97731",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 24,000 Token（页面最大输入上限）",
+          "upToInputTokens": 24000,
+          "input": 3,
+          "output": 9,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-6-1-sol",
+      "name": "GPT-6.1 Sol",
+      "apiId": "gpt-6.1-sol",
+      "providerId": "openai",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "接近 Astra 的旗舰推理模型，用更低成本覆盖复杂工作负载。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1050000,
+      "contextScope": "combined",
+      "maxInputTokens": 922000,
+      "maxOutputTokens": 128000,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "输入超过 272,000 Token 时按长上下文档计价（模型页原文：prompts with more than 272K input tokens are priced at 2x input and cache rates and 1.5x output for the full request）。",
+        "缓存写入价（页面原文）：30 分钟 $2.50 / 12 小时 $5.00（每 1M Token），未计入 cacheRead。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 272,000 Token（短上下文）",
+          "upToInputTokens": 272000,
+          "input": 2,
+          "output": 10,
+          "cacheRead": 0.1,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,050,000 Token（长上下文）",
+          "upToInputTokens": 1050000,
+          "input": 4,
+          "output": 15,
+          "cacheRead": 0.2,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-6-1-terra",
+      "name": "GPT-6.1 Terra",
+      "apiId": "gpt-6.1-terra",
+      "providerId": "openai",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "主打视觉推理、精确 computer use 与自然写作的高效模型。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 1050000,
+      "contextScope": "combined",
+      "maxInputTokens": 922000,
+      "maxOutputTokens": 128000,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "输入超过 272,000 Token 时按长上下文档计价（模型页原文：prompts with more than 272K input tokens are priced at 2x input and cache rates and 1.5x output for the full request）。",
+        "缓存写入价（页面原文）：30 分钟 $1.25 / 12 小时 $2.50（每 1M Token），未计入 cacheRead。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-6.1-terra",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 272,000 Token（短上下文）",
+          "upToInputTokens": 272000,
+          "input": 1,
+          "output": 5,
+          "cacheRead": 0.05,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,050,000 Token（长上下文）",
+          "upToInputTokens": 1050000,
+          "input": 2,
+          "output": 7.5,
+          "cacheRead": 0.1,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-6-luna",
+      "name": "GPT-6 Luna",
+      "apiId": "gpt-6-luna",
+      "providerId": "openai",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "面向高并发专注型任务的最经济模型。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 1050000,
+      "contextScope": "combined",
+      "maxInputTokens": 922000,
+      "maxOutputTokens": 128000,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "输入超过 272,000 Token 时按长上下文档计价（模型页原文：prompts with more than 272K input tokens are priced at 2x input and cache rates and 1.5x output for the full request）。",
+        "缓存写入价（页面原文）：30 分钟 $0.125 / 12 小时 $0.25（每 1M Token），未计入 cacheRead。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 272,000 Token（短上下文）",
+          "upToInputTokens": 272000,
+          "input": 0.1,
+          "output": 0.5,
+          "cacheRead": 0.01,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,050,000 Token（长上下文）",
+          "upToInputTokens": 1050000,
+          "input": 0.2,
+          "output": 0.75,
+          "cacheRead": 0.02,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-6-sol",
+      "name": "GPT-6 Sol",
+      "apiId": "gpt-6-sol",
+      "providerId": "openai",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "为复杂编程与 agent 工作流打造的上一代 Sol 旗舰。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1050000,
+      "contextScope": "combined",
+      "maxInputTokens": 922000,
+      "maxOutputTokens": 128000,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "输入超过 272,000 Token 时按长上下文档计价（模型页原文：prompts with more than 272K input tokens are priced at 2x input and cache rates and 1.5x output for the full request）。",
+        "缓存写入价（页面原文）：30 分钟 $2.50 / 12 小时 $5.00（每 1M Token），未计入 cacheRead。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-6-sol",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 272,000 Token（短上下文）",
+          "upToInputTokens": 272000,
+          "input": 2,
+          "output": 10,
+          "cacheRead": 0.2,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,050,000 Token（长上下文）",
+          "upToInputTokens": 1050000,
+          "input": 4,
+          "output": 15,
+          "cacheRead": 0.4,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-5-6-sol",
+      "name": "GPT-5.6 Sol",
+      "apiId": "gpt-5.6-sol",
+      "providerId": "openai",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "GPT-5.6 系列旗舰，用于复杂专业工作。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1050000,
+      "contextScope": "combined",
+      "maxInputTokens": 922000,
+      "maxOutputTokens": 128000,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "输入超过 272,000 Token 时按长上下文档计价（模型页原文：prompts with more than 272K input tokens are priced at 2x input and cache rates and 1.5x output for the full request）。",
+        "缓存写入价（页面原文）：30 分钟 $5.00 / 12 小时 $10.00（每 1M Token），未计入 cacheRead。",
+        "页面注：GPT-5.6 Sol 为促销价，截止 2026-11-30（promotion 字段按规范记 null）。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-5.6-sol",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 272,000 Token（短上下文）",
+          "upToInputTokens": 272000,
+          "input": 4,
+          "output": 20,
+          "cacheRead": 0.4,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,050,000 Token（长上下文）",
+          "upToInputTokens": 1050000,
+          "input": 8,
+          "output": 30,
+          "cacheRead": 0.8,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-5-5-pro",
+      "name": "GPT-5.5 Pro",
+      "apiId": "gpt-5.5-pro",
+      "providerId": "openai",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "GPT-5.5 的高算力版本，输出更精确。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1050000,
+      "contextScope": "combined",
+      "maxOutputTokens": 128000,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "输入超过 272,000 Token 时按长上下文档计价（模型页原文：prompts with more than 272K input tokens are priced at 2x input and cache rates and 1.5x output for the full request）。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-5.5-pro",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 272,000 Token（短上下文）",
+          "upToInputTokens": 272000,
+          "input": 30,
+          "output": 180,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,050,000 Token（长上下文）",
+          "upToInputTokens": 1050000,
+          "input": 60,
+          "output": 270,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-5-4-pro",
+      "name": "GPT-5.4 Pro",
+      "apiId": "gpt-5.4-pro",
+      "providerId": "openai",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "GPT-5.4 的高算力版本。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1050000,
+      "contextScope": "combined",
+      "maxOutputTokens": 128000,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "输入超过 272,000 Token 时按长上下文档计价（模型页原文：prompts with more than 272K input tokens are priced at 2x input and cache rates and 1.5x output for the full request）。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-5.4-pro",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 272,000 Token（短上下文）",
+          "upToInputTokens": 272000,
+          "input": 30,
+          "output": 180,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,050,000 Token（长上下文）",
+          "upToInputTokens": 1050000,
+          "input": 60,
+          "output": 270,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-5-4-nano",
+      "name": "GPT-5.4 Nano",
+      "apiId": "gpt-5.4-nano",
+      "providerId": "openai",
+      "status": "deprecated",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "最便宜的 GPT-5.4 系列模型，用于简单高并发任务；官方已标记 Deprecated。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": 400000,
+      "contextScope": "combined",
+      "maxInputTokens": 272000,
+      "maxOutputTokens": 128000,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "页面仅列单一费率，未区分短/长上下文档。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-5.4-nano",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 400,000 Token",
+          "upToInputTokens": 400000,
+          "input": 0.2,
+          "output": 1.25,
+          "cacheRead": 0.02,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-5-2",
+      "name": "GPT-5.2",
+      "apiId": "gpt-5.2",
+      "providerId": "openai",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "上一代旗舰，支持可配置推理强度。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 400000,
+      "contextScope": "combined",
+      "maxOutputTokens": 128000,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-5.2",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 400,000 Token",
+          "upToInputTokens": 400000,
+          "input": 1.75,
+          "output": 14,
+          "cacheRead": 0.175,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-5-2-pro",
+      "name": "GPT-5.2 Pro",
+      "apiId": "gpt-5.2-pro",
+      "providerId": "openai",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "上一代 Pro 档，回答更精确。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 400000,
+      "contextScope": "combined",
+      "maxOutputTokens": 128000,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "页面未给缓存读取价（cached input 记为 \"-\"）。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-5.2-pro",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 400,000 Token",
+          "upToInputTokens": 400000,
+          "input": 21,
+          "output": 168,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-5-1",
+      "name": "GPT-5.1",
+      "apiId": "gpt-5.1",
+      "providerId": "openai",
+      "status": "deprecated",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "支持可配置推理强度的编程/agent 模型；官方已标记 Deprecated。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 400000,
+      "contextScope": "combined",
+      "maxOutputTokens": 128000,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-5.1",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 400,000 Token",
+          "upToInputTokens": 400000,
+          "input": 1.25,
+          "output": 10,
+          "cacheRead": 0.125,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-5",
+      "name": "GPT-5",
+      "apiId": "gpt-5",
+      "providerId": "openai",
+      "status": "deprecated",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "上一代通用推理模型；官方已标记 Deprecated。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 400000,
+      "contextScope": "combined",
+      "maxInputTokens": 272000,
+      "maxOutputTokens": 128000,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "页面仅列单一费率，未区分短/长上下文档。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-5",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 400,000 Token",
+          "upToInputTokens": 400000,
+          "input": 1.25,
+          "output": 10,
+          "cacheRead": 0.125,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-5-mini",
+      "name": "GPT-5 Mini",
+      "apiId": "gpt-5-mini",
+      "providerId": "openai",
+      "status": "deprecated",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "面向成本敏感、低延迟高并发的上一代小模型。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": 400000,
+      "contextScope": "combined",
+      "maxInputTokens": 272000,
+      "maxOutputTokens": 128000,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "页面仅列单一费率，未区分短/长上下文档。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-5-mini",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 400,000 Token",
+          "upToInputTokens": 400000,
+          "input": 0.25,
+          "output": 2,
+          "cacheRead": 0.025,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-5-nano",
+      "name": "GPT-5 Nano",
+      "apiId": "gpt-5-nano",
+      "providerId": "openai",
+      "status": "deprecated",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "GPT-5 系列最轻最快、最省成本的版本。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": 400000,
+      "contextScope": "combined",
+      "maxInputTokens": 272000,
+      "maxOutputTokens": 128000,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "页面仅列单一费率，未区分短/长上下文档。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-5-nano",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 400,000 Token",
+          "upToInputTokens": 400000,
+          "input": 0.05,
+          "output": 0.4,
+          "cacheRead": 0.005,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-5-pro",
+      "name": "GPT-5 Pro",
+      "apiId": "gpt-5-pro",
+      "providerId": "openai",
+      "status": "deprecated",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "GPT-5 的高算力版本，输出更精确。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 400000,
+      "contextScope": "combined",
+      "maxOutputTokens": 272000,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "页面未给缓存读取价（cached input 记为 \"-\"）。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-5-pro",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 400,000 Token",
+          "upToInputTokens": 400000,
+          "input": 15,
+          "output": 120,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-4-1",
+      "name": "GPT-4.1",
+      "apiId": "gpt-4.1",
+      "providerId": "openai",
+      "status": "deprecated",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "上一代最强非推理模型。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 1047576,
+      "contextScope": "combined",
+      "maxOutputTokens": 32768,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-4.1",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 1,047,576 Token",
+          "upToInputTokens": 1047576,
+          "input": 2,
+          "output": 8,
+          "cacheRead": 0.5,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-4-1-mini",
+      "name": "GPT-4.1 Mini",
+      "apiId": "gpt-4.1-mini",
+      "providerId": "openai",
+      "status": "deprecated",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "GPT-4.1 的更小更快版本。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": 1047576,
+      "contextScope": "combined",
+      "maxOutputTokens": 32768,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-4.1-mini",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 1,047,576 Token",
+          "upToInputTokens": 1047576,
+          "input": 0.4,
+          "output": 1.6,
+          "cacheRead": 0.1,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-4o",
+      "name": "GPT-4o",
+      "apiId": "gpt-4o",
+      "providerId": "openai",
+      "status": "deprecated",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "上一代全能多模态模型。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": 128000,
+      "contextScope": "combined",
+      "maxOutputTokens": 16384,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-4o",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 2.5,
+          "output": 10,
+          "cacheRead": 1.25,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-4o-mini",
+      "name": "GPT-4o Mini",
+      "apiId": "gpt-4o-mini",
+      "providerId": "openai",
+      "status": "deprecated",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "上一代小型低成本模型。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": 128000,
+      "contextScope": "combined",
+      "maxOutputTokens": 16384,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-4o-mini",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 0.15,
+          "output": 0.6,
+          "cacheRead": 0.075,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "o3-pro",
+      "name": "o3-pro",
+      "apiId": "o3-pro",
+      "providerId": "openai",
+      "status": "deprecated",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "o3 的高算力版本。",
+      "useCases": [
+        "long"
+      ],
+      "contextTokens": 200000,
+      "contextScope": "combined",
+      "maxOutputTokens": 100000,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。",
+        "页面未给缓存读取价（cached input 记为 \"-\"）。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/o3-pro",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 200,000 Token",
+          "upToInputTokens": 200000,
+          "input": 20,
+          "output": 80,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "o3",
+      "name": "o3",
+      "apiId": "o3",
+      "providerId": "openai",
+      "status": "deprecated",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "面向复杂任务的推理模型，已被 GPT-5 取代。",
+      "useCases": [
+        "long",
+        "code"
+      ],
+      "contextTokens": 200000,
+      "contextScope": "combined",
+      "maxOutputTokens": 100000,
+      "notes": [
+        "Standard 档费率；Batch/Flex 为 5 折（batchFactor=0.5），Fast 档为 2 倍、Ultrafast 未收录。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/o3",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 200,000 Token",
+          "upToInputTokens": 200000,
+          "input": 2,
+          "output": 8,
+          "cacheRead": 0.5,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "chat-latest",
+      "name": "Chat Latest",
+      "apiId": "chat-latest",
+      "providerId": "openai",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "ChatGPT 使用的 Instant 模型，官方不推荐用于 API。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": 400000,
+      "contextScope": "combined",
+      "maxInputTokens": 272000,
+      "maxOutputTokens": 128000,
+      "notes": [
+        "价格取自页面 Specialized models 表（Codex / ChatGPT 分类）。",
+        "页面 Batch 表未列该模型，且模型页标注 Batch 端点不支持，batchFactor 记 null。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/chat-latest",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 400,000 Token",
+          "upToInputTokens": 400000,
+          "input": 5,
+          "output": 30,
+          "cacheRead": 0.5,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-6-cyber",
+      "name": "GPT-6-Cyber",
+      "apiId": "gpt-6-cyber",
+      "providerId": "openai",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "Daybreak 授权网络安全模型，用于漏洞验证与修复确认。",
+      "useCases": [
+        "code"
+      ],
+      "contextTokens": 1050000,
+      "contextScope": "combined",
+      "maxInputTokens": 922000,
+      "maxOutputTokens": 128000,
+      "notes": [
+        "超过 272,000 Token 时进入长上下文档（页面 Specialized 表 long context 行）。",
+        "价格取自页面 Specialized models 表；需通过 Trusted Access（Daybreak）审批后才能调用。",
+        "页面 Batch 表未列该模型，且模型页标注 Batch 端点不支持，batchFactor 记 null。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-6-cyber",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 272,000 Token（短上下文）",
+          "upToInputTokens": 272000,
+          "input": 20,
+          "output": 100,
+          "cacheRead": 2,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,050,000 Token（长上下文）",
+          "upToInputTokens": 1050000,
+          "input": 40,
+          "output": 150,
+          "cacheRead": 4,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gpt-5-6-cyber",
+      "name": "GPT-5.6 Cyber",
+      "apiId": "gpt-5.6-cyber",
+      "providerId": "openai",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "面向授权漏洞研究与安全测试的网络安全模型。",
+      "useCases": [
+        "code"
+      ],
+      "contextTokens": 400000,
+      "contextScope": "combined",
+      "maxInputTokens": 272000,
+      "maxOutputTokens": 128000,
+      "notes": [
+        "页面 Specialized 表把该模型的 long context 行标为 \"-\"（未公布长上下文档价格）；此处按已公布的 ≤272K 费率填写并覆盖至上下文上限 400,000，>272K 请求的实际计费页面未给出。",
+        "价格取自页面 Specialized models 表；需通过 Trusted Access（Daybreak）审批后才能调用。",
+        "页面 Batch 表未列该模型，且模型页标注 Batch 端点不支持，batchFactor 记 null。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "openai-pricing",
+      "specSource": "https://developers.openai.com/api/docs/models/gpt-5.6-cyber",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 400,000 Token（页面仅公布 ≤272K 档费率）",
+          "upToInputTokens": 400000,
+          "input": 12.5,
+          "output": 75,
+          "cacheRead": 1.25,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "claude-fable-5-2",
+      "name": "Claude Fable 5.2",
+      "apiId": "claude-fable-5-2",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "面向高难度推理与长周期 agent 工作的前沿模型，Fable 系列当前旗舰。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxOutputTokens": 128000,
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $10 / 1 小时 $16（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $4 / output $20 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。",
+        "另有 Fast mode（输出速度最高 2.5 倍，整段上下文适用）：$16 输入 / $80 输出 每 MTok；不可与 Batch 同用。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 8,
+          "output": 40,
+          "cacheRead": 0.2,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "claude-mythos-5-2",
+      "name": "Claude Mythos 5.2",
+      "apiId": "claude-mythos-5-2",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "与 Fable 5.2 同价的受限访问版本，需通过 Anthropic 验证计划（如 Cyber Verification Program）后才能调用。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxOutputTokens": 128000,
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $10 / 1 小时 $16（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $4 / output $20 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。",
+        "官方标注 limited availability：需通过 Anthropic 验证计划申请访问。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 8,
+          "output": 40,
+          "cacheRead": 0.2,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "claude-mythos-5-1",
+      "name": "Claude Mythos 5.1",
+      "apiId": "claude-mythos-5-1",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "Fable 5.1 的受限访问版本，需通过 Anthropic 验证计划。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxOutputTokens": 128000,
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $12.5 / 1 小时 $20（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $5 / output $25 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。",
+        "官方标注 limited availability：需通过 Anthropic 验证计划申请访问。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 10,
+          "output": 50,
+          "cacheRead": 0.25,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "claude-mythos-5",
+      "name": "Claude Mythos 5",
+      "apiId": "claude-mythos-5",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "Fable 5 的受限访问版本，需通过 Anthropic 验证计划。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxOutputTokens": 128000,
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $12.5 / 1 小时 $20（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $5 / output $25 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。",
+        "官方标注 limited availability：需通过 Anthropic 验证计划申请访问。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 10,
+          "output": 50,
+          "cacheRead": 1,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "claude-opus-5-5",
+      "name": "Claude Opus 5.5",
+      "apiId": "claude-opus-5-5",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "面向长时间 agentic 编程与知识工作的主力模型，官方推荐默认选择。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxOutputTokens": 128000,
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $5 / 1 小时 $8（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $2 / output $10 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。",
+        "另有 Fast mode（输出速度最高 2.5 倍，整段上下文适用）：$8 输入 / $40 输出 每 MTok；不可与 Batch 同用。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 4,
+          "output": 20,
+          "cacheRead": 0.2,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "claude-opus-4-1",
+      "name": "Claude Opus 4.1",
+      "apiId": "claude-opus-4-1",
+      "providerId": "anthropic",
+      "status": "retired",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "已退役的 Opus 版本，仅在 Google Cloud（Google managed）与 Bedrock 等平台继续提供。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 200000,
+      "contextScope": "combined",
+      "maxOutputTokens": 32000,
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $18.75 / 1 小时 $30（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $7.5 / output $37.5 每 MTok）。",
+        "上下文窗口为 200K，页面未给出长上下文档溢价。",
+        "官方标注 retired：仅在合作云平台（Google Cloud / Bedrock）继续提供。",
+        "模型概述页已下线，规格取自定价页与 models 汇总表。",
+        "本条目保留仅为对照，状态为 retired。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 200,000 Token",
+          "upToInputTokens": 200000,
+          "input": 15,
+          "output": 75,
+          "cacheRead": 1.5,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "claude-opus-4",
+      "name": "Claude Opus 4",
+      "apiId": "claude-opus-4",
+      "providerId": "anthropic",
+      "status": "retired",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "已退役的 Opus 4，仅在 Google Cloud（Google managed）等平台继续提供。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 200000,
+      "contextScope": "combined",
+      "maxOutputTokens": 32000,
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $18.75 / 1 小时 $30（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $7.5 / output $37.5 每 MTok）。",
+        "上下文窗口为 200K，页面未给出长上下文档溢价。",
+        "官方标注 retired：仅在合作云平台继续提供。",
+        "模型概述页已下线，规格取自定价页与 models 汇总表。",
+        "本条目保留仅为对照，状态为 retired。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 200,000 Token",
+          "upToInputTokens": 200000,
+          "input": 15,
+          "output": 75,
+          "cacheRead": 1.5,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "claude-sonnet-5-5",
+      "name": "Claude Sonnet 5.5",
+      "apiId": "claude-sonnet-5-5",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "速度与智能平衡最好的主力模型，适合大规模生产负载。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxOutputTokens": 128000,
+      "notes": [
+        "缓存写入价（页面原文）：5 分钟 $2.5 / 1 小时 $4（每 MTok），未计入 cacheRead。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $1 / output $5 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 2,
+          "output": 10,
+          "cacheRead": 0.1,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "claude-haiku-5-5",
+      "name": "Claude Haiku 5.5",
+      "apiId": "claude-haiku-5-5",
+      "providerId": "anthropic",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · 官方 API",
+      "description": "面向高并发、低延迟任务（分类、抽取、路由）的轻量模型，按提示长度分档计价。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxOutputTokens": 128000,
+      "notes": [
+        "按提示长度分档：提示超过 100,000 Token 时整个请求按高价档计费（含缓存读/写的输入 token 全部计入）。",
+        "页面原文：Claude Haiku 5.5 is priced by prompt length: a request whose prompt is over 100,000 tokens pays higher prices.",
+        "缓存写入价（页面原文）：5 分钟 $0.125 / 1 小时 $0.2（每 MTok，≤100K 档），>100K 档为 $0.625 / $1。",
+        "Batch API 为输入/输出 5 折（页面 Batch 表：input $0.25 / output $1.25 每 MTok）。",
+        "1M 上下文按标准价计费，无长上下文档溢价（页面原文：Claude 4.6 and later models ... include the full 1M token context window at standard pricing）。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "anthropic-pricing",
+      "specSource": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "提示不超过 100,000 Token",
+          "upToInputTokens": 100000,
+          "input": 0.1,
+          "output": 0.5,
+          "cacheRead": 0.01,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "提示超过 100,000 Token（至上下文上限）",
+          "upToInputTokens": 1000000,
+          "input": 0.5,
+          "output": 2.5,
+          "cacheRead": 0.05,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gemini-4-carbon",
+      "name": "Gemini 4 Carbon",
+      "apiId": "gemini-4-carbon",
+      "providerId": "google",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · Gemini API",
+      "description": "Gemini 4 系列旗舰，面向复杂推理与大规模多模态理解。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1048576,
+      "contextScope": "input",
+      "maxOutputTokens": 65536,
+      "notes": [
+        "页面未按输入长度分档，单一费率。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。",
+        "页面标注为限时价，另有生效日期与后续涨价：$2.00 through November 30, 2026. / $4.00 starting December 1, 2026.",
+        "模型页原文 Max output：Max output 65,536 (default synchronous) / up to 1,048,576 (with long decode)（maxOutputTokens 取默认同步值 65,536）。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "google-pricing",
+      "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-4-carbon",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 1,048,576 Token",
+          "upToInputTokens": 1048576,
+          "input": 2,
+          "output": 10,
+          "cacheRead": 0.1,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gemini-4-argon",
+      "name": "Gemini 4 Argon",
+      "apiId": "gemini-4-argon",
+      "providerId": "google",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · Gemini API",
+      "description": "Gemini 4 系列另一旗舰档位，定价与 Carbon 相同。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1048576,
+      "contextScope": "input",
+      "maxOutputTokens": 65536,
+      "notes": [
+        "页面未按输入长度分档，单一费率。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。",
+        "页面标注为限时价，另有生效日期与后续涨价：$2.00 through November 30, 2026. / $4.00 starting December 1, 2026.",
+        "模型页原文 Max output：Max output 65,536 (default synchronous) / up to 1,048,576 (with long decode)（maxOutputTokens 取默认同步值 65,536）。"
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "google-pricing",
+      "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-4-argon",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 1,048,576 Token",
+          "upToInputTokens": 1048576,
+          "input": 2,
+          "output": 10,
+          "cacheRead": 0.1,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gemini-3-8-flash",
+      "name": "Gemini 3.8 Flash",
+      "apiId": "gemini-3.8-flash",
+      "providerId": "google",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · Gemini API",
+      "description": "面向长周期软件工程、自主 agent 与企业工作流的高智能 Flash 模型。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1048576,
+      "contextScope": "input",
+      "maxOutputTokens": 65536,
+      "notes": [
+        "页面未按输入长度分档，单一费率。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。",
+        "页面标注为限时价，另有生效日期与后续涨价：$0.75 through December 31, 2026. / $1.50 starting January 1, 2027."
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "google-pricing",
+      "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 1,048,576 Token",
+          "upToInputTokens": 1048576,
+          "input": 0.75,
+          "output": 3.75,
+          "cacheRead": 0.075,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ]
+    },
+    {
+      "id": "gemini-3-6-flash",
+      "name": "Gemini 3.6 Flash",
+      "apiId": "gemini-3.6-flash",
+      "providerId": "google",
+      "status": "active",
+      "region": "global",
+      "regionLabel": "全球 · Gemini API",
+      "description": "上一代 Flash 主力，兼顾智能与成本。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 1048576,
+      "contextScope": "input",
+      "maxOutputTokens": 65536,
+      "notes": [
+        "页面未按输入长度分档，单一费率。",
+        "Batch 档价格为 Standard 的 5 折（页面 Batch tab 逐项核对一致），batchFactor=0.5。",
+        "页面标注为限时价，另有生效日期与后续涨价：$0.75 through December 31, 2026. / $1.50 starting January 1, 2027."
+      ],
+      "zeroPriceReason": null,
+      "currency": "USD",
+      "sourceId": "google-pricing",
+      "specSource": "https://ai.google.dev/gemini-api/docs/models/gemini-3.6-flash",
+      "verifiedAt": "2026-11-12",
+      "rates": [
+        {
+          "label": "输入不超过 1,048,576 Token",
+          "upToInputTokens": 1048576,
+          "input": 0.75,
+          "output": 3.75,
+          "cacheRead": 0.075,
+          "batchFactor": 0.5,
           "offPeakFactor": null,
           "promotion": null
         }

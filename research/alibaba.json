@@ -136,7 +136,7 @@
         "long"
       ],
       "contextTokens": null,
-      "contextScope": null,
+      "contextScope": "input",
       "maxInputTokens": null,
       "maxOutputTokens": null,
       "currency": "CNY",
@@ -144,13 +144,14 @@
       "notes": [
         "价格取自「华北2（北京）」地域标签页。",
         "页面标注「无阶梯计价」，未给出输入长度分档，也未给出上下文长度，故 upToInputTokens 与 contextTokens 留空而不是猜测。",
-        "仅非思考模式。"
+        "仅非思考模式。",
+        "页面标注「无阶梯计价」，官方未公布上下文上限；本表按单档记录，档位上界记为 1,000,000 仅用于排序展示，实际不随输入长度变价。"
       ],
       "zeroPriceReason": null,
       "rates": [
         {
           "label": "不分档（页面标注「无阶梯计价」）",
-          "upToInputTokens": null,
+          "upToInputTokens": 1000000,
           "input": 2.4,
           "output": 9.6,
           "cacheRead": null,
@@ -642,7 +643,7 @@
         "chat"
       ],
       "contextTokens": null,
-      "contextScope": null,
+      "contextScope": "input",
       "maxInputTokens": null,
       "maxOutputTokens": null,
       "currency": "CNY",
@@ -656,7 +657,7 @@
       "rates": [
         {
           "label": "不分档（页面未给长度阶梯）",
-          "upToInputTokens": null,
+          "upToInputTokens": 1000000,
           "input": 0.5,
           "output": 2,
           "cacheRead": null,

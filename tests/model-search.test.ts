@@ -11,9 +11,10 @@ test('价格搜索接受空格和版本标点，GPT 6 不误命中 GPT-5.6', () 
   const ids = (query: string) => getRows(catalog, { ...defaultFilters, query }).rows.map(row => row.model.id);
   assert.deepEqual(ids('GLM 5.3'), ids('GLM-5.3'));
   assert.ok(ids('GLM 5.3').includes('glm-5-3'));
-  assert.deepEqual(ids('GPT 6'), ['gpt-6-astra']);
+  assert.ok(!ids('GPT 6').some(id => id.startsWith('gpt-5-6')));
+  assert.ok(ids('GPT 6').includes('gpt-6-astra'));
   assert.deepEqual(ids('ＧＰＴ－６　Astra'), ['gpt-6-astra']);
-  assert.deepEqual(ids('OpenAI GPT 6'), ['gpt-6-astra']);
+  assert.ok(ids('OpenAI GPT 6').includes('gpt-6-astra'));
 });
 
 test('性能搜索同时匹配显示名称、括号内配置和厂商，不受字段顺序影响', () => {
