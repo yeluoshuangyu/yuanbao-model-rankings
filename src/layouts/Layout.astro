@@ -70,4 +70,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).hr
 <script>
   import '../scripts/motion';
   import '../scripts/theme';
+  import { initPalette } from '../scripts/palette';
+
+  initPalette();
 </script>

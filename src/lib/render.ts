@@ -3,6 +3,7 @@ import type { Catalog, Model } from './schema';
 import { billingLabels, metricLabels, money, rankRows, scenarios, statusLabels, tokens, type Filters, type Metric, type SortOrder, type Row } from './ranking';
 import { serializeFilters } from './url-state';
 import { pendingPriceProviders } from './price-coverage';
+import { countdown } from './retirement';
 
 export const escapeHtml = (value: unknown) => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]!);
 export const pathFor = (base: string, path = '') => `${base.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
@@ -21,12 +22,21 @@ function renderPriceState(model: Model) {
     const label = model.status === 'deprecated' ? '仅存量' : statusLabels[model.status];
     tags.push(`<span class="status-tag ${model.status}">${label}</span>`);
   }
+  const retire = retireTag(model);
+  if (retire) tags.push(retire);
   const state = model.verification?.status;
   const label = state === 'stale' ? '沿用旧价' : state === 'manual_review' ? '变价待审核' : state === 'unknown' ? '价格未核验' : state === 'deprecated' && model.status !== 'retired' && model.status !== 'deprecated' ? '官方停止提供' : '';
   const verification = verificationText(model.verification, model.verifiedAt);
   if (label) tags.push(`<span class="status-tag verification-caution" title="${escapeHtml(verification)}">${label}</span>`);
   if (verification.includes('超过 7 天')) tags.push('<span class="status-tag verification-caution">超过 7 天未核验</span>');
   return tags.length ? `<div class="price-state-tags">${tags.join('')}</div>` : '';
+}
+/** 官方已公告下线日期的型号，60 天内给一枚倒计时标；过了公告日期也标出来，提示数据该复核了。 */
+function retireTag(model: Model) {
+  if (!model.retireAt) return '';
+  const left = countdown(model.retireAt);
+  if (left.days < 0 || left.days > 60) return '';
+  return `<span class="status-tag retire-tag ${left.tone}" title="官方公告下线日期 ${escapeHtml(model.retireAt)}">${escapeHtml(left.label)}</span>`;
 }
 /** Star + compare toggles; pressed state is applied on the client from storage. */
 function rowTools(model: Model) {
@@ -40,7 +50,7 @@ export function renderRows(rows: Row[], catalog: Catalog, filters: Filters, base
     const label = row.applied === 'standard' ? (model.rates.length > 1 ? '阶梯计费' : '') : billingLabels[row.applied];
     return `<tr data-model-id="${escapeHtml(model.id)}" class="${row.rank === 1 ? 'winner-row' : ''}">
       <td class="rank-cell"><span class="rank-number ${row.rank <= 3 ? 'top-rank' : ''}">${row.rank < 10 ? '0' : ''}${row.rank}</span>${row.tied ? '<span class="tie-label">并列</span>' : ''}</td>
-      <th scope="row"><div class="model-cell"><a class="model-link" href="${modelUrl(base, model.id, filters)}">${mark(catalog, model.providerId, base)}<span><span class="model-name">${escapeHtml(model.name)}</span><span class="model-meta">${model.status !== 'active' ? `<span class="status-tag ${model.status}">${statusLabels[model.status]}</span>` : ''}${label ? `<span class="billing-tag">${label}</span>` : ''}</span></span></a>${rowTools(model)}</div></th>
+      <th scope="row"><div class="model-cell"><a class="model-link" href="${modelUrl(base, model.id, filters)}">${mark(catalog, model.providerId, base)}<span><span class="model-name">${escapeHtml(model.name)}</span><span class="model-meta">${model.status !== 'active' ? `<span class="status-tag ${model.status}">${statusLabels[model.status]}</span>` : ''}${retireTag(model)}${label ? `<span class="billing-tag">${label}</span>` : ''}</span></span></a>${rowTools(model)}</div></th>
       <td class="provider-cell">${escapeHtml(provider.shortName)}</td>
       <td class="numeric ${filters.metric === 'input' ? 'selected-col' : ''}">¥${money(row.input)}</td>
       <td class="numeric ${filters.metric === 'output' ? 'selected-col' : ''}">¥${money(row.output)}</td>

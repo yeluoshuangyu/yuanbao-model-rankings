@@ -5,12 +5,21 @@ import { defaultFilters, money, scenarios } from '../lib/ranking';
 import { escapeHtml, mark, modelUrl, pathFor } from '../lib/render';
 import { frontierRows, renderScatter, valueBoard, valueCategories, type ValueCategory } from '../lib/value';
 import { performanceCategories } from '../lib/performance-categories';
+import { priceIndex, renderIndexChart } from '../lib/price-index';
+import { recentPriceChanges } from '../lib/insights';
+import { historySchema } from '../lib/pricing-metadata';
+import historyData from '../data/price-history.json';
 const base = import.meta.env.BASE_URL;
 const boards = valueCategories.map(category => {
   const board = valueBoard(catalog, defaultFilters, category);
   return { category, board, frontier: frontierRows(board.points, catalog), points: board.points, staledays: Math.floor((Date.now() - Date.parse(board.publishedAt)) / 86_400_000) };
 });
 const total = catalog.models.filter(model => model.status !== 'retired').length;
+const history = historySchema.parse(historyData);
+const index = priceIndex(history);
+const adjustments = recentPriceChanges(catalog, history, 50, 100_000);
+const movedCount = adjustments.length;
+const batchOnly = Math.max(0, index.sample - movedCount);
 ---
 <Layout title="性价比图 · 源宝模型排行榜" description="把 Arena 性能分与官方价格放在同一张图上：看清同样的能力谁更便宜，同样的价格谁能做得更多，并标出帕累托前沿。">
   <main id="main" class="page-shell value-page" data-base={base}>
@@ -46,6 +55,30 @@ const total = catalog.models.filter(model => model.status !== 'retired').length;
         </div>
       </section>
     ))}
+    <section class="value-index" aria-labelledby="index-title">
+      <h2 id="index-title">价格变化指数</h2>
+      <p>把「首发时多少钱」记为 100，看同一批型号现在是多少。<strong>目前这条线是平的</strong>：{index.sample} 款有过记录差异的型号里，首档输入价一条都没真正变过 —— {movedCount} 款动的是档位上限或档数，{batchOnly} 款动的是 Batch 折扣或档位名称。</p>
+      <Fragment set:html={renderIndexChart(index.points)} />
+      <dl class="index-caliber">
+        <div><dt>纳入范围</dt><dd>{catalog.models.length} 款中有过差异记录的 {index.sample} 款，从未变过的型号不纳入</dd></div>
+        <div><dt>加权方式</dt><dd>等权。没有调用量数据，不编造权重</dd></div>
+        <div><dt>取值方式</dt><dd>只在有核验记录的日期取值，不插值；观测日 {index.observationDates} 个</dd></div>
+        <div><dt>价格口径</dt><dd>各自首档标准输入价，原币种比较，不含汇率</dd></div>
+      </dl>
+      {batchOnly > 0 && <p class="data-footnote">另有 {batchOnly} 款只调整了 Batch 折扣或档位名称，单价与档位都没动，因此没有单列。</p>}
+      {movedCount > 0 && <div class="table-scroll" tabindex="0" role="region" aria-label="有费率记录变化的型号">
+        <table class="frontier-table"><caption>这 {movedCount} 款动的是档位结构，不是单价</caption>
+          <thead><tr><th scope="col">模型</th><th scope="col">厂商</th><th scope="col">变化</th><th scope="col">记录日期</th></tr></thead>
+          <tbody>{adjustments.map(item => <tr>
+            <th scope="row"><a class="model-link" href={modelUrl(base, item.model.id)}><Fragment set:html={mark(catalog, item.model.providerId, base)} /><span class="model-name">{escapeHtml(item.model.name)}</span></a></th>
+            <td class="provider-cell">{escapeHtml(catalog.providers.find(provider => provider.id === item.model.providerId)!.shortName)}</td>
+            <td>{escapeHtml(item.label)}</td>
+            <td class="verified-cell">{item.effectiveAt ?? item.at.slice(0, 10)}</td>
+          </tr>)}</tbody>
+        </table>
+      </div>}
+    </section>
+
     <p class="data-footnote">分数来自 Arena 官方榜（Bradley–Terry 估算，含置信区间）。不同分类的分数不可横向比较，只能在同一张图内看相对位置。价格按标准费率与参考汇率折算，不含缓存、批量与低峰优惠。</p>
   </main>
 </Layout>

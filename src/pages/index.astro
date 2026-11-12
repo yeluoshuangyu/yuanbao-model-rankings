@@ -92,4 +92,7 @@ const signed = (value: number) => `${value < 0 ? '↓' : '↑'} ${Math.abs(value
 </Layout>
 <script>
   import '../scripts/leaderboard';
+  import { initShortcuts } from '../scripts/keys';
+
+  initShortcuts();
 </script>

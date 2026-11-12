@@ -18,7 +18,7 @@ const base = import.meta.env.BASE_URL;
     </section>
     <div id="compare-empty" class="empty-state" hidden><div class="empty-icon" aria-hidden="true">⇄</div><h3>还没有选择模型</h3><p>在上方搜索模型名称，或回到 <a href={pathFor(base)}>价格排行榜</a> 勾选「对比」。</p></div>
     <section id="compare-panel" class="compare-panel" aria-labelledby="compare-title" hidden>
-      <div class="ranking-header"><h2 id="compare-title">对比结果 <span class="count-pill" id="compare-count">0</span></h2><button id="compare-share" class="outline-button" type="button">复制对比链接</button></div>
+      <div class="ranking-header compare-header"><h2 id="compare-title">对比结果 <span class="count-pill" id="compare-count">0</span></h2><div class="compare-actions"><button id="compare-share" class="outline-button" type="button">复制对比链接</button><button id="compare-image" class="primary-button" type="button">下载对比图</button></div></div>
       <div class="table-scroll compare-scroll" tabindex="0" role="region" aria-label="模型对比表，可横向滚动"><div id="compare-root"></div></div>
       <p class="compare-note">价格按当前汇率与标准费率折算；任务成本按「日常聊天 1,000 输入 + 1,000 输出」计算。切回榜单可调整计费方式与缓存命中比例后再次对比。</p>
     </section>

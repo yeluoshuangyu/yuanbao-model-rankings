@@ -4,6 +4,7 @@ import { modelSearch } from '../lib/search';
 import { parseFilters } from '../lib/url-state';
 import { escapeHtml, mark } from '../lib/render';
 import { MAX_COMPARE, parseCompareIds, renderCompare } from '../lib/compare';
+import { downloadCompare } from './share-image';
 
 const byId = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const base = byId('main').dataset.base!;
@@ -71,6 +72,12 @@ root.addEventListener('click', event => {
   ids = ids.filter(id => id !== button.dataset.remove);
   writeUrl(true);
   render();
+});
+byId('compare-image').addEventListener('click', async () => {
+  const models = ids.map(id => catalog.models.find(model => model.id === id)!).filter(Boolean);
+  if (!models.length) { toast('先选至少一款模型再下载'); return; }
+  try { await downloadCompare(models, catalog, filters); toast('对比图已保存到下载目录'); }
+  catch { toast('对比图生成失败，换个浏览器试试'); }
 });
 byId('compare-share').addEventListener('click', async () => {
   try { await navigator.clipboard.writeText(location.href); toast('对比链接已复制，包含所选模型与计费设置'); }

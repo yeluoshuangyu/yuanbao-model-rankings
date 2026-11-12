@@ -1216,7 +1216,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "retireAt": "2026-11-18"
     },
     {
       "id": "minimax-m2-7-highspeed",
@@ -1255,7 +1256,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "retireAt": "2026-11-18"
     },
     {
       "id": "ernie-4-5-turbo-32k",
@@ -1974,7 +1976,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "retireAt": "2026-11-30"
     },
     {
       "id": "gemini-3-5-flash",
@@ -2881,7 +2884,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "retireAt": "2026-12-31"
     },
     {
       "id": "kimi-k2-7-code-highspeed",
@@ -2923,7 +2927,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "retireAt": "2026-12-31"
     },
     {
       "id": "kimi-k2-6",
@@ -2965,7 +2970,8 @@
           "offPeakFactor": null,
           "promotion": null
         }
-      ]
+      ],
+      "retireAt": "2026-12-31"
     },
     {
       "id": "glm-5-3",

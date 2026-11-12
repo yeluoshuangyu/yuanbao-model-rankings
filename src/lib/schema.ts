@@ -35,6 +35,7 @@ export const modelSchema = z.object({
   contextTokens: tokenCount.nullable(), contextScope: z.enum(['combined', 'input']), maxInputTokens: tokenCount.nullable().optional(),
   maxOutputTokens: tokenCount.nullable(), currency: z.enum(['CNY', 'USD']),
   sourceId: z.string().min(1), specSource: z.string().url().nullable(), verifiedAt: date,
+  retireAt: date.nullable().optional(),
   notes: z.array(z.string()), zeroPriceReason: z.string().min(1).nullable(), rates: z.array(rateSchema).min(1),
   verification: z.object({
     status: z.enum(['fresh', 'stale', 'manual_review', 'deprecated', 'unknown']),
@@ -48,6 +49,7 @@ export const modelSchema = z.object({
     if (rate.promotion && rate.promotion.startsAt > rate.promotion.endsAt) ctx.addIssue({ code: 'custom', message: '促销日期范围无效' });
   });
   if (model.specSource && !isOfficialUrl(model.specSource, model.providerId)) ctx.addIssue({ code: 'custom', message: '规格来源必须为本厂商官方域名' });
+  if (model.retireAt && model.status !== 'deprecated' && model.status !== 'retired') ctx.addIssue({ code: 'custom', message: '只有 deprecated / retired 的型号可以标注下线日期' });
 });
 export const catalogSchema = z.object({
   meta: z.object({ version: z.literal(1), updatedAt: date, usdToCny: z.number().positive(), exchangeRateNote: z.string().min(1) }),

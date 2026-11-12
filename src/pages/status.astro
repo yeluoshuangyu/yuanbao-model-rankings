@@ -2,7 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import { catalog, verification } from '../lib/catalog';
 import { escapeHtml, mark, pathFor } from '../lib/render';
-import { statusLabels } from '../lib/ranking';
+import { defaultFilters, money, statusLabels } from '../lib/ranking';
+import { retirements } from '../lib/retirement';
 import { performanceBoards } from '../lib/performance-data';
 import { performanceCategories, performanceCategoryIds } from '../lib/performance-categories';
 import { historySchema } from '../lib/pricing-metadata';
@@ -23,6 +24,8 @@ const stale = models
 const deprecated = countBy(model => model.status === 'deprecated');
 const retired = countBy(model => model.status === 'retired');
 const unpriced = countBy(model => model.rates[0].input <= 0 || model.rates[0].output <= 0);
+// 倒计时必须按「今天」算，不能按数据核验日算，否则页面会停在发布那一刻
+const retiring = retirements(catalog, defaultFilters, 1000, new Date());
 
 const now = Date.parse(verification.checkedAt);
 const daysSince = (value: string | null | undefined) => (value ? Math.max(0, Math.floor((now - Date.parse(value)) / 86_400_000)) : null);
@@ -101,6 +104,23 @@ const cards = [
         <span class="status-reason">{escapeHtml(note?.reason ?? '')}</span>
       </li>)}</ul>
     </section>}
+
+    <section class="status-block" aria-labelledby="status-retire">
+      <h2 id="status-retire">下线时间表</h2>
+      <p>只列官方明确公告过下线日期的型号。倒计时按公告日期计算，不推测实际停服时刻；公告日期已过、页面仍在展示的，说明该去复核这条记录了。</p>
+      {retiring.length ? <div class="table-scroll" tabindex="0" role="region" aria-label="已公告下线日期的型号">
+        <table class="status-table">
+          <thead><tr><th scope="col">型号</th><th scope="col">厂商</th><th scope="col">公告下线日</th><th scope="col">倒计时</th><th scope="col" class="numeric">每月账单</th></tr></thead>
+          <tbody>{retiring.map(item => <tr>
+            <th scope="row"><a class="model-link" href={pathFor(base, `models/${item.model.id}/`)}><Fragment set:html={mark(catalog, item.providerId, base)} /><span class="model-name">{escapeHtml(item.model.name)}</span></a></th>
+            <td>{escapeHtml(catalog.providers.find(provider => provider.id === item.providerId)!.shortName)}</td>
+            <td><time datetime={item.retireAt}>{item.retireAt}</time></td>
+            <td><span class:list={['status-tag', 'retire-tag', item.countdown.tone]}>{item.countdown.label}</span></td>
+            <td class="numeric">{item.monthly === null ? '—' : `¥${money(item.monthly, true)}`}</td>
+          </tr>)}</tbody>
+        </table>
+      </div> : <p class="status-note">当前没有已公告下线日期的型号。</p>}
+    </section>
 
     <section class="status-block" aria-labelledby="status-external">
       <h2 id="status-external">外部成绩榜</h2>
