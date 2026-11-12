@@ -195,7 +195,7 @@
   .detail-kicker { display: flex; gap: 10px; color: var(--muted); font-size: 13px; margin-bottom: 4px; }
   .detail-description { color: #6e7b91; margin: 12px 0 20px; font-size: 15px; }
   .detail-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 18px 0 28px; }
-  .detail-actions code { font-size: 13px; color: #64758e; background: #edf1f7; border-radius: 5px; padding: 7px 10px; overflow-wrap: anywhere; }
+  .detail-actions code { font-size: 13px; color: var(--muted); background: var(--tint); border-radius: 5px; padding: 7px 10px; overflow-wrap: anywhere; }
   .detail-notice { border: 1px solid #e9d8b8; color: #856635; background: #fffaf0; border-radius: 7px; padding: 12px 16px; font-size: 14px; margin: 18px 0; }
   .detail-prices { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; margin: 26px 0; }
   .detail-price-card { padding: 22px; background: var(--paper); border: 1px solid var(--line); border-radius: 9px; }
@@ -276,8 +276,8 @@
 }
 
 /* v2.1: append verification and history without changing v2.0 page structure. */
-.verification-notice { margin: 16px 0; color: #336343; font-size: 13px; line-height: 1.8; }
-.verification-caution { color: #916021; }
+.verification-notice { margin: 16px 0; color: var(--good); font-size: 13px; line-height: 1.8; }
+.verification-caution { color: var(--caution); }
 .history-summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 18px 0; }
 .history-summary > div { border: 1px solid var(--border, #e4e8f0); border-radius: 10px; padding: 16px; background: var(--blue-light); }
 .history-summary span, .history-summary strong, .history-summary small, .history-note { display: block; }

@@ -107,8 +107,8 @@ details:not([open]) > .filter-summary .filter-expand { display: inline; }
 .price-coverage { padding: 16px 26px; background: var(--caution-soft); border-bottom: 1px solid var(--caution-line); }
 .price-coverage p { display: flex; align-items: center; gap: 10px; }
 .price-coverage p + p { margin-top: 12px; }
-.price-coverage strong { display: block; color: #775923; font-size: 12px; font-weight: 550; }
-.price-coverage p > span > span { display: block; margin-top: 3px; color: #877452; font-size: 11px; line-height: 1.6; }
+.price-coverage strong { display: block; color: var(--caution); font-size: 12px; font-weight: 550; }
+.price-coverage p > span > span { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; line-height: 1.6; }
 .sort-control { display: inline-flex; flex-shrink: 0; align-items: center; gap: 6px; color: var(--muted); }
 .sort-control select { font-size: 12px; color: var(--ink-soft); border: 0; padding: 8px 0; background: none; }
 .scenario-bar { padding: 15px 26px 12px; gap: 12px; }
@@ -147,10 +147,10 @@ thead .selected-col { background: var(--blue-light); color: var(--ink); }
 .task-price { font-size: 12px; }
 .status-tag { font-size: 10px; border-radius: 4px; background: var(--tint); color: var(--muted); }
 .billing-tag { font-size: 10px; border-color: var(--line); color: var(--muted-2); }
-.best-ratio { background: #edf5ff; color: var(--blue); }
+.best-ratio { background: var(--blue-light); color: var(--blue); }
 .verified-cell { font-family: inherit; color: var(--muted-2); font-size: 10px; font-variant-numeric: tabular-nums; }
 .index-note { color: var(--muted-2); font-size: 10px; }
-.verification-caution { color: #9a670d; }
+.verification-caution { color: var(--caution); }
 .source-cell a { width: 28px; height: 28px; border: 0; background: var(--canvas); border-radius: 50%; color: var(--muted); }
 .table-footer { background: var(--paper); color: var(--muted-2); padding: 16px 26px; font-size: 10px; }
 .data-footnote { color: var(--muted-2); padding: 22px 4px; font-size: 11px; }
@@ -177,7 +177,7 @@ dialog::backdrop { background: #00000040; backdrop-filter: blur(5px); }
 .detail-heading h1 { font-size: 38px; font-weight: 600; letter-spacing: -.045em; }
 .detail-kicker { font-size: 12px; }
 .detail-description { color: var(--muted); font-size: 15px; line-height: 1.9; }
-.detail-actions code { color: var(--muted); background: #eaeaef; border-radius: 8px; }
+.detail-actions code { color: var(--muted); background: var(--tint); border-radius: 8px; }
 .detail-notice { border-radius: 12px; border: 0; background: var(--caution-soft); color: var(--caution); font-size: 13px; }
 .detail-prices { gap: 18px; margin: 18px 0 28px; }
 .detail-price-card { padding: 26px; border: 0; border-radius: 20px; }
@@ -203,7 +203,7 @@ dialog::backdrop { background: #00000040; backdrop-filter: blur(5px); }
 @media (hover: hover) {
   .champion-card:hover { transform: translateY(-5px); box-shadow: 0 14px 35px #00000009; }
   .checkbox-row:hover { background: var(--tint); color: var(--ink); }
-  .model-link:hover .provider-mark { background: #eaeaef; }
+  .model-link:hover .provider-mark { background: var(--tint); }
 }
 @keyframes enter { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 @media (prefers-reduced-motion: no-preference) {
