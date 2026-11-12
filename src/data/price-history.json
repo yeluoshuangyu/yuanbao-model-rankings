@@ -498,6 +498,43 @@
           "reason": "initial_snapshot",
           "verification": "manual_verified",
           "changeTypes": []
+        },
+        {
+          "id": "95fdfca3215481494c552dc3",
+          "detectedAt": "2026-11-12T03:53:29.261Z",
+          "effectiveAt": null,
+          "currency": "USD",
+          "rates": [
+            {
+              "label": "输入不超过 200,000 Token",
+              "upToInputTokens": 200000,
+              "input": 2,
+              "output": 6,
+              "cacheRead": 0.5,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            },
+            {
+              "label": "输入不超过 500,000 Token",
+              "upToInputTokens": 500000,
+              "input": 4,
+              "output": 12,
+              "cacheRead": 1,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.x.ai/developers/pricing",
+          "reason": "price_change",
+          "verification": "manual_verified",
+          "changeTypes": [
+            "tier_change",
+            "input_price",
+            "output_price",
+            "cache_read_price"
+          ]
         }
       ]
     },
@@ -2331,6 +2368,1146 @@
             }
           ],
           "sourceUrl": "https://docs.volcengine.com/docs/82379/1544106",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "grok-4-7",
+      "providerId": "xai",
+      "events": [
+        {
+          "id": "d2ecee2bf61d953ef7799738",
+          "detectedAt": "2026-11-12T03:53:29.261Z",
+          "effectiveAt": null,
+          "currency": "USD",
+          "rates": [
+            {
+              "label": "输入不超过 200,000 Token",
+              "upToInputTokens": 200000,
+              "input": 2,
+              "output": 6,
+              "cacheRead": 0.5,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            },
+            {
+              "label": "输入不超过 500,000 Token",
+              "upToInputTokens": 500000,
+              "input": 4,
+              "output": 12,
+              "cacheRead": 1,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.x.ai/developers/pricing",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "grok-build-0-1",
+      "providerId": "xai",
+      "events": [
+        {
+          "id": "9c31124f06a866b2222958a2",
+          "detectedAt": "2026-11-12T03:53:29.261Z",
+          "effectiveAt": null,
+          "currency": "USD",
+          "rates": [
+            {
+              "label": "输入不超过 200,000 Token",
+              "upToInputTokens": 200000,
+              "input": 1,
+              "output": 2,
+              "cacheRead": 0.2,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            },
+            {
+              "label": "输入不超过 256,000 Token",
+              "upToInputTokens": 256000,
+              "input": 2,
+              "output": 4,
+              "cacheRead": 0.4,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.x.ai/developers/pricing",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "grok-4-5",
+      "providerId": "xai",
+      "events": [
+        {
+          "id": "ab6d10b255808e67bd8188ea",
+          "detectedAt": "2026-11-12T03:53:29.261Z",
+          "effectiveAt": null,
+          "currency": "USD",
+          "rates": [
+            {
+              "label": "输入不超过 200,000 Token",
+              "upToInputTokens": 200000,
+              "input": 2,
+              "output": 6,
+              "cacheRead": 0.3,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            },
+            {
+              "label": "输入不超过 500,000 Token",
+              "upToInputTokens": 500000,
+              "input": 4,
+              "output": 12,
+              "cacheRead": 0.6,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.x.ai/developers/pricing",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "grok-4-3",
+      "providerId": "xai",
+      "events": [
+        {
+          "id": "037cb81a59902e1fd44cca5a",
+          "detectedAt": "2026-11-12T03:53:29.261Z",
+          "effectiveAt": null,
+          "currency": "USD",
+          "rates": [
+            {
+              "label": "输入不超过 200,000 Token",
+              "upToInputTokens": 200000,
+              "input": 1.25,
+              "output": 2.5,
+              "cacheRead": 0.2,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            },
+            {
+              "label": "输入不超过 1,000,000 Token",
+              "upToInputTokens": 1000000,
+              "input": 2.5,
+              "output": 5,
+              "cacheRead": 0.4,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.x.ai/developers/pricing",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "grok-4-20-0309-reasoning",
+      "providerId": "xai",
+      "events": [
+        {
+          "id": "538171558710775f98a00bba",
+          "detectedAt": "2026-11-12T03:53:29.261Z",
+          "effectiveAt": null,
+          "currency": "USD",
+          "rates": [
+            {
+              "label": "输入不超过 200,000 Token",
+              "upToInputTokens": 200000,
+              "input": 1.25,
+              "output": 2.5,
+              "cacheRead": 0.2,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            },
+            {
+              "label": "输入不超过 1,000,000 Token",
+              "upToInputTokens": 1000000,
+              "input": 2.5,
+              "output": 5,
+              "cacheRead": 0.4,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.x.ai/developers/pricing",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "grok-4-20-0309-non-reasoning",
+      "providerId": "xai",
+      "events": [
+        {
+          "id": "5cec954acbdfff3a77dc3ff3",
+          "detectedAt": "2026-11-12T03:53:29.261Z",
+          "effectiveAt": null,
+          "currency": "USD",
+          "rates": [
+            {
+              "label": "输入不超过 200,000 Token",
+              "upToInputTokens": 200000,
+              "input": 1.25,
+              "output": 2.5,
+              "cacheRead": 0.2,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            },
+            {
+              "label": "输入不超过 1,000,000 Token",
+              "upToInputTokens": 1000000,
+              "input": 2.5,
+              "output": 5,
+              "cacheRead": 0.4,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.x.ai/developers/pricing",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "grok-4-20-multi-agent-0309",
+      "providerId": "xai",
+      "events": [
+        {
+          "id": "631be2d2f40b4d15e3aff51a",
+          "detectedAt": "2026-11-12T03:53:29.261Z",
+          "effectiveAt": null,
+          "currency": "USD",
+          "rates": [
+            {
+              "label": "输入不超过 200,000 Token",
+              "upToInputTokens": 200000,
+              "input": 1.25,
+              "output": 2.5,
+              "cacheRead": 0.2,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            },
+            {
+              "label": "输入不超过 1,000,000 Token",
+              "upToInputTokens": 1000000,
+              "input": 2.5,
+              "output": 5,
+              "cacheRead": 0.4,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.x.ai/developers/pricing",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-5-3-flashx",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "90ff874db7a69bb10c7173b5",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 1,000,000 Token",
+              "upToInputTokens": 1000000,
+              "input": 2,
+              "output": 7,
+              "cacheRead": 0.57,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-5-3-flashx-legal",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "31ad6d58eec14bb35a1f417a",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 1,000,000 Token",
+              "upToInputTokens": 1000000,
+              "input": 2,
+              "output": 7,
+              "cacheRead": 0.57,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-5-1",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "4c64a9daa461cab8cef3698e",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 32,000 Token",
+              "upToInputTokens": 32000,
+              "input": 6,
+              "output": 24,
+              "cacheRead": 1.3,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            },
+            {
+              "label": "输入超过 32,000 Token",
+              "upToInputTokens": 200000,
+              "input": 8,
+              "output": 28,
+              "cacheRead": 2,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-5-turbo",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "688a88cd06c656962c86b86d",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 32,000 Token",
+              "upToInputTokens": 32000,
+              "input": 5,
+              "output": 22,
+              "cacheRead": 1.2,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            },
+            {
+              "label": "输入超过 32,000 Token",
+              "upToInputTokens": 200000,
+              "input": 7,
+              "output": 26,
+              "cacheRead": 1.8,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-5",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "609cc759934ca00bc10d013d",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 32,000 Token",
+              "upToInputTokens": 32000,
+              "input": 4,
+              "output": 18,
+              "cacheRead": 1,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            },
+            {
+              "label": "输入超过 32,000 Token",
+              "upToInputTokens": 200000,
+              "input": 6,
+              "output": 22,
+              "cacheRead": 1.5,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-4-7",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "297121939f3a69d97bb14218",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 32,000 Token（输出 200 Token 及以上）",
+              "upToInputTokens": 32000,
+              "input": 3,
+              "output": 14,
+              "cacheRead": 0.6,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            },
+            {
+              "label": "输入 32,000 至 200,000 Token",
+              "upToInputTokens": 200000,
+              "input": 4,
+              "output": 16,
+              "cacheRead": 0.8,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-4-5-air",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "e3e8d82c790c2e8e5ece452f",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 32,000 Token（输出 200 Token 及以上）",
+              "upToInputTokens": 32000,
+              "input": 0.8,
+              "output": 6,
+              "cacheRead": 0.16,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            },
+            {
+              "label": "输入 32,000 至 128,000 Token",
+              "upToInputTokens": 128000,
+              "input": 1.2,
+              "output": 8,
+              "cacheRead": 0.24,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-4-plus",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "6d088f1782f8a0702a1623a3",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 128,000 Token",
+              "upToInputTokens": 128000,
+              "input": 5,
+              "output": 5,
+              "cacheRead": 2.5,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-4-air-250414",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "297cd0befe377df8c04f4cf2",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 128,000 Token",
+              "upToInputTokens": 128000,
+              "input": 0.5,
+              "output": 0.5,
+              "cacheRead": 0.25,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-4-airx",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "860bf68f7b6353a224c13dda",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 8,000 Token",
+              "upToInputTokens": 8000,
+              "input": 10,
+              "output": 10,
+              "cacheRead": null,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-4-long",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "882e0dc0543c4a3ed45eff49",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 1,000,000 Token",
+              "upToInputTokens": 1000000,
+              "input": 1,
+              "output": 1,
+              "cacheRead": 0.5,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-4-assistant",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "a792aa3ea476d097da075c5b",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 128,000 Token",
+              "upToInputTokens": 128000,
+              "input": 5,
+              "output": 5,
+              "cacheRead": null,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-z1-air",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "5ce6d9ee8547f2f463448f1d",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 128,000 Token",
+              "upToInputTokens": 128000,
+              "input": 0.5,
+              "output": 0.5,
+              "cacheRead": null,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-z1-airx",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "6b3ca9cc50c492d90b57dbe1",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 32,000 Token",
+              "upToInputTokens": 32000,
+              "input": 5,
+              "output": 5,
+              "cacheRead": null,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-z1-flashx",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "d7de67621114b0fef20c722d",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 128,000 Token",
+              "upToInputTokens": 128000,
+              "input": 0.1,
+              "output": 0.1,
+              "cacheRead": null,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-4-flashx-250414",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "66ad864b664ee3ea5d6519b4",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 128,000 Token",
+              "upToInputTokens": 128000,
+              "input": 0.1,
+              "output": 0.1,
+              "cacheRead": 0.05,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-4-flash-250414",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "b7545ce698f0fdedcd427f0d",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 128,000 Token",
+              "upToInputTokens": 128000,
+              "input": 0,
+              "output": 0,
+              "cacheRead": null,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-z1-flash",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "9cdef105362f5464968a54b7",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 128,000 Token",
+              "upToInputTokens": 128000,
+              "input": 0,
+              "output": 0,
+              "cacheRead": null,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-5v-turbo",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "51226c051b35965636d37af2",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 32,000 Token",
+              "upToInputTokens": 32000,
+              "input": 5,
+              "output": 22,
+              "cacheRead": 1.2,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            },
+            {
+              "label": "输入超过 32,000 Token",
+              "upToInputTokens": 200000,
+              "input": 7,
+              "output": 26,
+              "cacheRead": 1.8,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-4-6v",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "cab621527ae92a8721ef530c",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 32,000 Token",
+              "upToInputTokens": 32000,
+              "input": 1,
+              "output": 3,
+              "cacheRead": 0.2,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            },
+            {
+              "label": "输入 32,000 至 128,000 Token",
+              "upToInputTokens": 128000,
+              "input": 2,
+              "output": 6,
+              "cacheRead": 0.4,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-4-6v-flashx",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "8d9b6af2f0584e401a7af70b",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 32,000 Token",
+              "upToInputTokens": 32000,
+              "input": 0.15,
+              "output": 1.5,
+              "cacheRead": 0.03,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            },
+            {
+              "label": "输入 32,000 至 128,000 Token",
+              "upToInputTokens": 128000,
+              "input": 0.3,
+              "output": 3,
+              "cacheRead": 0.03,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-4-6v-flash",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "167d9376fa3279c8e6688e6e",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 128,000 Token",
+              "upToInputTokens": 128000,
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-4-5v",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "59169b9a3ae1f3d72169a2c2",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 32,000 Token",
+              "upToInputTokens": 32000,
+              "input": 2,
+              "output": 6,
+              "cacheRead": 0.4,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            },
+            {
+              "label": "输入 32,000 至 64,000 Token",
+              "upToInputTokens": 64000,
+              "input": 4,
+              "output": 12,
+              "cacheRead": 0.8,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-4v-plus-0111",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "64913d964dc34f4d00f5127d",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 16,000 Token",
+              "upToInputTokens": 16000,
+              "input": 4,
+              "output": 4,
+              "cacheRead": 2,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-4v-flash",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "05908f3b5c66674d638abf86",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 4,000 Token",
+              "upToInputTokens": 4000,
+              "input": 0,
+              "output": 0,
+              "cacheRead": null,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-4-1v-thinking-flashx",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "c6bc3e2b98a8e2f4c5765270",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 64,000 Token",
+              "upToInputTokens": 64000,
+              "input": 2,
+              "output": 2,
+              "cacheRead": null,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "glm-4-1v-thinking-flash",
+      "providerId": "zhipu",
+      "events": [
+        {
+          "id": "f1e31f1718f1b9398c2aa310",
+          "detectedAt": "2026-11-12T03:55:59.384Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 64,000 Token",
+              "upToInputTokens": 64000,
+              "input": 0,
+              "output": 0,
+              "cacheRead": null,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+          "reason": "initial_snapshot",
+          "verification": "manual_verified",
+          "changeTypes": []
+        }
+      ]
+    },
+    {
+      "modelId": "minimax-m3-1-flash",
+      "providerId": "minimax",
+      "events": [
+        {
+          "id": "befa7a0fc814f4f95403c57a",
+          "detectedAt": "2026-11-12T03:55:59.445Z",
+          "effectiveAt": null,
+          "currency": "CNY",
+          "rates": [
+            {
+              "label": "输入不超过 1,000,000 Token",
+              "upToInputTokens": 1000000,
+              "input": 1,
+              "output": 4,
+              "cacheRead": 0.1,
+              "batchFactor": null,
+              "offPeakFactor": null,
+              "promotion": null
+            }
+          ],
+          "sourceUrl": "https://platform.minimax.cn/docs/guides/pricing-paygo",
           "reason": "initial_snapshot",
           "verification": "manual_verified",
           "changeTypes": []

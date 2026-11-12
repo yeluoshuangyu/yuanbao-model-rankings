@@ -1,0 +1,97 @@
+{
+  "providerId": "minimax",
+  "sourceId": "minimax-pricing",
+  "sourceUrl": "https://platform.minimax.cn/docs/guides/pricing-paygo",
+  "retrievedAt": "2026-11-12",
+  "notes": "页面实际落点为 /docs/pricing/overview（定价概览，lastModified 2026-11-11）。语言模型表当前只列 MiniMax-M3.1-Flash 与 MiniMax-M3 两款；用户提示中的 M2/M2.1/text-01 及 0-32k/32k-128k/>128k 三档在该页已不存在：M2.5、M2.7 系列已公告 2026-10-19 停止新用户开放、2026-11-18 正式下线，定价页不再列价，故未收录。全页价格以人民币计，单位为元/百万 tokens。视频、图片、语音、音乐、MCP、服务端工具价格不属于文本模型，未收录。",
+  "models": [
+    {
+      "id": "minimax-m3-1-flash",
+      "name": "MiniMax-M3.1-Flash",
+      "apiId": "MiniMax-M3.1-Flash",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "MiniMax 最新 M 系列语言模型，原生多模态输入、1M 上下文，面向 Agent 推理、工具调用与代码任务。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": "https://platform.minimax.cn/docs/guides/text-generation",
+      "notes": [
+        "定价页语言模型表对该型号只给出一条费率，未像 M3 那样按 512K 输入分档。",
+        "上下文窗口 1,000,000 Token 取自同站「模型调用」支持模型表；页面未给出最大输出 Token 数。",
+        "缓存读取 0.10 元/百万 tokens 为页面「缓存读取」列原文。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 1.0,
+          "output": 4.0,
+          "cacheRead": 0.1,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| **MiniMax-M3.1-Flash** | 1.00 | 4.00 | 0.10 |（表头：输入价格 元/百万 tokens / 输出价格 元/百万 tokens / 缓存读取 元/百万 tokens）"
+    },
+    {
+      "id": "minimax-m3",
+      "name": "MiniMax-M3",
+      "apiId": "MiniMax-M3",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "原生多模态、1M 上下文的 Frontier Coding 模型，按 512K 输入长度分档计费。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": "https://platform.minimax.cn/docs/guides/text-generation",
+      "notes": [
+        "页面把原价划掉并标注「永久五折」，此处采用五折后的现行费率（原价 4.20/16.80/0.84 与 8.40/33.60/1.68），不视为限时促销。",
+        "「优先」服务按标准价 1.5 倍计费（service_tier=priority），未纳入本记录。",
+        "上下文窗口 1,000,000 Token 取自同站「模型调用」支持模型表；页面未给出最大输出 Token 数。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 512,000 Token",
+          "upToInputTokens": 512000,
+          "input": 2.1,
+          "output": 8.4,
+          "cacheRead": 0.42,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入超过 512,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 4.2,
+          "output": 16.8,
+          "cacheRead": 0.84,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| **MiniMax-M3** ≤ 512k 输入 tokens 永久五折 | ~~4.20~~ 2.10 | ~~16.80~~ 8.40 | ~~0.84~~ 0.42 | / | **MiniMax-M3** > 512k 输入 tokens 永久五折 | ~~8.40~~ 4.20 | ~~33.60~~ 16.80 | ~~1.68~~ 0.84 |"
+    }
+  ]
+}

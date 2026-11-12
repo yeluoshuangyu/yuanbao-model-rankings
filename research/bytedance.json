@@ -1,0 +1,473 @@
+{
+  "providerId": "bytedance",
+  "sourceId": "doubao-ark-pricing",
+  "sourceUrl": "https://docs.volcengine.com/docs/82379/1544106",
+  "retrievedAt": "2026-11-12",
+  "notes": "价格全部取自「大语言模型 → 在线推理（常规）」表，单位即页面标注的元/M token（元/百万 Token），本文件 currency=CNY 无需换算；页面 K token 按 1,000 计（故 32K=32,000、256K=256,000、1024K=1,024,000）、分段计费原文：请求输入 200K tokens 满足「输入长度 (128, 256]」条件时，输入输出 token 按 输入 2.4 元/M token、输出 24 元/M token 单价计费，即整次请求按命中档位单价结算（contextScope 记为 input，档位上界即页面给出的输入长度上限）、Batch 折算：页面「批量推理」表逐模型给出约为常规价 50% 的单价（如 doubao-seed-2.1-pro 3.00/15.00、doubao-seed-2.0-pro 1.6/8.0），故 batchFactor=0.5；该表未收录 doubao-seed-evloving 与 doubao-seed-character，二者 batchFactor 留空、另有「在线推理（低延迟）」约为常规 2 倍、「在线推理（低优）」约为常规 50%（缓存命中价与常规相同），均未作为基础费率收录；「在线推理（TPM 保障包）」页面标注「暂无支持的模型」、缓存命中价取表中「缓存命中(非音频)」列；缓存存储费 0.017 元/M token/小时 另计，未计入 cacheRead。音频输入/音频缓存命中价单列（如 doubao-seed-2.1-lite 音频输入 12.00），未作为主费率、页面当前已无 Doubao-Seed-1.6 / 1.8 / Doubao-1.5-pro 以及任何带 thinking/深度思考命名的独立模型行（全页检索无结果），这些系列无法从现行定价页取数，未收录且未凭记忆补数、同表第三方模型（glm-5.3-flash、glm-5.2、kimi-k3.1-pro、deepseek-v4 系列）为转售，不属本 providerId，未收录；表中「调整前价格，2026-08-21/08-28 起不适用」的行按失效价处理，未收录、未收录：视频生成、图片生成、3D 生成、向量模型、模型精调、模型单元、Managed Agents、工具插件、Coding/Agent Plan",
+  "models": [
+    {
+      "id": "doubao-seed-evolving",
+      "name": "豆包 Seed Evolving",
+      "apiId": "doubao-seed-evloving",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "方舟自有 Seed 系列迭代模型，单档 1024K 输入。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1024000,
+      "contextScope": "input",
+      "maxInputTokens": 1024000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「在线推理（常规）」表，输入/输出/缓存命中均为「非音频」列，单位元/百万 Token。",
+        "页面模型名列写作 doubao-seed-evloving（原文如此），apiId 保留页面拼写。",
+        "批量推理表中没有该模型，batchFactor 留空。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入长度 [0, 1024]K Token",
+          "upToInputTokens": 1024000,
+          "input": 6.0,
+          "output": 30.0,
+          "cacheRead": 1.2,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "doubao-seed-evloving | 输入长度 [0, 1024] | 6.00 | - | 0.017 | 1.20 | - | 30.00"
+    },
+    {
+      "id": "doubao-seed-2-1-pro",
+      "name": "豆包 Seed 2.1 Pro",
+      "apiId": "doubao-seed-2.1-pro",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "方舟旗舰模型，单档 1024K 输入。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1024000,
+      "contextScope": "input",
+      "maxInputTokens": 1024000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「在线推理（常规）」表（非音频列），单位元/百万 Token。",
+        "批量推理表同模型为 3.00 / 1.20 / 15.00，恰为常规价 50%，故 batchFactor=0.5。",
+        "缓存存储另计 0.017 元/百万 Token/小时，不属读取价，未计入。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入长度 [0, 1024]K Token",
+          "upToInputTokens": 1024000,
+          "input": 6.0,
+          "output": 30.0,
+          "cacheRead": 1.2,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "doubao-seed-2.1-pro | 输入长度 [0, 1024] | 6.00 | - | 0.017 | 1.20 | - | 30.00"
+    },
+    {
+      "id": "doubao-seed-2-1-lite",
+      "name": "豆包 Seed 2.1 Lite",
+      "apiId": "doubao-seed-2.1-lite",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "方舟轻量模型，单档 1024K 输入，支持音频输入。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1024000,
+      "contextScope": "input",
+      "maxInputTokens": 1024000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「在线推理（常规）」表，取「非音频」输入与缓存命中列；音频输入为 12.00、音频缓存命中 2.40（未作为主费率）。",
+        "批量推理表为 0.40 / 0.16 / 1.35，恰为常规 50%，batchFactor=0.5。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入长度 [0, 1024]K Token",
+          "upToInputTokens": 1024000,
+          "input": 0.8,
+          "output": 2.7,
+          "cacheRead": 0.16,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "doubao-seed-2.1-lite | 输入长度 [0, 1024] | 0.80 | 12.00 | 0.017 | 0.16 | 2.40 | 2.70"
+    },
+    {
+      "id": "doubao-seed-2-1-turbo",
+      "name": "豆包 Seed 2.1 Turbo",
+      "apiId": "doubao-seed-2.1-turbo",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "方舟高性价比模型，输入上限 256K。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 256000,
+      "contextScope": "input",
+      "maxInputTokens": 256000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「在线推理（常规）」表（非音频列），单位元/百万 Token。",
+        "批量推理表为 1.50 / 0.60 / 7.50，为常规 50%，batchFactor=0.5。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入长度 [0, 256]K Token",
+          "upToInputTokens": 256000,
+          "input": 3.0,
+          "output": 15.0,
+          "cacheRead": 0.6,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "doubao-seed-2.1-turbo | 输入长度 [0, 256] | 3.00 | - | 0.017 | 0.60 | - | 15.00"
+    },
+    {
+      "id": "doubao-seed-2-0-pro",
+      "name": "豆包 Seed 2.0 Pro",
+      "apiId": "doubao-seed-2.0-pro",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "方舟上一代旗舰，按输入长度三档计费。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 256000,
+      "contextScope": "input",
+      "maxInputTokens": 256000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「在线推理（常规）」表（非音频列），单位元/百万 Token。",
+        "分段计费：整次请求的所有 token 按命中档位单价结算（页面示例：输入 200K 时输入 4.8、输出 24.0）。",
+        "批量推理表 1.6 / 2.4 / 4.8 与 8.0 / 12.0 / 24.0，为常规 50%，batchFactor=0.5。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入长度 ≤ 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 3.2,
+          "output": 16.0,
+          "cacheRead": 0.64,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入长度 ≤ 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 4.8,
+          "output": 24.0,
+          "cacheRead": 0.96,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入长度 ≤ 256,000 Token",
+          "upToInputTokens": 256000,
+          "input": 9.6,
+          "output": 48.0,
+          "cacheRead": 1.92,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "doubao-seed-2.0-pro | 输入长度 [0, 32] | 3.2 | - | 0.017 | 0.64 | - | 16.0 ; 输入长度 (32, 128] | 4.8 | - | 0.017 | 0.96 | - | 24.0 ; 输入长度 (128, 256] | 9.6 | - | 0.017 | 1.92 | - | 48.0"
+    },
+    {
+      "id": "doubao-seed-2-0-lite",
+      "name": "豆包 Seed 2.0 Lite",
+      "apiId": "doubao-seed-2.0-lite",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "方舟轻量模型，按输入长度三档计费。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 256000,
+      "contextScope": "input",
+      "maxInputTokens": 256000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「在线推理（常规）」表，取「非音频」列；音频输入为 9.0 / 13.5 / 27.0。",
+        "批量推理表 0.3 / 0.45 / 0.9 与 1.8 / 2.7 / 5.4，为常规 50%，batchFactor=0.5。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入长度 ≤ 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 0.6,
+          "output": 3.6,
+          "cacheRead": 0.12,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入长度 ≤ 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 0.9,
+          "output": 5.4,
+          "cacheRead": 0.18,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入长度 ≤ 256,000 Token",
+          "upToInputTokens": 256000,
+          "input": 1.8,
+          "output": 10.8,
+          "cacheRead": 0.36,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "doubao-seed-2.0-lite | 输入长度 [0, 32] | 0.6 | 9.0 | 0.017 | 0.12 | 1.8 | 3.6 ; 输入长度 (32, 128] | 0.9 | 13.5 | 0.017 | 0.18 | 2.7 | 5.4 ; 输入长度 (128, 256] | 1.8 | 27.0 | 0.017 | 0.36 | 5.4 | 10.8"
+    },
+    {
+      "id": "doubao-seed-2-0-mini",
+      "name": "豆包 Seed 2.0 Mini",
+      "apiId": "doubao-seed-2.0-mini",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "方舟最小号文本模型，按输入长度三档计费。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 256000,
+      "contextScope": "input",
+      "maxInputTokens": 256000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「在线推理（常规）」表，取「非音频」列；音频输入为 3.0 / 6.0 / 12.0。",
+        "批量推理表 0.1 / 0.2 / 0.4 与 1.0 / 2.0 / 4.0，为常规 50%，batchFactor=0.5。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入长度 ≤ 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 0.2,
+          "output": 2.0,
+          "cacheRead": 0.04,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入长度 ≤ 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 0.4,
+          "output": 4.0,
+          "cacheRead": 0.08,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入长度 ≤ 256,000 Token",
+          "upToInputTokens": 256000,
+          "input": 0.8,
+          "output": 8.0,
+          "cacheRead": 0.16,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "doubao-seed-2.0-mini | 输入长度 [0, 32] | 0.2 | 3.0 | 0.017 | 0.04 | 0.6 | 2.0 ; 输入长度 (32, 128] | 0.4 | 6.0 | 0.017 | 0.08 | 1.2 | 4.0 ; 输入长度 (128, 256] | 0.8 | 12.0 | 0.017 | 0.16 | 2.4 | 8.0"
+    },
+    {
+      "id": "doubao-seed-2-0-code",
+      "name": "豆包 Seed 2.0 Code",
+      "apiId": "doubao-seed-2.0-code",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "方舟代码专用模型，按输入长度三档计费。",
+      "useCases": [
+        "code"
+      ],
+      "contextTokens": 256000,
+      "contextScope": "input",
+      "maxInputTokens": 256000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「在线推理（常规）」表（非音频列），单位元/百万 Token。",
+        "批量推理表 1.6 / 2.4 / 4.8 与 8.0 / 12.0 / 24.0，为常规 50%，batchFactor=0.5。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入长度 ≤ 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 3.2,
+          "output": 16.0,
+          "cacheRead": 0.64,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入长度 ≤ 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 4.8,
+          "output": 24.0,
+          "cacheRead": 0.96,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入长度 ≤ 256,000 Token",
+          "upToInputTokens": 256000,
+          "input": 9.6,
+          "output": 48.0,
+          "cacheRead": 1.92,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "doubao-seed-2.0-code | 输入长度 [0, 32] | 3.2 | - | 0.017 | 0.64 | - | 16.0 ; 输入长度 (32, 128] | 4.8 | - | 0.017 | 0.96 | - | 24.0 ; 输入长度 (128, 256] | 9.6 | - | 0.017 | 1.92 | - | 48.0"
+    },
+    {
+      "id": "doubao-seed-character",
+      "name": "豆包 Seed Character",
+      "apiId": "doubao-seed-character",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "方舟角色扮演模型，两档输入计价，缓存命中价不随档位变化。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": 128000,
+      "contextScope": "input",
+      "maxInputTokens": 128000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「在线推理（常规）」表（非音频列），单位元/百万 Token。",
+        "第二档缓存命中价与原表一致为 0.16（页面如此，非笔误校正）。",
+        "批量推理表无该模型，batchFactor 留空。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入长度 ≤ 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 0.8,
+          "output": 2.0,
+          "cacheRead": 0.16,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入长度 ≤ 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 1.2,
+          "output": 6.0,
+          "cacheRead": 0.16,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "doubao-seed-character | 输入长度 [0, 32] | 0.80 | - | 0.017 | 0.16 | - | 2.00 ; 输入长度 (32, 128] | 1.20 | - | 0.017 | 0.16 | - | 6.00"
+    },
+    {
+      "id": "doubao-seed-translation",
+      "name": "豆包 Seed Translation",
+      "apiId": "doubao-seed-translation",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "方舟翻译专用模型，单一价格不分档。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": null,
+      "contextScope": "input",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「在线推理（常规）」表，单位元/百万 Token。",
+        "该行条件列为「-」，页面未给输入长度分档，也未给缓存存储/缓存命中价，故 upToInputTokens、contextTokens、cacheRead 留空。",
+        "批量推理表为 0.60 / 0.24 / 1.80，为常规 50%，batchFactor=0.5。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "不分档（页面条件列为「-」）",
+          "upToInputTokens": null,
+          "input": 1.2,
+          "output": 3.6,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "doubao-seed-translation | - | 1.20 | - | - | - | - | 3.60"
+    }
+  ]
+}

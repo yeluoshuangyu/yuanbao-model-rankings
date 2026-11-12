@@ -1,0 +1,868 @@
+{
+  "providerId": "alibaba",
+  "sourceId": "alibaba-pricing",
+  "sourceUrl": "https://help.aliyun.com/zh/model-studio/model-pricing",
+  "retrievedAt": "2026-11-12",
+  "notes": "价格全部取自官方定价页「文本生成-千问」「文本生成-千问-开源版」章节的「华北2（北京）」地域标签页；页面单价单位即「元/百万 Token」，本文件 currency=CNY，无需从元/千 Token 换算、阶梯计费规则原文：单价取决于单次请求的输入 Token 总量，该请求的所有 Token 均按对应阶梯的单价结算（因此档位上界即单次请求输入 Token 上限，contextScope 记为 input）、页面只列原价：Batch 调用按实时推理价格 50% 计费（仅在该模型行标注「Batch调用半价」时 batchFactor=0.5），上下文缓存另有折扣、限时活动价（如 qwen3.7-plus 限时 8 折）计入 notes 而不作为基础费率，promotion 一律 null、缓存命中单价未逐模型给出（页面仅说明通常按输入价 10% 计费，且 qwen3.8-max / qwen3.8-flash / qwen3.8-2.4t-a95b 有例外、部分模型分地域），故 cacheRead 统一留空、思考模式价格不同的模型（如 qwen-plus 输出 8/24/64 元）只收「非思考模式」档，差异写入该模型 notes；思考与非思考同价的模型按单一价格收录、contextTokens 取该模型最后一档输入 Token 上界；qwen-max（页面标注「无阶梯计价」）与 qwen-long（表中无长度分档）页面未给上下文长度，contextTokens 与 upToInputTokens 留空而非猜测、页面当前已查无 qwen-turbo、qwen3-max、qwen3.6-max-preview、qwen3-coder-plus、qwen3-coder-next 的条目（这些在 catalog.json 中已存在），本次无法从定价页取到其价格，需另行核实是否已下线、百炼页面同时列出第三方模型（DeepSeek、Kimi、GLM、MiniMax、MiMo、Stepfun、Unisound、Ling 等），属转售，未收录；embedding/rerank/OCR/语音/图像/视频/Omni-Realtime 等非文本对话模型也未收录、快照别名（qwen3.8-max-0902、qwen3.7-max-2026-05-20、qwen-plus-latest、qwen3.7-plus-2026-05-26 等）与主条目同价，未单独建条目",
+  "models": [
+    {
+      "id": "qwen3-8-max",
+      "name": "Qwen3.8 Max",
+      "apiId": "qwen3.8-max",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问 Max 系列旗舰，面向复杂推理、长文本与编程。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页，单位已是元/百万 Token。",
+        "页面标注「非思考和思考模式」同价，本条按该单一价格收录。",
+        "Batch 调用按实时推理价格 50% 计费（行内标注「Batch调用半价」）。",
+        "上下文缓存另有折扣，页面未在此行给出逐模型命中单价，cacheRead 留空。",
+        "价格档只有 0<Token≤1M 一档，故上下文上限记为 1,000,000。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 12,
+          "output": 36,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "qwen3.8-max > Batch调用 半价 > 上下文缓存享有折扣 | 非思考和思考模式 | 0<Token≤1M | 12元 | 36元 | 100万Token"
+    },
+    {
+      "id": "qwen3-7-max",
+      "name": "Qwen3.7 Max",
+      "apiId": "qwen3.7-max",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问 Max 上一代旗舰，能力等同于 qwen3.7-max-2026-05-20。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页。",
+        "页面注明当前能力等同于 qwen3.7-max-2026-05-20，快照别名不单独建条目。",
+        "非思考和思考模式同价；Batch 调用 5 折。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 12,
+          "output": 36,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "qwen3.7-max > 当前能力等同于qwen3.7-max-2026-05-20 > Batch调用 半价 > 上下文缓存享有折扣 | 非思考和思考模式 | 0<Token≤1M | 12元 | 36元 | 100万Token"
+    },
+    {
+      "id": "qwen3-7-max-preview",
+      "name": "Qwen3.7 Max Preview",
+      "apiId": "qwen3.7-max-preview",
+      "status": "preview",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问 Max 预览版，仅提供思考模式。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页。",
+        "页面标注「仅思考模式」，无可选的非思考档；行内未标注 Batch 半价，batchFactor 留空。",
+        "status 记为 preview（预览版，能力等同于 qwen3.7-max-2026-05-17）。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 12,
+          "output": 36,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "qwen3.7-max-preview > 当前能力等同于qwen3.7-max-2026-05-17 | 仅思考模式 | 0<Token≤1M | 12元 | 36元 | 无"
+    },
+    {
+      "id": "qwen-max",
+      "name": "Qwen Max",
+      "apiId": "qwen-max",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问 Max 经典商用模型，仅支持非思考模式。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": null,
+      "contextScope": null,
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页。",
+        "页面标注「无阶梯计价」，未给出输入长度分档，也未给出上下文长度，故 upToInputTokens 与 contextTokens 留空而不是猜测。",
+        "仅非思考模式。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "不分档（页面标注「无阶梯计价」）",
+          "upToInputTokens": null,
+          "input": 2.4,
+          "output": 9.6,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "更多模型 | qwen-max | 仅非思考模式 | 无阶梯计价 | 2.4元 | 9.6元 | 无"
+    },
+    {
+      "id": "qwen3-7-plus",
+      "name": "Qwen3.7 Plus",
+      "apiId": "qwen3.7-plus",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问 Plus 均衡档，兼顾质量与成本。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页，收录页面「原价」列。",
+        "页面同时标注「限时8折」活动价，属限时活动，promotion 留空并记录于此。",
+        "非思考模式与思考模式（思维链+回答）同价；Batch 调用 5 折。",
+        "能力等同于 qwen3.7-plus-2026-05-26，快照别名不单独建条目。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 256,000 Token",
+          "upToInputTokens": 256000,
+          "input": 2,
+          "output": 8,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 6,
+          "output": 24,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "qwen3.7-plus > Batch调用 半价 > 上下文缓存享有折扣 | 0<Token≤256K | 原价2元（限时8折） | 原价8元（限时8折） | 100万Token ; 256K<Token≤1M | 原价6元（限时8折） | 原价24元（限时8折）"
+    },
+    {
+      "id": "qwen3-6-plus",
+      "name": "Qwen3.6 Plus",
+      "apiId": "qwen3.6-plus",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问 Plus 上一代，长上下文档位较陡。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页。",
+        "思考模式（思维链+回答）与本表输出价相同；行内未标注 Batch 半价，batchFactor 留空。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 256,000 Token",
+          "upToInputTokens": 256000,
+          "input": 2,
+          "output": 12,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 8,
+          "output": 48,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "qwen3.6-plus > 当前能力等同于qwen3.6-plus-2026-04-02 | 0<Token≤256K | 2元 | 12元 | 无 ; 256K<Token≤1M | 8元 | 48元"
+    },
+    {
+      "id": "qwen3-5-plus",
+      "name": "Qwen3.5 Plus",
+      "apiId": "qwen3.5-plus",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问 Plus 第三代，三档输入阶梯。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页。",
+        "思考模式输出价与表中输出价相同；行内未标注 Batch 半价，batchFactor 留空。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 0.8,
+          "output": 4.8,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 256,000 Token",
+          "upToInputTokens": 256000,
+          "input": 2,
+          "output": 12,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 4,
+          "output": 24,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "qwen3.5-plus > 当前能力等同于qwen3.5-plus-2026-02-15 | 0<Token≤128K | 0.8元 | 4.8元 ; 128K<Token≤256K | 2元 | 12元 ; 256K<Token≤1M | 4元 | 24元"
+    },
+    {
+      "id": "qwen-plus",
+      "name": "Qwen Plus",
+      "apiId": "qwen-plus",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问 Plus 经典商用模型，三档输入阶梯。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页，输入/输出取「非思考模式」列。",
+        "同一行还给出思考模式（思维链+回答）输出价 8元 / 24元 / 64元，高于非思考档，按要求只收非思考价。",
+        "Batch 调用 5 折；能力等同于 qwen-plus-2025-12-01。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 0.8,
+          "output": 2,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 256,000 Token",
+          "upToInputTokens": 256000,
+          "input": 2.4,
+          "output": 20,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 4.8,
+          "output": 48,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "qwen-plus > Batch调用 半价 | 0<Token≤128K | 0.8元 | 2元 | 8元 ; 128K<Token≤256K | 2.4元 | 20元 | 24元 ; 256K<Token≤1M | 4.8元 | 48元 | 64元"
+    },
+    {
+      "id": "qwen3-8-flash",
+      "name": "Qwen3.8 Flash",
+      "apiId": "qwen3.8-flash",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问 Flash 旗舰级轻量模型，单档低价。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页。",
+        "非思考和思考模式同价；行内未标注 Batch 半价，batchFactor 留空。",
+        "上下文缓存折扣按模型单独定义（与常见的 10% 命中折扣不同），页面未在此行给出命中单价，cacheRead 留空。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 0.8,
+          "output": 2.7,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "qwen3.8-flash > 上下文缓存享有折扣 | 非思考和思考模式 | 0<Token≤1M | 0.8元 | 2.7元 | 100万Token"
+    },
+    {
+      "id": "qwen3-7-flash",
+      "name": "Qwen3.7 Flash",
+      "apiId": "qwen3.7-flash",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问 Flash 上一代，32K 内极低价。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页。",
+        "非思考和思考模式同价；Batch 调用 5 折；能力等同于 qwen3.7-flash-2026-07-15。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 0.2,
+          "output": 0.8,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 256,000 Token",
+          "upToInputTokens": 256000,
+          "input": 0.6,
+          "output": 2.4,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 1.2,
+          "output": 4.8,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "qwen3.7-flash > Batch调用 半价 | 非思考和思考模式 | 0<Token≤32K | 0.2元 | 0.8元 ; 32K<Token≤256K | 0.6元 | 2.4元 ; 256K<Token≤1M | 1.2元 | 4.8元"
+    },
+    {
+      "id": "qwen3-6-flash",
+      "name": "Qwen3.6 Flash",
+      "apiId": "qwen3.6-flash",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问 Flash 上一代，输出计价偏高。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页。",
+        "非思考和思考模式同价；Batch 调用 5 折；能力等同于 qwen3.6-flash-2026-04-16。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 256,000 Token",
+          "upToInputTokens": 256000,
+          "input": 1.2,
+          "output": 7.2,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 4.8,
+          "output": 28.8,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "qwen3.6-flash > Batch调用 半价 | 非思考和思考模式 | 0<Token≤256K | 1.2元 | 7.2元 ; 256K<Token≤1M | 4.8元 | 28.8元"
+    },
+    {
+      "id": "qwen3-5-flash",
+      "name": "Qwen3.5 Flash",
+      "apiId": "qwen3.5-flash",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问 Flash 第三代，三档输入阶梯。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页。",
+        "非思考和思考模式同价；Batch 调用 5 折；能力等同于 qwen3.5-flash-2026-02-23。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 0.2,
+          "output": 2,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 256,000 Token",
+          "upToInputTokens": 256000,
+          "input": 0.8,
+          "output": 8,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 1.2,
+          "output": 12,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "qwen3.5-flash > Batch调用 半价 | 非思考和思考模式 | 0<Token≤128K | 0.2元 | 2元 ; 128K<Token≤256K | 0.8元 | 8元 ; 256K<Token≤1M | 1.2元 | 12元"
+    },
+    {
+      "id": "qwen-flash",
+      "name": "Qwen Flash",
+      "apiId": "qwen-flash",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问 Flash 经典轻量模型，最低输入价档。",
+      "useCases": [
+        "chat",
+        "long"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页；能力等同于 qwen-flash-2025-07-28。",
+        "非思考和思考模式同价；Batch 调用 5 折。",
+        "新加坡等海外地域单独定价，本文件只收中国大陆地域。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 0.15,
+          "output": 1.5,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 256,000 Token",
+          "upToInputTokens": 256000,
+          "input": 0.6,
+          "output": 6,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 1.2,
+          "output": 12,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "qwen-flash > Batch调用 半价 | 非思考和思考模式 | 0<Token≤128K | 0.15元 | 1.5元 ; 128K<Token≤256K | 0.6元 | 6元 ; 256K<Token≤1M | 1.2元 | 12元"
+    },
+    {
+      "id": "qwen-long",
+      "name": "Qwen Long",
+      "apiId": "qwen-long",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问长文档模型，按长文本场景计费。",
+      "useCases": [
+        "long",
+        "chat"
+      ],
+      "contextTokens": null,
+      "contextScope": null,
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页；该模型表只有一列单价，没有输入长度分档。",
+        "页面未给出上下文长度与最大输出，故 contextTokens / maxOutputTokens 留空而不是猜测。",
+        "Batch 调用 5 折（行内标注「Batch调用半价」）。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "不分档（页面未给长度阶梯）",
+          "upToInputTokens": null,
+          "input": 0.5,
+          "output": 2,
+          "cacheRead": null,
+          "batchFactor": 0.5,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "千问Long 计费规则：按输入Token和输出Token计费。若模型支持Batch调用，其输入和输出Token单价均按实时推理价格的50%计费。 | qwen-long > Batch调用 半价 | 0.5元 | 2元 | 无"
+    },
+    {
+      "id": "qwen3-coder-flash",
+      "name": "Qwen3 Coder Flash",
+      "apiId": "qwen3-coder-flash",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问代码专用轻量模型，四档输入阶梯。",
+      "useCases": [
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页。",
+        "该行未标注 Batch 半价，也未标注上下文缓存折扣，batchFactor / cacheRead 留空。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 1,
+          "output": 4,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 1.5,
+          "output": 6,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 256,000 Token",
+          "upToInputTokens": 256000,
+          "input": 2.5,
+          "output": 10,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 5,
+          "output": 25,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "千问Coder | qwen3-coder-flash > 当前能力等同于qwen3-coder-flash-2025-07-28 | 0<Token≤32K | 1元 | 4元 ; 32K<Token≤128K | 1.5元 | 6元 ; 128K<Token≤256K | 2.5元 | 10元 ; 256K<Token≤1M | 5元 | 25元"
+    },
+    {
+      "id": "qwen3-vl-plus",
+      "name": "Qwen3 VL Plus",
+      "apiId": "qwen3-vl-plus",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问视觉理解多模态模型，图像/视频输入按 token 计费。",
+      "useCases": [
+        "chat"
+      ],
+      "contextTokens": 256000,
+      "contextScope": "input",
+      "maxInputTokens": 256000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页，输出价为「思维链+回答」。",
+        "行内标注「Batch调用半价」，但仅有「5折」表述、未给批量单价，batchFactor 记 0.5。",
+        "非思考和思考模式同价。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 1,
+          "output": 10,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 1.5,
+          "output": 15,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入不超过 256,000 Token",
+          "upToInputTokens": 256000,
+          "input": 3,
+          "output": 30,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "qwen3-vl-plus > Batch调用 半价 > 上下文缓存享有折扣 | 非思考和思考模式 | 0<Token≤32K | 1元 | 10元 ; 32K<Token≤128K | 1.5元 | 15元 ; 128K<Token≤256K | 3元 | 30元"
+    },
+    {
+      "id": "qwen3-8-2-4t-a95b",
+      "name": "Qwen3.8 2.4T A95B",
+      "apiId": "qwen3.8-2.4t-a95b",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问开源版超大稀疏模型（2.4T 总参数），由百炼托管。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页（开源版 Qwen3.8 表）。",
+        "非思考和思考模式同价；该节未标注 Batch 折扣，batchFactor 留空。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 12,
+          "output": 36,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "文本生成-千问-开源版 | Qwen3.8 | qwen3.8-2.4t-a95b > 上下文缓存享有折扣 | 非思考和思考模式 | 0<Token≤1M | 12元 | 36元 | 100万Token"
+    },
+    {
+      "id": "qwen3-8-27b",
+      "name": "Qwen3.8 27B",
+      "apiId": "qwen3.8-27b",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆",
+      "description": "千问开源版 27B 稠密模型，由百炼托管。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "input",
+      "maxInputTokens": 1000000,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "价格取自「华北2（北京）」地域标签页（开源版 Qwen3.8 表）。",
+        "非思考和思考模式同价；该节未标注 Batch 折扣，batchFactor 留空。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 3,
+          "output": 12,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "文本生成-千问-开源版 | Qwen3.8 | qwen3.8-27b > 上下文缓存享有折扣 | 非思考和思考模式 | 0<Token≤1M | 3元 | 12元 | 100万Token"
+    }
+  ]
+}

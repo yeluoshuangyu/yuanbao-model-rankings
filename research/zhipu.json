@@ -1,0 +1,1333 @@
+{
+  "providerId": "zhipu",
+  "sourceId": "glm-official-pricing",
+  "sourceUrl": "https://docs.bigmodel.cn/cn/guide/start/pricing.md",
+  "retrievedAt": "2026-11-12",
+  "notes": "价格全部取自智谱官方文档站「API 定价」markdown 原文（最新模型 / 文本模型 / 更多文本模型 / 视觉理解 / 更多视觉模型 五张表），单位为元/百万 Tokens，上下文列写作 32K/128K/200K/1M 等，按 32,000/128,000/200,000/1,000,000 Token 记。缓存存储列一律为「限时免费」，未作为价格项收录；缓存命中列写作「不支持」的，cacheRead 留空。Batch API 页面仅笼统说明「支持 Batch API 的模型按标准调用价格 5 折」，未按模型标注适用范围，故 batchFactor 统一留空。未收录：GLM-OCR（文档解析专用，非对话模型）、多模态生成的图像/视频模型、语音模型、Embedding/Rerank/CodeGeeX 之外的向量与重排服务、搜索与知识库工具服务。定价页的「文本模型」表中没有 GLM-4.6（仅有 GLM-4.6V 视觉型号），GLM-4.6 文本型号无可核价，故未收录。",
+  "models": [
+    {
+      "id": "glm-5-3",
+      "name": "GLM-5.3",
+      "apiId": "glm-5.3",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "智谱 GLM-5.3 旗舰文本模型，面向复杂软件工程、终端操作与 Agent 任务。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "CNY",
+      "specSource": "https://docs.bigmodel.cn/cn/guide/models/text/glm-5.3",
+      "notes": [
+        "取自定价页「最新模型」表；上下文 1M、最大输出 128K 取自「模型概览」推荐模型表。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 8,
+          "output": 28,
+          "cacheRead": 2,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-5.3 | 1M | 8 | 28 | 限时免费 | 2 | 文本 |"
+    },
+    {
+      "id": "glm-5-3-flash",
+      "name": "GLM-5.3-Flash",
+      "apiId": "glm-5.3-flash",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "GLM-5.3 的原生多模态普惠版本，支持图片、视频、文件与文本输入。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "CNY",
+      "specSource": "https://docs.bigmodel.cn/cn/guide/models/vlm/glm-5.3-flash",
+      "notes": [
+        "取自定价页「最新模型」表；输入模态为图片、视频、文件、文本。",
+        "缓存存储列标注「限时免费」，未作为价格项收录",
+        "只比较文本 Token 费用。",
+        "上下文 1M、最大输出 128K 取自「模型概览」推荐模型表。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 0.8,
+          "output": 2.8,
+          "cacheRead": 0.23,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-5.3-Flash | 1M | 0.8 | 2.8 | 限时免费 | 0.23 | 图片、视频、文件、文本 |"
+    },
+    {
+      "id": "glm-5-3-flashx",
+      "name": "GLM-5.3-FlashX",
+      "apiId": "glm-5.3-flashx",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "GLM-5.3-Flash 的高速版本，推理速度约 200 tokens/s。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "CNY",
+      "specSource": "https://docs.bigmodel.cn/cn/guide/models/vlm/glm-5.3-flash",
+      "notes": [
+        "取自定价页「最新模型」表",
+        "上下文 1M、最大输出 128K 取自「模型概览」推荐模型表。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 2,
+          "output": 7,
+          "cacheRead": 0.57,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-5.3-FlashX | 1M | 2 | 7 | 限时免费 | 0.57 | 图片、视频、文件、文本 |"
+    },
+    {
+      "id": "glm-5-3-flashx-legal",
+      "name": "GLM-5.3-FlashX-Legal",
+      "apiId": "glm-5.3-flashx-legal",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "面向法律专业场景优化的 GLM-5.3-FlashX 变体，覆盖法律检索、合同审查与文书起草。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "CNY",
+      "specSource": "https://docs.bigmodel.cn/cn/guide/models/vlm/glm-5.3-flash#glm-5-3-flashx-legal",
+      "notes": [
+        "取自定价页「文本模型」表",
+        "上下文 1M、最大输出 128K 取自「模型概览」推荐模型表。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 2,
+          "output": 7,
+          "cacheRead": 0.57,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-5.3-FlashX-Legal | 1M | 2 | 7 | 限时免费 | 0.57 |"
+    },
+    {
+      "id": "glm-5-2",
+      "name": "GLM-5.2",
+      "apiId": "glm-5.2",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "智谱 GLM-5.2 文本模型，面向复杂长程任务与工程级 Coding。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "CNY",
+      "specSource": "https://docs.bigmodel.cn/cn/guide/models/text/glm-5.2",
+      "notes": [
+        "取自定价页「文本模型」表",
+        "上下文 1M、最大输出 128K 取自「模型概览」推荐模型表。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 8,
+          "output": 28,
+          "cacheRead": 2,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-5.2 | 1M | 8 | 28 | 限时免费 | 2 |"
+    },
+    {
+      "id": "glm-5-1",
+      "name": "GLM-5.1",
+      "apiId": "glm-5.1",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "智谱 GLM-5.1 文本模型，按输入长度 32K 分档计费。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 200000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "CNY",
+      "specSource": "https://docs.bigmodel.cn/cn/guide/models/text/glm-5.1",
+      "notes": [
+        "取自定价页「文本模型」表，按「输入长度 [0, 32K)」与「输入长度 ≥32K」两档列价。",
+        "上下文 200K、最大输出 128K 取自 GLM-5.1 模型页；页面档位写作 32K，此处按 32,000 Token 记。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 6,
+          "output": 24,
+          "cacheRead": 1.3,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入超过 32,000 Token",
+          "upToInputTokens": 200000,
+          "input": 8,
+          "output": 28,
+          "cacheRead": 2,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-5.1 | 输入长度 [0, 32K) | 6 | 24 | 限时免费 | 1.3 | / | GLM-5.1 | 输入长度 ≥32K | 8 | 28 | 限时免费 | 2 |"
+    },
+    {
+      "id": "glm-5-turbo",
+      "name": "GLM-5-Turbo",
+      "apiId": "glm-5-turbo",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "智谱 GLM-5 系列 Turbo 版本，按输入长度 32K 分档计费。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 200000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "CNY",
+      "specSource": "https://docs.bigmodel.cn/cn/guide/models/text/glm-5-turbo",
+      "notes": [
+        "取自定价页「文本模型」表，按「输入长度 [0, 32K)」与「输入长度 ≥32K」两档列价。",
+        "上下文 200K、最大输出 128K 取自 GLM-5-Turbo 模型页；页面档位写作 32K，此处按 32,000 Token 记。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 5,
+          "output": 22,
+          "cacheRead": 1.2,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入超过 32,000 Token",
+          "upToInputTokens": 200000,
+          "input": 7,
+          "output": 26,
+          "cacheRead": 1.8,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-5-Turbo | 输入长度 [0, 32K) | 5 | 22 | 限时免费 | 1.2 | / | GLM-5-Turbo | 输入长度 ≥32K | 7 | 26 | 限时免费 | 1.8 |"
+    },
+    {
+      "id": "glm-5",
+      "name": "GLM-5",
+      "apiId": "glm-5",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "智谱 GLM-5 文本模型，按输入长度 32K 分档计费。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 200000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "CNY",
+      "specSource": "https://docs.bigmodel.cn/cn/guide/models/text/glm-5",
+      "notes": [
+        "取自定价页「文本模型」表，按「输入长度 [0, 32K)」与「输入长度 ≥32K」两档列价。",
+        "上下文 200K、最大输出 128K 取自 GLM-5 模型页；页面档位写作 32K，此处按 32,000 Token 记。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 4,
+          "output": 18,
+          "cacheRead": 1,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入超过 32,000 Token",
+          "upToInputTokens": 200000,
+          "input": 6,
+          "output": 22,
+          "cacheRead": 1.5,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-5 | 输入长度 [0, 32K) | 4 | 18 | 限时免费 | 1 | / | GLM-5 | 输入长度 ≥32K | 6 | 22 | 限时免费 | 1.5 |"
+    },
+    {
+      "id": "glm-4-7",
+      "name": "GLM-4.7",
+      "apiId": "glm-4.7",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "智谱 GLM-4.7 文本模型，同时按输入长度与输出长度分档计费。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 200000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "CNY",
+      "specSource": "https://docs.bigmodel.cn/cn/guide/models/text/glm-4.7",
+      "notes": [
+        "取自定价页「更多文本模型」折叠表；该型号除输入档位外还有输出长度门槛。",
+        "页面另有一档「输入 [0, 32K)，输出 [0, 0.2K)」为 2 / 8 / 0.4；本条目采用输出 ≥0.2K 的费率作为常规档，短输出折扣见该档。",
+        "上下文 200K、最大输出 128K 取自 GLM-4.7 模型页。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 32,000 Token（输出 200 Token 及以上）",
+          "upToInputTokens": 32000,
+          "input": 3,
+          "output": 14,
+          "cacheRead": 0.6,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入 32,000 至 200,000 Token",
+          "upToInputTokens": 200000,
+          "input": 4,
+          "output": 16,
+          "cacheRead": 0.8,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-4.7 | 输入 [0, 32K)，输出 ≥0.2K | 3 | 14 | 限时免费 | 0.6 | / | GLM-4.7 | 输入 [32K, 200K) | 4 | 16 | 限时免费 | 0.8 |"
+    },
+    {
+      "id": "glm-4-5-air",
+      "name": "GLM-4.5-Air",
+      "apiId": "glm-4.5-air",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "智谱轻量级 GLM-4.5-Air，按输入长度与输出长度分档计费。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 128000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": "https://docs.bigmodel.cn/cn/guide/models/text/glm-4.5-air",
+      "notes": [
+        "取自定价页「更多文本模型」折叠表；该型号除输入档位外还有输出长度门槛。",
+        "页面另有一档「输入 [0, 32K)，输出 [0, 0.2K)」为 0.8 / 2 / 0.16；本条目采用输出 ≥0.2K 的费率作为常规档。",
+        "页面未单列该型号最大输出 Token 数，留空。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 32,000 Token（输出 200 Token 及以上）",
+          "upToInputTokens": 32000,
+          "input": 0.8,
+          "output": 6,
+          "cacheRead": 0.16,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入 32,000 至 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 1.2,
+          "output": 8,
+          "cacheRead": 0.24,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-4.5-Air | 输入 [0, 32K)，输出 ≥0.2K | 0.8 | 6 | 限时免费 | 0.16 | / | GLM-4.5-Air | 输入 [32K, 128K) | 1.2 | 8 | 限时免费 | 0.24 |"
+    },
+    {
+      "id": "glm-4-7-flashx",
+      "name": "GLM-4.7-FlashX",
+      "apiId": "glm-4.7-flashx",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "GLM-4.7 的轻量高速版本。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 200000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "CNY",
+      "specSource": "https://docs.bigmodel.cn/cn/guide/models/text/glm-4.7",
+      "notes": [
+        "取自定价页「更多文本模型」折叠表",
+        "上下文 200K、最大输出 128K 取自 GLM-4.7 模型页 FlashX 页签。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 200,000 Token",
+          "upToInputTokens": 200000,
+          "input": 0.5,
+          "output": 3,
+          "cacheRead": 0.1,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-4.7-FlashX | 200K | 0.5 | 3 | 限时免费 | 0.1 |"
+    },
+    {
+      "id": "glm-4-7-flash",
+      "name": "GLM-4.7-Flash",
+      "apiId": "glm-4.7-flash",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "免费开放的 GLM-4.7 轻量版本。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 200000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": "https://docs.bigmodel.cn/cn/guide/models/text/glm-4.7",
+      "notes": [
+        "取自定价页「更多文本模型」折叠表，输入、输出、缓存命中三列均标注「免费」。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": "官方定价为 0，免费开放",
+      "rates": [
+        {
+          "label": "输入不超过 200,000 Token",
+          "upToInputTokens": 200000,
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-4.7-Flash | 200K | 免费 | 免费 | 限时免费 | 免费 |"
+    },
+    {
+      "id": "glm-4-plus",
+      "name": "GLM-4-Plus",
+      "apiId": "glm-4-plus",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "智谱 GLM-4 系列高性能通用文本模型。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 128000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "取自定价页「更多文本模型」折叠表",
+        "页面未单列该型号最大输出 Token 数，留空。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 5,
+          "output": 5,
+          "cacheRead": 2.5,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-4-Plus | 128K | 5 | 5 | 限时免费 | 2.5 |"
+    },
+    {
+      "id": "glm-4-air-250414",
+      "name": "GLM-4-Air-250414",
+      "apiId": "glm-4-air-250414",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "GLM-4-Air 的 2025-04-14 版本，高性价比通用文本模型。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 128000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "取自定价页「更多文本模型」折叠表",
+        "页面未单列该型号最大输出 Token 数，留空。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 0.5,
+          "output": 0.5,
+          "cacheRead": 0.25,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-4-Air-250414 | 128K | 0.5 | 0.5 | 限时免费 | 0.25 |"
+    },
+    {
+      "id": "glm-4-airx",
+      "name": "GLM-4-AirX",
+      "apiId": "glm-4-airx",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "GLM-4 系列高速版本，上下文仅 8K。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 8000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "取自定价页「更多文本模型」折叠表；缓存命中列标注「不支持」，故 cacheRead 留空。",
+        "页面未单列该型号最大输出 Token 数，留空。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 8,000 Token",
+          "upToInputTokens": 8000,
+          "input": 10,
+          "output": 10,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-4-AirX | 8K | 10 | 10 | 限时免费 | 不支持 |"
+    },
+    {
+      "id": "glm-4-long",
+      "name": "GLM-4-Long",
+      "apiId": "glm-4-long",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "面向超长文本的 GLM-4 版本，上下文 1M。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 1000000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "取自定价页「更多文本模型」折叠表",
+        "页面未单列该型号最大输出 Token 数，留空。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 1,000,000 Token",
+          "upToInputTokens": 1000000,
+          "input": 1,
+          "output": 1,
+          "cacheRead": 0.5,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-4-Long | 1M | 1 | 1 | 限时免费 | 0.5 |"
+    },
+    {
+      "id": "glm-4-assistant",
+      "name": "GLM-4-Assistant",
+      "apiId": "glm-4-assistant",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "面向助手场景的 GLM-4 版本。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 128000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "取自定价页「更多文本模型」折叠表；缓存命中列标注「不支持」，故 cacheRead 留空。",
+        "页面未单列该型号最大输出 Token 数，留空。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 5,
+          "output": 5,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-4-Assistant | 128K | 5 | 5 | 限时免费 | 不支持 |"
+    },
+    {
+      "id": "glm-z1-air",
+      "name": "GLM-Z1-Air",
+      "apiId": "glm-z1-air",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "智谱 Z1 推理系列的高性价比版本。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 128000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "取自定价页「更多文本模型」折叠表；缓存命中列标注「不支持」，故 cacheRead 留空。",
+        "页面未单列该型号最大输出 Token 数，留空。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 0.5,
+          "output": 0.5,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-Z1-Air | 128K | 0.5 | 0.5 | 限时免费 | 不支持 |"
+    },
+    {
+      "id": "glm-z1-airx",
+      "name": "GLM-Z1-AirX",
+      "apiId": "glm-z1-airx",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "智谱 Z1 推理系列的高速版本，上下文 32K。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 32000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "取自定价页「更多文本模型」折叠表；缓存命中列标注「不支持」，故 cacheRead 留空。",
+        "页面未单列该型号最大输出 Token 数，留空。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 5,
+          "output": 5,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-Z1-AirX | 32K | 5 | 5 | 限时免费 | 不支持 |"
+    },
+    {
+      "id": "glm-z1-flashx",
+      "name": "GLM-Z1-FlashX",
+      "apiId": "glm-z1-flashx",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "智谱 Z1 推理系列的轻量高速版本。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 128000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "取自定价页「更多文本模型」折叠表；缓存命中列标注「不支持」，故 cacheRead 留空。",
+        "页面未单列该型号最大输出 Token 数，留空。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 0.1,
+          "output": 0.1,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-Z1-FlashX | 128K | 0.1 | 0.1 | 限时免费 | 不支持 |"
+    },
+    {
+      "id": "glm-4-flashx-250414",
+      "name": "GLM-4-FlashX-250414",
+      "apiId": "glm-4-flashx-250414",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "GLM-4-FlashX 的 2025-04-14 版本，低价通用文本模型。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 128000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "取自定价页「更多文本模型」折叠表",
+        "页面未单列该型号最大输出 Token 数，留空。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 0.1,
+          "output": 0.1,
+          "cacheRead": 0.05,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-4-FlashX-250414 | 128K | 0.1 | 0.1 | 限时免费 | 0.05 |"
+    },
+    {
+      "id": "glm-4-flash-250414",
+      "name": "GLM-4-Flash-250414",
+      "apiId": "glm-4-flash-250414",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "免费开放的 GLM-4-Flash 2025-04-14 版本。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 128000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "取自定价页「更多文本模型」折叠表，输入与输出均标注「免费」；缓存命中列标注「不支持」，故 cacheRead 留空。",
+        "页面未单列该型号最大输出 Token 数，留空。"
+      ],
+      "zeroPriceReason": "官方定价为 0，免费开放",
+      "rates": [
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 0,
+          "output": 0,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-4-Flash-250414 | 128K | 免费 | 免费 | 限时免费 | 不支持 |"
+    },
+    {
+      "id": "glm-z1-flash",
+      "name": "GLM-Z1-Flash",
+      "apiId": "glm-z1-flash",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "免费开放的智谱 Z1 推理模型。",
+      "useCases": [
+        "chat",
+        "code"
+      ],
+      "contextTokens": 128000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "取自定价页「更多文本模型」折叠表，输入与输出均标注「免费」；缓存命中列标注「不支持」，故 cacheRead 留空。",
+        "页面未单列该型号最大输出 Token 数，留空。"
+      ],
+      "zeroPriceReason": "官方定价为 0，免费开放",
+      "rates": [
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 0,
+          "output": 0,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-Z1-Flash | 128K | 免费 | 免费 | 限时免费 | 不支持 |"
+    },
+    {
+      "id": "glm-5v-turbo",
+      "name": "GLM-5V-Turbo",
+      "apiId": "glm-5v-turbo",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "智谱多模态视觉理解模型，支持图片、视频、文件输入，按输入长度分档。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 200000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": 128000,
+      "currency": "CNY",
+      "specSource": "https://docs.bigmodel.cn/cn/guide/models/vlm/glm-5v-turbo",
+      "notes": [
+        "取自定价页「视觉理解」表，按「输入长度 [0, 32K)」与「输入长度 ≥32K」两档列价。",
+        "上下文 200K、最大输出 128K 取自 GLM-5V-Turbo 模型页；页面档位写作 32K，此处按 32,000 Token 记。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 5,
+          "output": 22,
+          "cacheRead": 1.2,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入超过 32,000 Token",
+          "upToInputTokens": 200000,
+          "input": 7,
+          "output": 26,
+          "cacheRead": 1.8,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-5V-Turbo | 输入长度 [0, 32K) | 5 | 22 | 限时免费 | 1.2 | / | GLM-5V-Turbo | 输入长度 ≥32K | 7 | 26 | 限时免费 | 1.8 |"
+    },
+    {
+      "id": "glm-4-6v",
+      "name": "GLM-4.6V",
+      "apiId": "glm-4.6v",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "智谱 106B 多模态视觉理解模型，支持视频、图像、文本、文件输入。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 128000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": "https://docs.bigmodel.cn/cn/guide/models/vlm/glm-4.6v",
+      "notes": [
+        "取自定价页「更多视觉模型」折叠表",
+        "页面未单列该型号最大输出 Token 数，留空。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 1,
+          "output": 3,
+          "cacheRead": 0.2,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入 32,000 至 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 2,
+          "output": 6,
+          "cacheRead": 0.4,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-4.6V | 输入长度 [0, 32K) | 1 | 3 | 限时免费 | 0.2 | / | GLM-4.6V | 输入长度 [32K, 128K) | 2 | 6 | 限时免费 | 0.4 |"
+    },
+    {
+      "id": "glm-4-6v-flashx",
+      "name": "GLM-4.6V-FlashX",
+      "apiId": "glm-4.6v-flashx",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "GLM-4.6V 的轻量高速版本（9B）。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 128000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": "https://docs.bigmodel.cn/cn/guide/models/vlm/glm-4.6v",
+      "notes": [
+        "取自定价页「更多视觉模型」折叠表",
+        "页面未单列该型号最大输出 Token 数，留空。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 0.15,
+          "output": 1.5,
+          "cacheRead": 0.03,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入 32,000 至 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 0.3,
+          "output": 3,
+          "cacheRead": 0.03,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-4.6V-FlashX | 输入长度 [0, 32K) | 0.15 | 1.5 | 限时免费 | 0.03 | / | GLM-4.6V-FlashX | 输入长度 [32K, 128K) | 0.3 | 3 | 限时免费 | 0.03 |"
+    },
+    {
+      "id": "glm-4-6v-flash",
+      "name": "GLM-4.6V-Flash",
+      "apiId": "glm-4.6v-flash",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "免费开放的 GLM-4.6V 轻量版本（9B），支持图片、视频、文件输入。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 128000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": "https://docs.bigmodel.cn/cn/guide/models/free/glm-4.6v-flash",
+      "notes": [
+        "取自定价页「更多视觉模型」折叠表，上下文列写作「—」，取 GLM-4.6V-Flash 模型页的 128K；输入、输出、缓存命中均标注「免费」。",
+        "页面未单列该型号最大输出 Token 数，留空。"
+      ],
+      "zeroPriceReason": "官方定价为 0，免费开放",
+      "rates": [
+        {
+          "label": "输入不超过 128,000 Token",
+          "upToInputTokens": 128000,
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-4.6V-Flash | — | 免费 | 免费 | 限时免费 | 免费 |"
+    },
+    {
+      "id": "glm-4-5v",
+      "name": "GLM-4.5V",
+      "apiId": "glm-4.5v",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "智谱 GLM-4.5V 多模态视觉理解模型，上下文 64K。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 64000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": "https://docs.bigmodel.cn/cn/guide/models/vlm/glm-4.5v",
+      "notes": [
+        "取自定价页「更多视觉模型」折叠表",
+        "上下文 64K 与定价末档一致；页面未单列最大输出 Token 数，留空。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 32,000 Token",
+          "upToInputTokens": 32000,
+          "input": 2,
+          "output": 6,
+          "cacheRead": 0.4,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        },
+        {
+          "label": "输入 32,000 至 64,000 Token",
+          "upToInputTokens": 64000,
+          "input": 4,
+          "output": 12,
+          "cacheRead": 0.8,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-4.5V | 输入长度 [0, 32K) | 2 | 6 | 限时免费 | 0.4 | / | GLM-4.5V | 输入长度 [32K, 64K) | 4 | 12 | 限时免费 | 0.8 |"
+    },
+    {
+      "id": "glm-4v-plus-0111",
+      "name": "GLM-4V-Plus-0111",
+      "apiId": "glm-4v-plus-0111",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "GLM-4V 系列多模态视觉理解模型，上下文 16K。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 16000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "取自定价页「更多视觉模型」折叠表",
+        "页面未单列该型号最大输出 Token 数，留空。",
+        "缓存存储列标注「限时免费」，未作为价格项收录"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 16,000 Token",
+          "upToInputTokens": 16000,
+          "input": 4,
+          "output": 4,
+          "cacheRead": 2,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-4V-Plus-0111 | 16K | 4 | 4 | 限时免费 | 2 |"
+    },
+    {
+      "id": "glm-4v-flash",
+      "name": "GLM-4V-Flash",
+      "apiId": "glm-4v-flash",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "免费开放的 GLM-4V 轻量多模态模型，上下文 4K。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 4000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "取自定价页「更多视觉模型」折叠表，输入与输出标注「免费」；缓存命中列标注「不支持」，故 cacheRead 留空。",
+        "页面未单列该型号最大输出 Token 数，留空。"
+      ],
+      "zeroPriceReason": "官方定价为 0，免费开放",
+      "rates": [
+        {
+          "label": "输入不超过 4,000 Token",
+          "upToInputTokens": 4000,
+          "input": 0,
+          "output": 0,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-4V-Flash | 4K | 免费 | 免费 | 限时免费 | 不支持 |"
+    },
+    {
+      "id": "glm-4-1v-thinking-flashx",
+      "name": "GLM-4.1V-Thinking-FlashX",
+      "apiId": "glm-4.1v-thinking-flashx",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "GLM-4.1V 思考版视觉模型的付费轻量版本，上下文 64K。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 64000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "取自定价页「更多视觉模型」折叠表；缓存命中列标注「不支持」，故 cacheRead 留空。",
+        "页面未单列该型号最大输出 Token 数，留空。"
+      ],
+      "zeroPriceReason": null,
+      "rates": [
+        {
+          "label": "输入不超过 64,000 Token",
+          "upToInputTokens": 64000,
+          "input": 2,
+          "output": 2,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-4.1V-Thinking-FlashX | 64K | 2 | 2 | 限时免费 | 不支持 |"
+    },
+    {
+      "id": "glm-4-1v-thinking-flash",
+      "name": "GLM-4.1V-Thinking-Flash",
+      "apiId": "glm-4.1v-thinking-flash",
+      "status": "active",
+      "region": "mainland",
+      "regionLabel": "中国大陆 · 官方 API",
+      "description": "免费开放的 GLM-4.1V 思考版视觉模型，上下文 64K。",
+      "useCases": [
+        "chat",
+        "long",
+        "code"
+      ],
+      "contextTokens": 64000,
+      "contextScope": "combined",
+      "maxInputTokens": null,
+      "maxOutputTokens": null,
+      "currency": "CNY",
+      "specSource": null,
+      "notes": [
+        "取自定价页「更多视觉模型」折叠表，输入与输出标注「免费」；缓存命中列标注「不支持」，故 cacheRead 留空。",
+        "页面未单列该型号最大输出 Token 数，留空。"
+      ],
+      "zeroPriceReason": "官方定价为 0，免费开放",
+      "rates": [
+        {
+          "label": "输入不超过 64,000 Token",
+          "upToInputTokens": 64000,
+          "input": 0,
+          "output": 0,
+          "cacheRead": null,
+          "batchFactor": null,
+          "offPeakFactor": null,
+          "promotion": null
+        }
+      ],
+      "evidence": "| GLM-4.1V-Thinking-Flash | 64K | 免费 | 免费 | 限时免费 | 不支持 |"
+    }
+  ]
+}
