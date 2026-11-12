@@ -7,6 +7,16 @@ const ROWS = 8;
 const ROW_HEIGHT = 62;
 const TOP = 244;
 
+/**
+ * 图里印的站点地址。读页面上的 canonical（由 SITE_URL 与 BASE_PATH 决定），
+ * 换仓库、换自定义域名都不必改代码。没有 canonical 时退回当前主机名。
+ */
+function siteLabel(): string {
+  const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute('href') ?? '';
+  const value = canonical || location.host;
+  return value.replace(/^https?:\/\//, '').replace(/\/+$/, '');
+}
+
 function clip(context: CanvasRenderingContext2D, text: string, max: number) {
   if (context.measureText(text).width <= max) return text;
   let value = text;
@@ -114,7 +124,7 @@ export function drawRanking(rows: Row[], filters: Filters, catalog: Catalog, tod
   context.fillText(`共 ${rows.length} 款在售模型 · 价格单位：人民币 / 百万 Token；任务成本：人民币 / 次 · 汇率与促销以官方账单为准`, 64, footerY);
   context.fillStyle = '#0a2540';
   context.font = `500 16px ${FONT}`;
-  context.fillText('gityuanbao.github.io/yuanbao-model-rankings', 64, footerY + 26);
+  context.fillText(siteLabel(), 64, footerY + 26);
   return canvas;
 }
 

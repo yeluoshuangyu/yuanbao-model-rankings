@@ -143,12 +143,16 @@ async function shareImagePage(): Promise<string | null> {
       target: 'es2020',
     });
     const code = bundled.outputFiles[0].text;
+    // 让预览和线上一致：分享图上的地址取自真实页面里的 canonical。
+    const canonical = readPage('index.html').match(/<link rel="canonical" href="([^"]+)"/)?.[1] ?? '';
     const payload = JSON.stringify({
       rows: listRow,
       filters: { ...defaultFilters, providers: [] },
       catalog: { meta: catalog.meta, providers: catalog.providers, sources: catalog.sources },
     }).replace(/</g, '\\u003c');
-    return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>分享图预览</title><style>
+    return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>分享图预览</title>${
+      canonical ? `<link rel="canonical" href="${canonical}">` : ''
+    }<style>
 body { margin: 0; padding: 24px; background: #e9e9ec; display: flex; justify-content: center; font-family: -apple-system, "PingFang SC", sans-serif; }
 canvas { width: 1080px; height: auto; border-radius: 14px; box-shadow: 0 20px 50px rgba(0, 0, 0, .2); }
 </style></head><body><script>${code}</script><script>

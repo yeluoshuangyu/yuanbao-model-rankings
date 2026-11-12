@@ -51,7 +51,7 @@ npm run snap -- --shot --only=home,value --chrome=/path/to/chrome
 项目子路径校验：
 
 ```bash
-SITE_URL=https://gityuanbao.github.io BASE_PATH=/yuanbao-model-rankings/ npm run build
+SITE_URL=https://yeluoshuangyu.github.io BASE_PATH=/yuanbao-model-rankings/ npm run build
 BASE_PATH=/yuanbao-model-rankings/ npm run validate:build
 ```
 

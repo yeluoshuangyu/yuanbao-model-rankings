@@ -140,7 +140,7 @@ Provider Adapter → 官方抓取 → 原币与单位标准化 → Schema → Di
 
 ## 8. 公网发布
 
-- 账号 `gityuanbao`，目标仓库 `yuanbao-model-rankings`，目标网址 `https://gityuanbao.github.io/yuanbao-model-rankings/`。是否已上线以[发布验收记录](docs/RELEASE-v3.0.md)为准，本次迭代见 [v3.1 发布说明](docs/RELEASE-v3.1.md)。
+- 账号 `yeluoshuangyu`，目标仓库 `yuanbao-model-rankings`，目标网址 `https://yeluoshuangyu.github.io/yuanbao-model-rankings/`。是否已上线以[发布验收记录](docs/RELEASE-v3.0.md)为准，本次迭代见 [v3.1 发布说明](docs/RELEASE-v3.1.md)。
 - `main` 推送触发 CI 和 Pages；域名、子路径由 Pages 提供，导航、图片、脚本、JSON、详情与分享适配项目子路径。
 - 首次发布仅提交所需源码、数据与说明，排除个人环境、凭据、文档输出、中间产物和运行报告。
 - 三类发布共用互斥组；校验或 Build 失败不部署，Deploy 失败保留旧站。自动数据更新部署成功后才推送，不强推。
