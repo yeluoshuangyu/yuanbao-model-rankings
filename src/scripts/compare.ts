@@ -1,5 +1,5 @@
 import { catalog } from '../lib/catalog';
-import { defaultFilters, getRows, money, type Filters } from '../lib/ranking';
+import { getRows, money } from '../lib/ranking';
 import { modelSearch } from '../lib/search';
 import { parseFilters } from '../lib/url-state';
 import { escapeHtml, mark } from '../lib/render';

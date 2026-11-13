@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { catalog, verification } from '../lib/catalog';
 import { escapeHtml, mark, pathFor } from '../lib/render';
-import { defaultFilters, money, statusLabels } from '../lib/ranking';
+import { defaultFilters, money } from '../lib/ranking';
 import { retirements } from '../lib/retirement';
 import { performanceBoards } from '../lib/performance-data';
 import { performanceCategories, performanceCategoryIds } from '../lib/performance-categories';
@@ -27,7 +27,8 @@ const unpriced = countBy(model => model.rates[0].input <= 0 || model.rates[0].ou
 // 倒计时必须按「今天」算，不能按数据核验日算，否则页面会停在发布那一刻
 const retiring = retirements(catalog, defaultFilters, 1000, new Date());
 
-const now = Date.parse(verification.checkedAt);
+// checkedAt 可能为空（快照里没有任何厂商核验过），此时以当前时间算天数，不抛错也不假装是 0 天
+const now = verification.checkedAt ? Date.parse(verification.checkedAt) : Date.now();
 const daysSince = (value: string | null | undefined) => (value ? Math.max(0, Math.floor((now - Date.parse(value)) / 86_400_000)) : null);
 const stamp = (value: string | null | undefined) => (value ? new Date(value).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', hour12: false }) : '未记录');
 
